@@ -1,7 +1,7 @@
-// Lista que voy a luego llenar con los productos
+// Lista para llenar con los productos
 var productsArray = [];
 
-// Función para mostrar todos los productos de la lista con su imagen, nombre, descripcion y precio
+// Muestro todos los productos de la lista con su imagen, nombre, descripcion y precio
 function showProductsList(array){
 
     let htmlContentToAppend = "";
@@ -37,11 +37,12 @@ function showProductsList(array){
 //elementos HTML presentes.
 document.addEventListener("DOMContentLoaded", function (e) {
 
-    // Función para traer el listado de productos desde el json a traves de la url
+    // Traer el listado de productos desde el json a traves de la url
     getJSONData(PRODUCTS_URL).then(function(resultObj){
         if (resultObj.status === "ok")
         {
             productsArray = resultObj.data;
+
             //Muestro las categorías ordenadas
             showProductsList(productsArray);
         }

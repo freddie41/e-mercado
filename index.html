@@ -1,109 +1,144 @@
 <!DOCTYPE html>
 <!-- saved from url=(0049)https://getbootstrap.com/docs/4.3/examples/album/ -->
-<html lang="en">
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <title>eMercado - Todo lo que busques está aquí</title>
+<html lang="es">
 
-    <link rel="canonical" href="https://getbootstrap.com/docs/4.3/examples/album/">
-    <link href="https://fonts.googleapis.com/css?family=Raleway:300,300i,400,400i,700,700i,900,900i" rel="stylesheet">
-    <!-- Bootstrap core CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/styles.css" rel="stylesheet">
-  </head>
-  <body>
-    <nav class="site-header sticky-top py-1 bg-dark">
-      <div class="container d-flex flex-column flex-md-row justify-content-between">
-        <a class="py-2 d-none d-md-inline-block" href="index.html">Inicio</a>
-        <a class="py-2 d-none d-md-inline-block" href="categories.html">Categorías</a>
-        <a class="py-2 d-none d-md-inline-block" href="products.html">Productos</a>
-        <a class="py-2 d-none d-md-inline-block" href="sell.html">Vender</a>
-        <a class="py-2 d-none d-md-inline-block" href="cart.html">Mi carrito</a>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <title>eMercado - Todo lo que busques está aquí</title>
+
+  <!-- Google APIs para Google OAuth 2.0 -->
+  <meta name="google-signin-client_id"
+    content="428794117897-af3u2j4lhobceldnrq8s6cdnnuucd6l8.apps.googleusercontent.com">
+  <script src="https://apis.google.com/js/platform.js" async defer></script>
+  <script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script> 
+
+  <link rel="canonical" href="https://getbootstrap.com/docs/4.3/examples/album/">
+  <link href="https://fonts.googleapis.com/css?family=Raleway:300,300i,400,400i,700,700i,900,900i" rel="stylesheet">
+
+  <!-- Bootstrap core CSS -->
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/styles.css" rel="stylesheet">
+  <style>
+    html,
+    body {
+      height: 100%;
+    }
+
+    body {
+      align-items: center;
+      padding-top: 20px;
+      padding-bottom: 20px;
+      background-color: #f8f9fa;
+    }
+
+    .signin {
+      width: 100%;
+      max-width: 330px;
+      padding: 15px;
+      margin: auto;
+    }
+
+    p.copyright {
+      color: #939395;
+      position: absolute;
+      width: 100%;
+      line-height: 40px;
+      text-align: center;
+      bottom: 1px;
+    }
+
+    .or-break {
+      border-bottom: 1px solid #e4e4e4;
+      color: #999;
+      font-size: 13px;
+      line-height: 0;
+      margin: 20px -15px;
+      text-align: center;
+    }
+
+    .or-break>span {
+      background: #f8f9fa;
+      padding: 0 10px;
+    }
+  </style>
+</head>
+
+<body class="text-center">
+  <img src="img/login.png" alt="jap login" height="41%">
+  <div class="container p-1">
+    <div class="signin">
+      <h1 class="h3 mb-2 font-weight-normal">Bienvenido</h1>
+      <h1 class="h6 mb-3 font-weight-normal">Inicie sesión con su cuenta</h1>
+      <div class="mt-3">
+        <input id="inputEmail" class="form-control" placeholder="Usuario o email" autofocus>
       </div>
-    </nav>
-    <main role="main">
-      <section class="jumbotron text-center">
-        <div class="m-5">
-          <h1></h1>
-        </div>
-      </section>
-      <div class="album py-5 bg-light">
-        <div class="container">
-          <div class="row">
-            <div class="col-md-4">
-              <a href="categories.html" class="card mb-4 shadow-sm custom-card">
-                <img class="bd-placeholder-img card-img-top"  src="img/cat1.jpg">
-                <h3 class="m-3">Autos (122)</h3>
-                <div class="card-body">
-                  <p class="card-text">Los mejores precios en autos 0 kilómetro, de alta y media gama.</p>
-                </div>
-              </a>
-            </div>
-            <div class="col-md-4">
-                <a href="categories.html" class="card mb-4 shadow-sm custom-card">
-                  <img class="bd-placeholder-img card-img-top" src="img/cat2.jpg">
-                  <h3 class="m-3">Juguetes (354)</h3>
-                  <div class="card-body">
-                    <p class="card-text">Encuentra aquí los mejores precios para niños/as de cualquier edad.</p>
-                  </div>
-                </a>
-            </div>
-            <div class="col-md-4">
-                <a href="categories.html" class="card mb-4 shadow-sm custom-card">
-                  <img class="bd-placeholder-img card-img-top" src="img/cat3.jpg">
-                  <h3 class="m-3">Muebles (157)</h3>
-                  <div class="card-body">
-                    <p class="card-text">Muebles antiguos, nuevos y para ser armados por uno mismo.</p>
-                  </div>
-                </a>
-            </div>
-            <div class="col-md-4">
-                <a href="categories.html" class="card mb-4 shadow-sm custom-card">
-                  <img class="bd-placeholder-img card-img-top" src="img/cat4.jpg">
-                  <h3 class="m-3">Herramientas (452)</h3>
-                  <div class="card-body">
-                    <p class="card-text">Herramientas para cualquier tipo de trabajo.</p>
-                  </div>
-                </a>
-            </div>
-            <div class="col-md-4">
-                <a href="categories.html" class="card mb-4 shadow-sm custom-card">
-                  <img class="bd-placeholder-img card-img-top" src="img/cat5.jpg">
-                  <h3 class="m-3">Computadoras (724)</h3>
-                  <div class="card-body">
-                    <p class="card-text">Todo en cuanto a computadoras, para uso de oficina y/o juegos.</p>
-                  </div>
-                </a>
-            </div>
-            <div class="col-md-4">
-                <a href="categories.html" class="card mb-4 shadow-sm custom-card">
-                  <img class="bd-placeholder-img card-img-top" src="img/cat6.jpg">
-                  <h3 class="m-3">Vestimenta (841)</h3>
-                  <div class="card-body">
-                    <p class="card-text">Gran variedad de ropa, nueva y de segunda mano.</p>
-                  </div>
-                </a>
-            </div>
-          </div>
-          <div class="row">
-              <a type="button" class="btn btn-light btn-lg btn-block" href="categories.html">Ver todas</a>
-          </div>
-        </div>
+      <div class="mt-3 mb-3">
+        <input id="inputPassword" class="form-control" placeholder="Contraseña">
       </div>
-    </main>
-    <footer class="text-muted">
-      <div class="container">
-        <p class="float-right">
-          <a href="#">Volver arriba</a>
-        </p>
-        <p>Este sitio forma parte de Desarrollo Web - JAP - 2020</p>
-        <p>Clickea <a target="_blank" href="Letra.pdf">aquí</a> para descargar la letra del obligatorio.</p>
+      <div class="mb-3">
+        <button id="loginBtn" class="btn btn-lg btn-info btn-block">Ingresar</button>
       </div>
-    </footer>
-    <script src="js/jquery-3.4.1.min.js"></script>
-    <script src="js/bootstrap.bundle.min.js"></script>
-    <script src="js/init.js"></script>
-  </body>
+
+      <div class="or-break">
+        <span>O</span>
+      </div>
+
+      <!-- Sign in with Google btn with CSS -->
+      <div id="my-signin2" style="display:none"></div>
+      <script>
+        function onSuccess(googleUser) {
+          window.location = "homepage.html";
+        }
+        function onFailure(error) {
+          console.log(error);
+        }
+        function renderButton() {
+          gapi.signin2.render('my-signin2', {
+            'scope': 'profile email',
+            'width': 300,
+            'height': 50,
+            'longtitle': true,
+            'theme': 'white',
+            'onsuccess': onSuccess,
+            'onfailure': onFailure,
+          });
+        }
+
+        var reintentosDeCargaGoogleBtn = 0;
+
+        //Función para controlar que al finalizar
+        //la carga del btn se pueda cambiar el default btn txt a español
+        function onInit() {
+
+          //Utilizo un timer con un control de errores para el cambio de txt para reducir
+          // el tiempo en el que carga del botón y hacer el cambio de txt lo antes posible
+          setTimeout(function () {
+            try {
+              document.getElementById("my-signin2")
+                .getElementsByClassName("abcRioButtonContents")[0]
+                .getElementsByTagName("span")[0]
+                .innerText = "Acceder con Google";
+              document.getElementById("my-signin2").style.display = "block";
+            } catch {
+              reintentosDeCargaGoogleBtn += 1;
+              if (reintentosDeCargaGoogleBtn < 5) {
+                onInit();
+              }
+            }
+          }, 100);
+        }
+        window.onload = onInit;
+      </script>
+    </div>
+  </div>
+
+  <p class="copyright">&copy; Jóvenes a Programar 2021</p>
+
+  <script src="js/init.js"></script>
+  <script src="js/login.js"></script>
+
+</body>
+
 </html>
