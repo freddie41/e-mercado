@@ -32,30 +32,21 @@
       <a class="py-2 d-none d-md-inline-block" href="products.html">Productos</a>
       <a class="py-2 d-none d-md-inline-block" href="sell.html">Vender</a>
       <a class="py-2 d-none d-md-inline-block" href="cart.html">Mi carrito</a>
-      <a id="infoUser" class="py-2 d-none d-md-inline-block" style="display: none;">
+      
+      <!-- Logged user email shown -->
+      <a class="py-2 d-none d-md-inline-block" id="infoUser" style="display: none;">
         <p id="user"></p>
       </a>
-      
-      <!-- Sign out with Google
-      <a class="py-2 d-none d-md-inline-block" onclick="logOut();">Cerrar sesión</a>
 
-      <a href="#" id="signOut" class="py-2 d-none d-md-inline-block" onclick="signOut();">Cerrar sesión</a>
+      <!-- Google user name and profile img -->
+      <a class="py-2 d-none d-md-inline-block" id="gUserInfo" style="display: none;">
+        <p id="gUser"></p>
+      </a>
       <script>
-        function onLoad() {
-          gapi.load('auth2', function () {
-            gapi.auth2.init();
-          });
-        }
-        function signOut() {
-          var auth2 = gapi.auth2.getAuthInstance();
-          auth2.signOut()
-            .then(function () {
-              window.location.href = "index.html";
-            });
-        }
+
       </script>
       Sign out with Google -->
-      
+
       <script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
     </div>
   </nav>
