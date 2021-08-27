@@ -32,8 +32,13 @@
       <a class="py-2 d-none d-md-inline-block" href="products.html">Productos</a>
       <a class="py-2 d-none d-md-inline-block" href="sell.html">Vender</a>
       <a class="py-2 d-none d-md-inline-block" href="cart.html">Mi carrito</a>
+      <a id="infoUser" class="py-2 d-none d-md-inline-block" style="display: none;">
+        <p id="user"></p>
+      </a>
+      
+      <!-- Sign out with Google
+      <a class="py-2 d-none d-md-inline-block" onclick="logOut();">Cerrar sesión</a>
 
-      <!-- Sign out with Google -->
       <a href="#" id="signOut" class="py-2 d-none d-md-inline-block" onclick="signOut();">Cerrar sesión</a>
       <script>
         function onLoad() {
@@ -49,7 +54,8 @@
             });
         }
       </script>
-
+      Sign out with Google -->
+      
       <script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
     </div>
   </nav>

@@ -41,6 +41,7 @@ document.addEventListener("DOMContentLoaded", function (e) {
             }
 
             if (camposCompletos) {
+                localStorage.setItem("userLogged", (JSON.stringify({email:email.value})));
                 window.location = "homepage.html";
             }
         });
