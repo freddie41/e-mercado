@@ -85,7 +85,7 @@
         <span>O</span>
       </div>
 
-      <!-- Sign in with Google btn with CSS -->
+      <!-- Sign in with Google -->
       <div id="my-signin2" style="display:none"></div>
 
       <script>
@@ -113,8 +113,8 @@
         //la carga del btn se pueda cambiar el default btn txt a español
         function onInit() {
 
-          //Utilizo un timer con un control de errores para el cambio de txt para reducir
-          // el tiempo en el que carga del botón y hacer el cambio de txt lo antes posible
+          //Timer con un control de errores para el cambio de txt que reduce
+          // el tiempo en el que carga del botón y se ejecuta el cambio de txt
           setTimeout(function () {
             try {
               document.getElementById("my-signin2")
@@ -132,7 +132,7 @@
         }
         window.onload = onInit;
       </script>
-      
+
     </div>
   </div>
 

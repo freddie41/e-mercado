@@ -45,24 +45,23 @@ var getJSONData = function (url) {
 //elementos HTML presentes.
 document.addEventListener("DOMContentLoaded", function (e) {
 
+  // User data
   var userLogged = localStorage.getItem("userLogged");
-  var infoUser = document.getElementById("infoUser");
+  var userInfo = document.getElementById("userInfo");
   var user = document.getElementById("user");
 
   // Google user data
   var googleUserData = onSignIn(googleUser);
   var profile = googleUser.getBasicProfile();
-  var gUserInfo = document.getElementById("gUserInfo");
-  var gUser = document.getElementById("gUser");
 
   if (userLogged) {
     userLogged = JSON.parse(userLogged);
-    infoUser.style = "display: inline-block";
+    userInfo.style = "display: inline-block";
     user.innerText = userLogged.email;
   }
 
   if (googleUserData) {
-    gUserInfo.style = "display: inline-block";
-    gUser.innerText = profile.getEmail();
+    userInfo.style = "display: inline-block";
+    user.innerText = profile.getEmail();
   }
 });
