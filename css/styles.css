@@ -46,12 +46,12 @@
 }
 
 footer {
-  padding-top: 3rem;
-  padding-bottom: 3rem;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
 }
 
 footer p {
-  margin-bottom: .25rem;
+  margin-bottom: .1rem;
 }
 
 .site-header a {
@@ -140,6 +140,6 @@ a.custom-card:hover {
   color: orange;
 }
 
-#infoUser {
+#userInfo {
   color:white;
 }

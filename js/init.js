@@ -44,24 +44,24 @@ var getJSONData = function (url) {
 //que el documento se encuentra cargado, es decir, se encuentran todos los
 //elementos HTML presentes.
 document.addEventListener("DOMContentLoaded", function (e) {
+  
 
-  // User data
+  // Importación de user login info y google user login info
   var userLogged = localStorage.getItem("userLogged");
+  var googleUserLogged = localStorage.getItem("googleUserLogged");
   var userInfo = document.getElementById("userInfo");
   var user = document.getElementById("user");
 
-  // Google user data
-  var googleUserData = onSignIn(googleUser);
-  var profile = googleUser.getBasicProfile();
-
+  // Control para mostrar login email
   if (userLogged) {
     userLogged = JSON.parse(userLogged);
+    user.innerText = "Hola," + " " + userLogged.email;
     userInfo.style = "display: inline-block";
-    user.innerText = userLogged.email;
+  }
+  if (googleUserLogged) {
+    googleUserEmail = googleUserLogged;
+    user.innerText = "Hola," + " " + googleUserEmail;
+    userInfo.style = "display: inline-block";
   }
 
-  if (googleUserData) {
-    userInfo.style = "display: inline-block";
-    user.innerText = profile.getEmail();
-  }
 });

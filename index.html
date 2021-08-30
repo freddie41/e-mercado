@@ -8,16 +8,15 @@
   <meta name="description" content="">
   <title>eMercado - Todo lo que busques está aquí</title>
 
-  <!-- Google APIs para Google OAuth 2.0 -->
+  <!-- Google source data -->
   <meta name="google-signin-client_id"
     content="428794117897-af3u2j4lhobceldnrq8s6cdnnuucd6l8.apps.googleusercontent.com">
   <script src="https://apis.google.com/js/platform.js" async defer></script>
   <script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
-
-  <link rel="canonical" href="https://getbootstrap.com/docs/4.3/examples/album/">
   <link href="https://fonts.googleapis.com/css?family=Raleway:300,300i,400,400i,700,700i,900,900i" rel="stylesheet">
 
   <!-- Bootstrap core CSS -->
+  <link rel="canonical" href="https://getbootstrap.com/docs/4.3/examples/album/">
   <link href="css/bootstrap.min.css" rel="stylesheet">
   <link href="css/styles.css" rel="stylesheet">
   <style>
@@ -28,8 +27,6 @@
 
     body {
       align-items: center;
-      padding-top: 20px;
-      padding-bottom: 20px;
       background-color: #f8f9fa;
     }
 
@@ -40,13 +37,23 @@
       margin: auto;
     }
 
-    p.copyright {
-      color: #939395;
-      position: absolute;
-      width: 100%;
-      line-height: 40px;
+    .login-footer {
+      border-top: .0425rem solid rgba(0, 0, 0, .1);
+      background: #fff;
+      height: 4.5rem;
+      display: -webkit-flex;
+      display: flex;
+      -webkit-flex-direction: column;
+      flex-direction: column;
+      -webkit-justify-content: center;
+      justify-content: center;
       text-align: center;
-      bottom: 1px;
+    }
+
+    .login-footer_copyright {
+      font-size: 12px;
+      font-size: .75rem;
+      color: rgba(0, 0, 0, .45);
     }
 
     .or-break {
@@ -75,7 +82,7 @@
         <input id="inputEmail" class="form-control" placeholder="Usuario o email" autofocus>
       </div>
       <div class="mt-3 mb-3">
-        <input id="inputPassword" class="form-control" placeholder="Contraseña">
+        <input id="inputPassword" type="password" class="form-control" placeholder="Contraseña">
       </div>
       <div class="mb-3">
         <button id="loginBtn" class="btn btn-lg btn-info btn-block">Ingresar</button>
@@ -86,15 +93,19 @@
       </div>
 
       <!-- Sign in with Google -->
-      <div id="my-signin2" style="display:none"></div>
+      <div class="mb-5" id="my-signin2" style="display:none"></div>
 
       <script>
         function onSuccess(googleUser) {
           window.location = "homepage.html";
+          var profile = googleUser.getBasicProfile();
+          localStorage.setItem("googleUserLogged", profile.getEmail());
         }
+
         function onFailure(error) {
           console.log(error);
         }
+
         function renderButton() {
           gapi.signin2.render('my-signin2', {
             'scope': 'profile email',
@@ -107,10 +118,11 @@
           });
         }
 
-        var reintentosDeCargaGoogleBtn = 0;
-
         //Función para controlar que al finalizar
         //la carga del btn se pueda cambiar el default btn txt a español
+
+        var reintentosDeCargaGoogleBtn = 0;
+
         function onInit() {
 
           //Timer con un control de errores para el cambio de txt que reduce
@@ -136,7 +148,9 @@
     </div>
   </div>
 
-  <p class="copyright">&copy; Jóvenes a Programar 2021</p>
+  <footer class="login-footer">
+    <div class="login-footer_copyright">Copyright © 2021 Jóvenes a Programar</div>
+  </footer>
 
   <script src="js/init.js"></script>
   <script src="js/login.js"></script>
