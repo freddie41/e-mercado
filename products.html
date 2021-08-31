@@ -11,7 +11,6 @@
   <!-- Google source data -->
   <meta name="google-signin-client_id"
     content="428794117897-af3u2j4lhobceldnrq8s6cdnnuucd6l8.apps.googleusercontent.com">
-  <script src="https://apis.google.com/js/platform.js?onload=onLoad" async defer></script>
   <link href="https://fonts.googleapis.com/css?family=Raleway:300,300i,400,400i,700,700i,900,900i" rel="stylesheet">
 
   <!-- Bootstrap core CSS -->
@@ -32,20 +31,12 @@
       <a class="py-2 d-none d-md-inline-block" href="sell.html">Vender</a>
       <a class="py-2 d-none d-md-inline-block" href="cart.html">Mi carrito</a>
 
-      <!-- Email del usuario logeado -->
-      <div id="userInfo" style="display: none;">
-        <p class="py-2 d-none d-md-inline-block" id="user"></p>
-      </div>
+      <!-- Email del usuario logueado -->
+      <a class="py-2 d-none d-md-inline-block" href="my-profile.html" id="user"></a>
 
-      <!-- Btn para salir de la sesión para ambos tipos de login -->
+      <!-- Logout -->
       <a href="#" id="signOut" class="py-2 d-none d-md-inline-block" onclick="signOut();">Salir</a>
-
       <script>
-        function onLoad() {
-          gapi.load('auth2', function () {
-            gapi.auth2.init();
-          });
-        }
         function signOut() {
           var auth2 = gapi.auth2.getAuthInstance();
           auth2.signOut()
@@ -54,39 +45,86 @@
               window.location.href = "index.html"
             });
         }
+        function onLoad() {
+          gapi.load('auth2', function () {
+            gapi.auth2.init();
+          });
+        }
       </script>
+      <script src="https://apis.google.com/js/platform.js?onload=onLoad" async defer></script>
+
     </div>
   </nav>
-  <div class="container p-5">
-
-    <!--Se agrega un espacio vacio para luego colocar la lista de productos desde "productos.js"-->
+  <!-- Botones de ordenamiento por precio y relevancia -->
+  <div class="mt-3 container">
     <div class="row">
-      <div class="list-group" id="product-list-container">
+      <div class="col text-right">
+        <div class="btn-group btn-group-toggle mb-4" data-toggle="buttons">
+          <label class="btn btn-light" id="sortAscCost">
+            <input type="radio" name="options" autocomplete="off">Menor precio
+          </label>
+          <label class="btn btn-light" id="sortDescCost">
+            <input type="radio" name="options" autocomplete="off">Mayor precio
+          </label>
+          <label class="btn btn-light active" id="sortByrRelevance">
+            <input type="radio" name="options" autocomplete="off" checked><i
+              class="fas fa-sort-amount-down mr-1"></i>Relevancia
+          </label>
+        </div>
       </div>
     </div>
+    <div class="row justify-content-end">
+      <div class="col-md-6"></div>
+      <div class="col-md-6 col-sm-12 mb-1 container">
+        <div class="row container p-0 m-0">
+          <div class="col">
+            <p class="font-weight-normal text-right my-2">Precio USD</p>
+          </div>
+          <div class="col">
+            <input class="form-control" type="number" placeholder="min." id="rangeFilterMinCost">
+          </div>
+          <div class="col">
+            <input class="form-control" type="number" placeholder="máx." id="rangeFilterMaxCost">
+          </div>
+          <div class="col-3 p-0">
+            <div class="btn-group" role="group">
+              <button class="btn btn-light btn-block" id="rangeFilterCost">Filtrar</button>
+              <button class="btn btn-li btn-sm" id="clearRangeFilter">Limpiar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container p-2">
 
-  </div>
-  <footer class="text-muted bg-light">
-    <div class="container">
-      <p class="float-right">
-        <a href="#">Volver arriba</a>
-      </p>
-      <p>Este sitio forma parte de Desarrollo Web - JAP - 2020</p>
-      <p>Clickea <a target="_blank" href="Letra.pdf">aquí</a> para descargar la letra del obligatorio.</p>
+      <!--Se agrega un contenedor vacio para luego colocar la lista de productos desde "productos.js"-->
+      <div class="row">
+        <div class="list-group" id="product-list-container">
+        </div>
+      </div>
+
     </div>
-  </footer>
-  <div id="spinner-wrapper">
-    <div class="lds-ring">
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
+    <footer class="text-muted bg-light">
+      <div class="container">
+        <p class="float-right">
+          <a href="#">Volver arriba</a>
+        </p>
+        <p>Este sitio forma parte de Desarrollo Web - JAP - 2020</p>
+        <p>Clickea <a target="_blank" href="Letra.pdf">aquí</a> para descargar la letra del obligatorio.</p>
+      </div>
+    </footer>
+    <div id="spinner-wrapper">
+      <div class="lds-ring">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
     </div>
-  </div>
-  <script src="js/jquery-3.4.1.min.js"></script>
-  <script src="js/bootstrap.bundle.min.js"></script>
-  <script src="js/init.js"></script>
-  <script src="js/products.js"></script>
+    <script src="js/jquery-3.4.1.min.js"></script>
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/init.js"></script>
+    <script src="js/products.js"></script>
 </body>
 
 </html>

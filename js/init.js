@@ -46,22 +46,18 @@ var getJSONData = function (url) {
 document.addEventListener("DOMContentLoaded", function (e) {
   
 
-  // Importación de user login info y google user login info
+  // User data y google user data
   var userLogged = localStorage.getItem("userLogged");
   var googleUserLogged = localStorage.getItem("googleUserLogged");
-  var userInfo = document.getElementById("userInfo");
   var user = document.getElementById("user");
 
-  // Control para mostrar login email
+  // Control para mostrar user logged o google user logged (email)
   if (userLogged) {
     userLogged = JSON.parse(userLogged);
     user.innerText = "Hola," + " " + userLogged.email;
-    userInfo.style = "display: inline-block";
   }
   if (googleUserLogged) {
     googleUserEmail = googleUserLogged;
     user.innerText = "Hola," + " " + googleUserEmail;
-    userInfo.style = "display: inline-block";
   }
-
 });

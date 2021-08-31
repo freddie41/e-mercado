@@ -11,8 +11,6 @@
   <!-- Google source data -->
   <meta name="google-signin-client_id"
     content="428794117897-af3u2j4lhobceldnrq8s6cdnnuucd6l8.apps.googleusercontent.com">
-  <script src="https://apis.google.com/js/platform.js" async defer></script>
-  <script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
   <link href="https://fonts.googleapis.com/css?family=Raleway:300,300i,400,400i,700,700i,900,900i" rel="stylesheet">
 
   <!-- Bootstrap core CSS -->
@@ -93,8 +91,10 @@
       </div>
 
       <!-- Sign in with Google -->
+      
       <div class="mb-5" id="my-signin2" style="display:none"></div>
-
+      <script src="https://apis.google.com/js/platform.js" async defer></script>
+      <script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
       <script>
         function onSuccess(googleUser) {
           window.location = "homepage.html";
