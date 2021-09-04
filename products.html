@@ -52,52 +52,56 @@
         }
       </script>
       <script src="https://apis.google.com/js/platform.js?onload=onLoad" async defer></script>
-
     </div>
   </nav>
+
   <!-- Botones de ordenamiento por precio y relevancia -->
-  <div class="mt-3 container">
+  <div class="mt-5 container">
     <div class="row">
       <div class="col text-right">
         <div class="btn-group btn-group-toggle mb-4" data-toggle="buttons">
-          <label class="btn btn-light" id="sortAscCost">
-            <input type="radio" name="options" autocomplete="off">Menor precio
+          <label class="btn btn-light active" id="sortByRelevance">
+            <input type="radio" name="options" autocomplete="off" checked>
+            <i class="fas fa-medal mr-1"></i>Relevancia
           </label>
           <label class="btn btn-light" id="sortDescCost">
-            <input type="radio" name="options" autocomplete="off">Mayor precio
+            <input type="radio" name="options" autocomplete="off">
+            <i class="fas fa-sort-amount-up mr-1"></i>Mayor precio
           </label>
-          <label class="btn btn-light active" id="sortByrRelevance">
-            <input type="radio" name="options" autocomplete="off" checked><i
-              class="fas fa-sort-amount-down mr-1"></i>Relevancia
+          <label class="btn btn-light" id="sortAscCost">
+            <input type="radio" name="options" autocomplete="off">
+            <i class="fas fa-sort-amount-down-alt mr-1"></i>Menor precio
           </label>
         </div>
       </div>
     </div>
-    <div class="row justify-content-end">
+
+    <!-- Filtro por precio y btn para restablecer lista -->
+    <div class="row">
       <div class="col-md-6"></div>
-      <div class="col-md-6 col-sm-12 mb-1 container">
-        <div class="row container p-0 m-0">
-          <div class="col">
+      <div class="col-md-6 mb-3">
+          <div class="row">
             <p class="font-weight-normal text-right my-2">Precio USD</p>
-          </div>
-          <div class="col">
-            <input class="form-control" type="number" placeholder="min." id="rangeFilterMinCost">
-          </div>
-          <div class="col">
-            <input class="form-control" type="number" placeholder="máx." id="rangeFilterMaxCost">
-          </div>
-          <div class="col-3 p-0">
-            <div class="btn-group" role="group">
-              <button class="btn btn-light btn-block" id="rangeFilterCost">Filtrar</button>
-              <button class="btn btn-li btn-sm" id="clearRangeFilter">Limpiar</button>
+            <div class="col-sm-3">
+              <input class="form-control" type="number" placeholder="min." id="rangeFilterMinCost">
+            </div>
+            <div class="col-sm-3">
+              <input class="form-control" type="number" placeholder="máx." id="rangeFilterMaxCost">
+            </div>
+            <div class="btn-group">
+              <button class="btn btn-light" id="rangeFilterCost">
+                <i class="fa fa-funnel-dollar mr-1"></i>Filtrar
+              </button>
+              <button class="btn btn-light" id="clearRangeFilter">
+                <i class="fas fa-eraser mr-1"></i>Limpiar
+              </button>
             </div>
           </div>
         </div>
       </div>
-    </div>
-    <div class="container p-2">
 
-      <!--Se agrega un contenedor vacio para luego colocar la lista de productos desde "productos.js"-->
+    <!--Se agrega un contenedor vacio para luego colocar la lista de productos desde "productos.js"-->
+    <div class="container p-2">
       <div class="row">
         <div class="list-group" id="product-list-container">
         </div>

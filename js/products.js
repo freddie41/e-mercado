@@ -47,8 +47,8 @@ function sortProducts(criteria, array){
     }else if (criteria === ORDER_BY_PROD_RELEVANCE) {
 
         result = array.sort(function(a, b) {
-            let aSoldCount = parseInt(a.soldCount);
-            let bSoldCount = parseInt(b.soldCount);
+            let aSoldCount = a.soldCount;
+            let bSoldCount = b.soldCount;
 
             if ( aSoldCount > bSoldCount ) {
                 return -1;
@@ -73,9 +73,8 @@ function showProductsList() {
         let product = item;
 
         // Control para modificar el listado a mostrar aplicando el filtro por precio minimo y maximo
-        // FALTA CONTEMPLAR EL CASO DE INGRESAR UN minCost mayor a un existente de la lista
-        if (((minCost == undefined) || (minCost != undefined && parseInt(product.cost) >= minCost)) &&
-            ((maxCost == undefined) || (maxCost != undefined && parseInt(product.cost) <= maxCost))) {
+        if (((minCost == undefined) || (minCost != undefined && product.cost >= minCost)) &&
+            ((maxCost == undefined) || (maxCost != undefined && product.cost <= maxCost))) {
 
             htmlContentToAppend += `
         <div class="list-group-item list-group-item-action">
@@ -95,8 +94,8 @@ function showProductsList() {
             </div>
         </div>
         `
-            document.getElementById("product-list-container").innerHTML = htmlContentToAppend;
         }
+        document.getElementById("product-list-container").innerHTML = htmlContentToAppend;
     }
 }
 
@@ -137,10 +136,11 @@ document.addEventListener("DOMContentLoaded", function (e) {
         sortAndShowProducts(ORDER_DESC_BY_COST);
     });
 
-    document.getElementById("sortByrRelevance").addEventListener("click", function(){
+    document.getElementById("sortByRelevance").addEventListener("click", function(){
         sortAndShowProducts(ORDER_BY_PROD_RELEVANCE);
     });
 
+    // Funcion para limpiar todos los campos de filtro de costo y mostrar el listado inicial
     document.getElementById("clearRangeFilter").addEventListener("click", function () {
         document.getElementById("rangeFilterMinCost").value = "";
         document.getElementById("rangeFilterMaxCost").value = "";
