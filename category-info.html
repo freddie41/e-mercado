@@ -11,14 +11,15 @@
   <!-- Google source data -->
   <meta name="google-signin-client_id"
     content="428794117897-af3u2j4lhobceldnrq8s6cdnnuucd6l8.apps.googleusercontent.com">
-  <script src="https://apis.google.com/js/platform.js?onload=onLoad" async defer></script>
-  <link href="https://fonts.googleapis.com/css?family=Raleway:300,300i,400,400i,700,700i,900,900i" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Raleway:300,300i,400,400i,700,700i,900,900i" rel="stylesheet">
 
   <!-- Bootstrap core CSS -->
   <link rel="canonical" href="https://getbootstrap.com/docs/4.3/examples/album/">
   <link href="css/bootstrap.min.css" rel="stylesheet">
   <link href="css/styles.css" rel="stylesheet">
+
+  <!-- Font awesome source -->
+  <link href="css/font-awesome.min.css" rel="stylesheet">
 </head>
 
 <body>
@@ -30,20 +31,12 @@
       <a class="py-2 d-none d-md-inline-block" href="sell.html">Vender</a>
       <a class="py-2 d-none d-md-inline-block" href="cart.html">Mi carrito</a>
 
-      <!-- User logged email -->
-      <div id="userInfo" style="display: none;">
-        <p class="py-2 d-none d-md-inline-block" id="user"></p>
-      </div>
+      <!-- Email del usuario logueado -->
+      <a class="py-2 d-none d-md-inline-block" href="my-profile.html" id="user"></a>
 
-      <!-- Sign out with Google / logout user -->
+      <!-- Logout -->
       <a href="#" id="signOut" class="py-2 d-none d-md-inline-block" onclick="signOut();">Salir</a>
-
       <script>
-        function onLoad() {
-          gapi.load('auth2', function () {
-            gapi.auth2.init();
-          });
-        }
         function signOut() {
           var auth2 = gapi.auth2.getAuthInstance();
           auth2.signOut()
@@ -52,7 +45,13 @@
               window.location.href = "index.html"
             });
         }
+        function onLoad() {
+          gapi.load('auth2', function () {
+            gapi.auth2.init();
+          });
+        }
       </script>
+      <script src="https://apis.google.com/js/platform.js?onload=onLoad" async defer></script>
     </div>
   </nav>
   <main role="main">
