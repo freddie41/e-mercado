@@ -21,13 +21,20 @@
     html,
     body {
       height: 100%;
-    }
-
-    body {
-      align-items: center;
       background-color: #f8f9fa;
+      display: flex;
+      flex-direction: column;
     }
 
+    img {
+      align-self: center;
+      height: 35%;
+    }
+
+    #login-container {
+      flex: 1 0 auto;
+    }
+    
     .signin {
       width: 100%;
       max-width: 330px;
@@ -35,20 +42,16 @@
       margin: auto;
     }
 
-    .login-footer {
+    .footer {
       border-top: .0425rem solid rgba(0, 0, 0, .1);
       background: #fff;
-      height: 4.5rem;
-      display: -webkit-flex;
-      display: flex;
-      -webkit-flex-direction: column;
-      flex-direction: column;
-      -webkit-justify-content: center;
-      justify-content: center;
-      text-align: center;
+      padding: 20px;
     }
 
-    .login-footer_copyright {
+    .footer-copyright {
+      justify-content: center;
+      text-align: center;
+      flex-shrink: 0;
       font-size: 12px;
       font-size: .75rem;
       color: rgba(0, 0, 0, .45);
@@ -71,8 +74,8 @@
 </head>
 
 <body class="text-center">
-  <img src="img/login.png" alt="jap login" height="41%">
-  <div class="container p-1">
+  <img src="img/login.png" alt="jap-login" id="jap-login">
+  <div class="container p-1" id="login-container">
     <div class="signin">
       <h1 class="h3 mb-2 font-weight-normal">Bienvenido</h1>
       <h1 class="h6 mb-3 font-weight-normal">Inicie sesión con su cuenta</h1>
@@ -148,8 +151,8 @@
     </div>
   </div>
 
-  <footer class="login-footer">
-    <div class="login-footer_copyright">Copyright © 2021 Jóvenes a Programar</div>
+  <footer class="footer">
+    <div class="footer-copyright">Copyright © 2021 Jóvenes a Programar</div>
   </footer>
 
   <script src="js/init.js"></script>
