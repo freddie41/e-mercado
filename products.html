@@ -76,9 +76,20 @@
       </div>
     </div>
 
-    <!-- Filtro por precio y btn para restablecer lista -->
+    <!-- Filtro por busqueda por titulo y/o descripción -->
     <div class="row">
-      <div class="col-md-6"></div>
+      <div class="col-md-6 mb-3">
+        <div class="row">
+          <div class="col-md-10">
+            <div class="inner-addon left-addon">
+              <i class="fa fa-search"></i>
+              <input class="form-control" type="search" placeholder="Buscar..." id="search">
+          </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Filtro por precio y btn para restablecer lista -->
       <div class="col-md-6 mb-3">
           <div class="row">
             <p class="font-weight-normal text-right my-2">Precio USD</p>
@@ -92,13 +103,14 @@
               <button class="btn btn-light" id="rangeFilterCost">
                 <i class="fa fa-funnel-dollar mr-1"></i>Filtrar
               </button>
-              <button class="btn btn-light" id="clearRangeFilter">
+              <button class="btn btn-light" id="clearFilters">
                 <i class="fas fa-eraser mr-1"></i>Limpiar
               </button>
             </div>
           </div>
         </div>
       </div>
+    </div>
 
     <!--Se agrega un contenedor vacio para luego colocar la lista de productos desde "productos.js"-->
     <div class="container p-2">
