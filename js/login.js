@@ -8,20 +8,20 @@ document.addEventListener("DOMContentLoaded", function (e) {
 
             //Validación para que los campos del login no queden vacios
             let password = document.getElementById("inputPassword");
-            let email = document.getElementById("inputEmail");
+            let user = document.getElementById("inputUser");
             let camposCompletos = true;
 
-            if (email.value === "" && password.value !== "") {
+            if (user.value === "" && password.value !== "") {
                 camposCompletos = false;
-                alert("El campo de email no puede ir vacío");
-                document.getElementById("inputEmail")
+                alert("El campo de usuario no puede ir vacío");
+                document.getElementById("inputUser")
                     .setAttribute("style", "border-color: #dc3545; box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);");
             } else {
-                document.getElementById("inputEmail")
+                document.getElementById("inputUser")
                     .removeAttribute("style");
             }
 
-            if (password.value === "" && email.value !== "") {
+            if (password.value === "" && user.value !== "") {
                 camposCompletos = false;
                 alert("El campo de contraseña no puede ir vacío");
                 document.getElementById("inputPassword")
@@ -31,17 +31,17 @@ document.addEventListener("DOMContentLoaded", function (e) {
                     .removeAttribute("style");
             }
 
-            if (email.value === "" && password.value === "") {
+            if (user.value === "" && password.value === "") {
                 camposCompletos = false;
-                alert("Debe ingresar un email y contraseña");
-                document.getElementById("inputEmail")
+                alert("Debe ingresar un usuario y contraseña");
+                document.getElementById("inputUser")
                     .setAttribute("style", "border-color: #dc3545; box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);");
                 document.getElementById("inputPassword")
                     .setAttribute("style", "border-color: #dc3545; box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);");
             }
 
             if (camposCompletos) {
-                localStorage.setItem("userLogged", (JSON.stringify({email:email.value})));
+                localStorage.setItem("userLogged", (JSON.stringify({user:user.value})));
                 window.location = "homepage.html";
             }
         });
