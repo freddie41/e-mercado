@@ -46,6 +46,8 @@
 }
 
 footer {
+  border-top: .0425rem solid rgba(0, 0, 0, .1);
+  background: #fff;
   padding-top: 2rem;
   padding-bottom: 2rem;
 }
