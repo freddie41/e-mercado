@@ -49,10 +49,11 @@
       <div class="my-1 d-none d-md-inline-block">
         <div class="dropdown">
           <!-- Username del usuario logueado -->
-          <a class="btn btn-info btn-sm dropdown-toggle" href="#" id="user" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></a>
-          <div class="dropdown-menu" aria-labelledby="user">
-            <a class="dropdown-item" href="cart.html">Carrito</a>
+          <button type="button" class="btn btn-info btn-sm dropdown-toggle" href="#" id="user" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false" data-offset="10,15"></button>
+          <div class="dropdown-menu dropdown-menu-right bg-light shadow" aria-labelledby="user">
             <a class="dropdown-item" href="my-profile.html">Mi perfil</a>
+            <a class="dropdown-item" href="cart.html">Carrito</a>
             <div class="dropdown-divider"></div>
             <!-- Logout -->
             <a class="dropdown-item" href="#" id="signOut" onclick="signOut();">Salir</a>
