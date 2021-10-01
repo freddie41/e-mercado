@@ -4,24 +4,39 @@ var productInfo = {};
 
 var productsList = [];
 
-function showImagesGallery(array) {
+function showCarousel(id, array) {
 
-    let htmlContentToAppend = "";
+    var html = $("#" + id).append( `
+    <ol class="carousel-indicators"></ol>
+    <div class="carousel-inner"></div>
+    <a class="carousel-control-prev" href="#` + id + `" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true">
+        </span><span class="sr-only">Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#` + id + `" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true">
+        </span><span class="sr-only">Next</span>
+    </a>
+    `);
 
-    for(let item of array) {
-        
-        let imageSrc = item;
+    let indicatorItem = html.find('.carousel-indicators');
+    let carouselItem = html.find('.carousel-inner');
 
-        htmlContentToAppend += `
-        <div class="col-lg-3 col-md-4 col-6">
-            <div class="d-block mb-4 h-100">
-                <img class="img-fluid img-thumbnail" src="`+ imageSrc +`" alt="">
-            </div>
+    array.forEach((imgSrc, indicator) => {
+
+        var activeclass = indicator == 0 ? "active" : "";
+
+        indicatorItem.append(`
+        <li data-target="#`+ id +`" data-slide-to="` + indicator + `" class="` + activeclass + `">
+        </li>
+        `);
+
+        carouselItem.append(`
+        <div class="carousel-item ` + activeclass + `">
+            <img class="d-block w-100 rounded" src="` + imgSrc + `" alt="First slide">
         </div>
-        `
-
-        document.getElementById("productImagesGallery").innerHTML = htmlContentToAppend;
-    }
+        `);
+    });
 }
 
 // Función para mostrar info de producto al cliquear en una de las opciones de la lista
@@ -173,8 +188,8 @@ function showProductInfo (productID) {
             productCategoryHTML.innerHTML = productInfo.category;
             productCostHTML.innerHTML = productInfo.currency + " " + productInfo.cost;
 
-            //Muestro las imagenes en forma de galería
-            showImagesGallery(productInfo.images);
+            //Muestro las imagenes en forma de carrusel
+            showCarousel("carouselIndicators", productInfo.images);
 
             // Trae el listado de comentarios desde el json a traves de la url y los muestra
             getJSONData(PRODUCT_INFO_COMMENTS_URL).then(function (resultObj) {
