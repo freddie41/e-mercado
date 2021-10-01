@@ -25,33 +25,48 @@
 <body>
   <nav class="site-header sticky-top py-1 bg-dark">
     <div class="container d-flex flex-column flex-md-row justify-content-between">
-      <a class="py-2 d-none d-md-inline-block" href="index.html">Inicio</a>
+      <a class="py-2 d-none d-md-inline-block" href="homepage.html">Inicio</a>
       <a class="py-2 d-none d-md-inline-block" href="categories.html">Categorías</a>
       <a class="py-2 d-none d-md-inline-block" href="products.html">Productos</a>
       <a class="py-2 d-none d-md-inline-block" href="sell.html">Vender</a>
-      <a class="py-2 d-none d-md-inline-block" href="cart.html">Mi carrito</a>
 
-      <!-- Email del usuario logueado -->
-      <a class="py-2 d-none d-md-inline-block" href="my-profile.html" id="user"></a>
-
-      <!-- Logout -->
-      <a href="#" id="signOut" class="py-2 d-none d-md-inline-block" onclick="signOut();">Salir</a>
-      <script>
-        function signOut() {
-          var auth2 = gapi.auth2.getAuthInstance();
-          auth2.signOut()
-            .then(function () {
-              localStorage.clear();
-              window.location.href = "index.html"
-            });
-        }
-        function onLoad() {
-          gapi.load('auth2', function () {
-            gapi.auth2.init();
-          });
-        }
-      </script>
-      <script src="https://apis.google.com/js/platform.js?onload=onLoad" async defer></script>
+      <!-- Menú desplegable -->
+      <div class="my-1 d-none d-md-inline-block">
+        <div class="dropdown">
+          <!-- Username del usuario logueado -->
+          <a class="btn btn-info btn-sm dropdown-toggle" href="#" id="user" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></a>
+          <div class="dropdown-menu" aria-labelledby="user">
+            <a class="dropdown-item" href="cart.html">Carrito</a>
+            <a class="dropdown-item" href="my-profile.html">Mi perfil</a>
+            <div class="dropdown-divider"></div>
+            <!-- Logout -->
+            <a class="dropdown-item" href="#" id="signOut" onclick="signOut();">Salir</a>
+            <script>
+              function onLoad() {
+                gapi.load('auth2', function () {
+                  gapi.auth2.init();
+                });
+              }
+              
+              function signOut() {
+                
+                let auth2 = gapi.auth2.getAuthInstance();
+                
+                if (auth2 !== null) {
+                  auth2.signOut().then(function () {
+                    localStorage.clear();
+                    window.location.href = "index.html";
+                  });
+                } else {
+                  localStorage.clear();
+                  window.location.href = "index.html";
+                }
+              }
+            </script>
+            <script src="https://apis.google.com/js/platform.js?onload=onLoad" async defer></script>
+          </div>
+        </div>
+      </div>
     </div>
   </nav>
 
