@@ -25,11 +25,10 @@
 <body>
   <nav class="site-header sticky-top py-1 bg-dark">
     <div class="container d-flex flex-column flex-md-row justify-content-between">
-      <a class="py-2 d-none d-md-inline-block" href="homepage.html">Inicio</a>
+      <a class="py-2 d-none d-md-inline-block" href="home.html">Inicio</a>
       <a class="py-2 d-none d-md-inline-block" href="categories.html">Categorías</a>
       <a class="py-2 d-none d-md-inline-block" href="products.html">Productos</a>
       <a class="py-2 d-none d-md-inline-block" href="sell.html">Vender</a>
-
       <!-- Menú desplegable -->
       <div class="my-1 d-none d-md-inline-block">
         <div class="dropdown">
@@ -48,11 +47,11 @@
                   gapi.auth2.init();
                 });
               }
-              
+
               function signOut() {
-                
+
                 let auth2 = gapi.auth2.getAuthInstance();
-                
+
                 if (auth2 !== null) {
                   auth2.signOut().then(function () {
                     localStorage.clear();
@@ -71,61 +70,212 @@
     </div>
   </nav>
   <main role="main" class="pb-5">
-    <div class="text-center p-4">
-      <h2>Categorías</h2>
-      <p class="lead">Verás aquí todas las categorías del sitio.</p>
-    </div>
-    <div class="container">
-      <div class="row">
-        <div class="col text-right">
-          <div class="btn-group btn-group-toggle mb-4" data-toggle="buttons">
-            <label class="btn btn-light active" id="sortAsc">
-              <input type="radio" name="options" autocomplete="off" checked>A-Z
-            </label>
-            <label class="btn btn-light" id="sortDesc">
-              <input type="radio" name="options" autocomplete="off">Z-A
-            </label>
-            <label class="btn btn-light" id="sortByCount">
-              <input type="radio" name="options" autocomplete="off"><i class="fas fa-sort-amount-down mr-1"></i>Cant.
-            </label>
-          </div>
-        </div>
+    <div class="container my-4">
+      <div class="text-center p-4 mb-4">
+        <h2>Categorías</h2>
+        <p class="lead">Verás aquí todas las categorías del sitio.</p>
       </div>
-      <div class="row justify-content-end">
+      <!-- Botones de ordenamiento -->
+      <div class="row no-gutters mb-3">
         <div class="col-md-6"></div>
-        <div class="col-md-6 col-sm-12 mb-1 container">
-          <div class="row container p-0 m-0">
-            <div class="col">
-              <p class="font-weight-normal text-right my-2">Cant.</p>
+        <div class="col-md-6">
+          <div class="row no-gutters justify-content-end">
+            <div class="mx-2">
+              <p class="font-weight-normal text-center my-2">Orden</p>
             </div>
-            <div class="col">
-              <input class="form-control" type="number" placeholder="min." id="rangeFilterCountMin">
-            </div>
-            <div class="col">
-              <input class="form-control" type="number" placeholder="máx." id="rangeFilterCountMax">
-            </div>
-            <div class="col-3 p-0">
-              <div class="btn-group" role="group">
-                <button class="btn btn-light btn-block" id="rangeFilterCount">Filtrar</button>
-                <button class="btn btn-link btn-sm" id="clearRangeFilter">Limpiar</button>
+            <div class="text-right ml-2">
+              <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                <label class="btn btn-light active" id="sortAsc">
+                  <input type="radio" name="options" autocomplete="off" checked="">
+                  <i class="fas fa-long-arrow-alt-up mr-1"></i>A-Z
+                </label>
+                <label class="btn btn-light" id="sortDesc">
+                  <input type="radio" name="options" autocomplete="off">
+                  <i class="fas fa-long-arrow-alt-down mr-1"></i>Z-A
+                </label>
+                <label class="btn btn-light" id="sortByCount">
+                  <input type="radio" name="options" autocomplete="off">
+                  <i class="fas fa-sort-amount-down mr-1"></i>Cantidad
+                </label>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div class="row">
-        <div class="list-group" id="cat-list-container">
+      <div class="row no-gutters justify-content-end mb-3">
+        <div class="col-md-5 col-sm-3"></div>
+        <!-- Filtro por precio y btn para restablecer lista -->
+        <div class="col-md-7 col-sm-6">
+          <div class="row container justify-content-end p-0 m-0">
+            <div class="mx-2">
+              <p class="font-weight-normal text-center my-2">Cantidad</p>
+            </div>
+            <div class="col-2 px-2">
+              <input class="form-control" type="number" placeholder="min." id="rangeFilterCountMin">
+            </div>
+            <div class="col-2 px-2 mr-2">
+              <input class="form-control" type="number" placeholder="máx." id="rangeFilterCountMax">
+            </div>
+            <div class="btn-group" role="group">
+              <button class="btn btn-light" id="rangeFilterCost">
+                <i class="fa fa-filter mr-1"></i>Filtrar
+              </button>
+              <button class="btn btn-light" id="clearFilters">
+                <i class="fas fa-eraser mr-1"></i>Limpiar
+              </button>
+            </div>
+          </div>
         </div>
+      </div>
+      <!-- Lista de categorías -->
+      <div class="row no-gutters">
+        <div class="list-group" id="cat-list-container">
+            <a href="category-info.html" class="list-group-item list-group-item-action">
+                <div class="row">
+                    <div class="col-3">
+                        <img src="img/cat1.jpg" alt="Los mejores precios en autos 0 kilómetro, de alta y media gama." class="img-thumbnail">
+                    </div>
+                    <div class="col">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h4 class="mb-1">Autos</h4>
+                            <small class="text-muted">122 artículos</small>
+                        </div>
+                        <p class="mb-1">Los mejores precios en autos 0 kilómetro, de alta y media gama.</p>
+                    </div>
+                </div>
+            </a>
+            
+            <a href="category-info.html" class="list-group-item list-group-item-action">
+                <div class="row">
+                    <div class="col-3">
+                        <img src="img/cat9.jpg" alt="Celulares de todo tipo para cubrir todas las necesidades." class="img-thumbnail">
+                    </div>
+                    <div class="col">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h4 class="mb-1">Celulares</h4>
+                            <small class="text-muted">124 artículos</small>
+                        </div>
+                        <p class="mb-1">Celulares de todo tipo para cubrir todas las necesidades.</p>
+                    </div>
+                </div>
+            </a>
+            
+            <a href="category-info.html" class="list-group-item list-group-item-action">
+                <div class="row">
+                    <div class="col-3">
+                        <img src="img/cat5.jpg" alt="Todo en cuanto a computadoras, para uso de oficina y/o juegos." class="img-thumbnail">
+                    </div>
+                    <div class="col">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h4 class="mb-1">Computadoras</h4>
+                            <small class="text-muted">724 artículos</small>
+                        </div>
+                        <p class="mb-1">Todo en cuanto a computadoras, para uso de oficina y/o juegos.</p>
+                    </div>
+                </div>
+            </a>
+            
+            <a href="category-info.html" class="list-group-item list-group-item-action">
+                <div class="row">
+                    <div class="col-3">
+                        <img src="img/cat8.jpg" alt="Toda la variedad de indumentaria para todo tipo de deporte." class="img-thumbnail">
+                    </div>
+                    <div class="col">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h4 class="mb-1">Deporte</h4>
+                            <small class="text-muted">574 artículos</small>
+                        </div>
+                        <p class="mb-1">Toda la variedad de indumentaria para todo tipo de deporte.</p>
+                    </div>
+                </div>
+            </a>
+            
+            <a href="category-info.html" class="list-group-item list-group-item-action">
+                <div class="row">
+                    <div class="col-3">
+                        <img src="img/cat7.jpg" alt="Todos los electrodomésticos modernos y de bajo consumo." class="img-thumbnail">
+                    </div>
+                    <div class="col">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h4 class="mb-1">Electrodomésticos</h4>
+                            <small class="text-muted">84 artículos</small>
+                        </div>
+                        <p class="mb-1">Todos los electrodomésticos modernos y de bajo consumo.</p>
+                    </div>
+                </div>
+            </a>
+            
+            <a href="category-info.html" class="list-group-item list-group-item-action">
+                <div class="row">
+                    <div class="col-3">
+                        <img src="img/cat4.jpg" alt="Herramientas para cualquier tipo de trabajo." class="img-thumbnail">
+                    </div>
+                    <div class="col">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h4 class="mb-1">Herramientas</h4>
+                            <small class="text-muted">452 artículos</small>
+                        </div>
+                        <p class="mb-1">Herramientas para cualquier tipo de trabajo.</p>
+                    </div>
+                </div>
+            </a>
+            
+            <a href="category-info.html" class="list-group-item list-group-item-action">
+                <div class="row">
+                    <div class="col-3">
+                        <img src="img/cat2.jpg" alt="Encuentra aquí los mejores precios para niños/as de cualquier edad." class="img-thumbnail">
+                    </div>
+                    <div class="col">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h4 class="mb-1">Juguetes</h4>
+                            <small class="text-muted">354 artículos</small>
+                        </div>
+                        <p class="mb-1">Encuentra aquí los mejores precios para niños/as de cualquier edad.</p>
+                    </div>
+                </div>
+            </a>
+            
+            <a href="category-info.html" class="list-group-item list-group-item-action">
+                <div class="row">
+                    <div class="col-3">
+                        <img src="img/cat3.jpg" alt="Muebles antiguos, nuevos y para ser armados por uno mismo." class="img-thumbnail">
+                    </div>
+                    <div class="col">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h4 class="mb-1">Muebles</h4>
+                            <small class="text-muted">157 artículos</small>
+                        </div>
+                        <p class="mb-1">Muebles antiguos, nuevos y para ser armados por uno mismo.</p>
+                    </div>
+                </div>
+            </a>
+            
+            <a href="category-info.html" class="list-group-item list-group-item-action">
+                <div class="row">
+                    <div class="col-3">
+                        <img src="img/cat6.jpg" alt="Gran variedad de ropa, nueva y de segunda mano." class="img-thumbnail">
+                    </div>
+                    <div class="col">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h4 class="mb-1">Vestimenta</h4>
+                            <small class="text-muted">841 artículos</small>
+                        </div>
+                        <p class="mb-1">Gran variedad de ropa, nueva y de segunda mano.</p>
+                    </div>
+                </div>
+            </a>
+            </div>
       </div>
     </div>
   </main>
   <footer class="text-muted bg-light">
     <div class="container">
       <p class="float-right">
-        <a href="#">Volver arriba</a>
+        <a href="#" class="text-info">Volver arriba</a>
       </p>
       <p>Este sitio forma parte de Desarrollo Web - JAP - 2021</p>
-      <p>Clickea <a target="_blank" href="Letra.pdf">aquí</a> para descargar la letra del obligatorio.</p>
+      <p>Clickea <a class="text-info" target="_blank" href="Letra.pdf">aquí</a> para descargar la letra del obligatorio.
+      </p>
     </div>
   </footer>
   <div id="spinner-wrapper">

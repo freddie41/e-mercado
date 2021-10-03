@@ -41,7 +41,7 @@
 <body>
   <nav class="site-header sticky-top py-1 bg-dark">
     <div class="container d-flex flex-column flex-md-row justify-content-between">
-      <a class="py-2 d-none d-md-inline-block" href="homepage.html">Inicio</a>
+      <a class="py-2 d-none d-md-inline-block" href="home.html">Inicio</a>
       <a class="py-2 d-none d-md-inline-block" href="categories.html">Categorías</a>
       <a class="py-2 d-none d-md-inline-block" href="products.html">Productos</a>
       <a class="py-2 d-none d-md-inline-block" href="sell.html">Vender</a>
@@ -88,7 +88,8 @@
   </nav>
 
   <!-- Contenedor con los elementos que conforman los datos del articulo a vender -->
-  <div class="container">
+<main role="main" class="pb-5">
+  <div class="container my-4">
     <div class="text-center p-4">
       <h2>Vender</h2>
       <p class="lead">Ingresa los datos del artículo a vender.</p>
@@ -186,7 +187,7 @@
               <label class="custom-control-label" for="standardradio">Estándar (3%)</label>
             </div>
             <div class="row">
-              <button type="button" class="m-1 btn btn-link" data-toggle="modal" data-target="#contidionsModal">Ver
+              <button type="button" class="m-1 btn btn-link text-info" data-toggle="modal" data-target="#contidionsModal">Ver
                 condiciones</button>
             </div>
           </div>
@@ -202,7 +203,7 @@
             </li>
             <li class="list-group-item d-flex justify-content-between lh-condensed">
               <div>
-                <h6 class="my-0">P0rcentaje</h6>
+                <h6 class="my-0">Porcentaje</h6>
                 <small class="text-muted">Según el tipo de publicación</small>
               </div>
               <span class="text-muted" id="comissionText">-</span>
@@ -213,15 +214,20 @@
             </li>
           </ul>
           <hr class="mb-4">
-          <button class="btn btn-primary btn-lg" type="submit">Vender</button>
+          <button class="btn btn-info btn-lg mb-4" type="submit">Vender</button>
         </form>
       </div>
     </div>
   </div>
-  <footer class="text-muted">
+</main>
+  <footer class="text-muted bg-light">
     <div class="container">
+      <p class="float-right">
+        <a href="#" class="text-info">Volver arriba</a>
+      </p>
       <p>Este sitio forma parte de Desarrollo Web - JAP - 2021</p>
-      <p>Clickea <a target="_blank" href="Letra.pdf">aquí</a> para descargar la letra del obligatorio.</p>
+      <p>Clickea <a class="text-info" target="_blank" href="Letra.pdf">aquí</a> para descargar la letra del obligatorio.
+      </p>
     </div>
   </footer>
   <div class="alert fade" role="alert" id="alertResult">
