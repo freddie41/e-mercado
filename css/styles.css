@@ -259,3 +259,7 @@ a.custom-card:hover {
   height: 10px;
   border-radius: 100%;
 }
+
+.btn-group-toggle label {
+  cursor: pointer;
+}
