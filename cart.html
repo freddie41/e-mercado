@@ -17,6 +17,9 @@
   <!-- Bootstrap core CSS -->
   <link rel="canonical" href="https://getbootstrap.com/docs/4.3/examples/album/">
 
+  <!-- Font awesome source -->
+  <link href="css/font-awesome.min.css" rel="stylesheet">
+
   <style>
     .bd-placeholder-img {
       font-size: 1.125rem;
@@ -35,7 +38,6 @@
   </style>
   <link href="css/bootstrap.min.css" rel="stylesheet">
   <link href="css/styles.css" rel="stylesheet">
-  <link href="css/dropzone.css" rel="stylesheet">
 </head>
 
 <body>
@@ -64,11 +66,11 @@
                   gapi.auth2.init();
                 });
               }
-              
+
               function signOut() {
-                
+
                 let auth2 = gapi.auth2.getAuthInstance();
-                
+
                 if (auth2 !== null) {
                   auth2.signOut().then(function () {
                     localStorage.clear();
@@ -86,15 +88,234 @@
       </div>
     </div>
   </nav>
-  <div class="container p-5">
-    <div class="alert alert-danger" role="alert" style="position: relative; width:auto; top: 0;">
-      <h4 class="alert-heading">¡A trabajar! :)</h4>
-      <p>Esta sección corresponde a: Entrega 5 (Fecha de entrega: 17/10/2021) y Entrega 7 (Fecha de entrega:
-        14/11/2021).</p>
-      <hr>
-      <p class="mb-0">Para saber qué debes hacer, fijate en la actividad en CREA correspondiente a esta entrega.</p>
+  <!-- Contenedor con los elementos que conforman los datos del articulo a vender -->
+  <main role="main" class="pb-5">
+    <div class="container my-4">
+      <div class="text-center p-4">
+        <h2>Mi carrito</h2>
+      </div>
+
+      <!--Section: Block Content-->
+      <section>
+
+        <!--Grid row-->
+        <div class="row">
+      
+          <!--Grid column-->
+          <div class="col-lg-8">
+      
+            <!-- Cart items -->
+            <div class="card wish-list mb-3">
+              <div class="card-body">
+      
+                <h5 class="mb-4">Artículos (<span>2</span> items)</h5>
+                
+                <!-- Cart item -->
+                <div class="row">
+                  <div class="col-md-5 col-lg-3">
+                    <div class="d-block h-100">
+                      <img class="img-fluid img-thumbnail"
+                        src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Vertical/12a.jpg" alt="Sample">
+                    </div>
+                  </div>
+                  <div class="col-md-7 col-lg-9">
+                    <div>
+                      <div class="d-flex justify-content-between">
+                        <div>
+                          <h5>Blue denim shirt</h5>
+                          <p class="my-3 text-muted text-uppercase small">Item cost</p>
+                        </div>
+
+                        <!-- Item unit controls -->
+                        <div>
+                          <div class="def-number-input number-input safari_only mb-0 w-100">
+                            <div class="input-group">
+                              <span class="input-group-prepend">
+                                <button type="button" class="btn btn-outline-info btn-number" disabled="disabled" data-type="minus"
+                                  data-field="quant[1]">
+                                  <span class="fa fa-minus"></span>
+                                </button>
+                              </span>
+                              <input type="number" name="quant[1]" class="form-control input-number text-center" value="1" min="1" max="10">
+                              <span class="input-group-append">
+                                <button type="button" class="btn btn-outline-info btn-number" data-type="plus" data-field="quant[1]">
+                                  <span class="fa fa-plus"></span>
+                                </button>
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+
+                        <!-- Item unit controls -->
+                      </div>
+                      <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                          <a href="#!" type="button" class="text-danger small text-uppercase mr-3"><i
+                              class="fas fa-trash-alt mr-1"></i> Borrar </a>
+                        </div>
+                        <p class="mb-0"><span><strong>$17.99</strong></span></p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                <hr class="my-4">
+
+              </div>
+            </div>
+            <!-- Cart items -->
+      
+            <!-- Shipping and payment -->
+            <div id="accordion">
+
+              <!-- Shipping collapse -->
+              <div class="card mb-3">
+                <div class="card-header" id="headingOne">
+                  <div class="mb-0">
+                    <h5 class="collapsed my-1" data-toggle="collapse" data-target="#collapseShippingCard" aria-expanded="true" aria-controls="collapseShippingCard">
+                      Tipo de envío
+                      <span><i class="fas fa-chevron-down pt-1" style="float: right;"></i></span>
+                    </h5>
+                  </div>
+                </div>
+                <!-- Shipping radio options -->
+                <div id="collapseShippingCard" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+                  <div class="card-body">
+                    <div class="d-block my-3 mx-3">
+                      <div class="custom-control custom-radio mb-2">
+                        <input id="premiumradio" name="shippingType" type="radio" class="custom-control-input" checked=""
+                          required="">
+                        <label class="custom-control-label" for="premiumradio">Premium (2-5 días)</label>
+                      </div>
+                      <div class="custom-control custom-radio mb-2">
+                        <input id="expressradio" name="shippingType" type="radio" class="custom-control-input" required="">
+                        <label class="custom-control-label" for="expressradio">Express (5-8 días)</label>
+                      </div>
+                      <div class="custom-control custom-radio">
+                        <input id="standardradio" name="shippingType" type="radio" class="custom-control-input" required="">
+                        <label class="custom-control-label" for="standardradio">Standard (12-15 días)</label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- Shipping radio options -->
+              </div>
+              <!-- Shipping collapse -->
+
+              <!-- Payment collapse -->
+              <div class="card mb-3">
+                <div class="card-header" id="headingTwo">
+                  <div class="mb-0">
+                    <h5 class="collapsed my-1" data-toggle="collapse" data-target="#collapsePaymentCard" aria-expanded="false" aria-controls="collapsePaymentCard">
+                      Método de pago
+                      <span><i class="fas fa-chevron-down pt-1" style="float: right;"></i></span>
+                    </h5>
+                  </div>
+                </div>
+                <!-- Payment radio options -->
+                <div id="collapsePaymentCard" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+                  <div class="card-body">
+                    <div class="d-block my-3 mx-3">
+                      <div class="custom-control custom-radio mb-4">
+                        <input id="cardsradio" name="paymentType" type="radio" class="custom-control-input" checked=""
+                          required="">
+                        <label class="custom-control-label" for="cardsradio">Tarjeta de crédito</label>
+                        <div class="my-1">
+                          <img class="mr-1" width="45px" src="img/logos/oca.jpeg" alt="Oca" style="border-radius: 3px;">
+                          <img class="mr-1" width="45px" src="img/logos/visa.svg" alt="Visa">
+                          <img class="mr-1" width="45px" src="img/logos/mastercard.svg" alt="Mastercard">
+                          <img class="mr-1" width="45px" src="img/logos/amex.svg" alt="American Express">
+                          <img class="mr-1" width="45px" src="img/logos/prex.jpeg" alt="Prex" style="border-radius: 3px;">
+                        </div>
+                      </div>
+                      <div class="custom-control custom-radio mb-4">
+                        <input id="banksradio" name="paymentType" type="radio" class="custom-control-input" required="">
+                        <label class="custom-control-label" for="banksradio">Transferencia bancaria</label>
+                        <div class="my-1">
+                          <img class="mr-1" width="35px" src="img/logos/brou2.webp" alt="Brou" style="border-radius: 25.2%;">
+                          <img class="mr-1" width="35px" src="img/logos/itau2.webp" alt="Itau" style="border-radius: 25.2%;">
+                          <img class="mr-1" width="35px" src="img/logos/santander.jpeg" alt="Santander" style="border-radius: 25.2%;">
+                          <img class="mr-1" width="35px" src="img/logos/bbva.png" alt="BBVA" style="border-radius: 25.2%;">
+                          <img class="mr-1" width="35px" src="img/logos/scotia.png" alt="Scotia" style="border-radius: 25.2%;">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- Payment radio options -->
+              </div>
+              <!-- Payment collapse -->
+            </div>
+            <!-- Shipping and payment -->
+      
+          </div>
+          <!--Grid column -->
+      
+          <!--Grid column summary -->
+          <div class="col-lg-4">
+      
+            <!-- Card summary -->
+            <div class="card mb-3">
+              <div class="card-body">
+      
+                <h5 class="mb-3">Resumen del pedido</h5>
+      
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-2" id="summaryItems">
+                    Item name
+                    <span>$25.98</span>
+                  </li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center border-1 px-0 pb-2">
+                    Sub-total
+                    <span>$25.98</span>
+                  </li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center border-1 px-0 pb-2">
+                    Costo de envío
+                    <span>-</span>
+                  </li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-1 mb-3">
+                    <div>
+                      <strong>TOTAL
+                        <span class="mr-1">
+                          <!-- Cotización de USD-UYU -->
+                        <a class="text-info" tabindex="0" role="button" data-toggle="popover" data-trigger="focus" data-placement="top"
+                        title="Tipo de Cambio" data-content="1 USD = 40 UYU">
+                        <i class="fas fa-info-circle"></i>
+                      </a>
+                      <!-- Cotización de USD-UYU -->
+                        </span>
+                      </strong>
+                    </div>
+                    <span><strong>$53.98</strong></span>
+                  </li>
+                </ul>
+      
+                <button type="button" class="btn btn-info btn-lg btn-block">Finalizar compra</button>
+      
+              </div>
+            </div>
+            <!-- Card -->
+      
+          </div>
+          <!-- Grid column summary -->
+      
+        </div>
+        <!--Grid row-->
+      
+      </section>
+      <!--Section: Block Content-->
     </div>
-  </div>
+  </main>
+  <footer class="text-muted bg-light">
+    <div class="container">
+      <p class="float-right">
+        <a href="#" class="text-info">Volver arriba</a>
+      </p>
+      <p>Este sitio forma parte de Desarrollo Web - JAP - 2021</p>
+      <p>Clickea <a class="text-info" target="_blank" href="Letra.pdf">aquí</a> para descargar la letra del obligatorio.
+      </p>
+    </div>
+  </footer>
   <div id="spinner-wrapper">
     <div class="lds-ring">
       <div></div>
@@ -105,7 +326,6 @@
   </div>
   <script src="js/jquery-3.4.1.min.js"></script>
   <script src="js/bootstrap.bundle.min.js"></script>
-  <script src="js/dropzone.js"></script>
   <script src="js/init.js"></script>
   <script src="js/cart.js"></script>
 </body>

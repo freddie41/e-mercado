@@ -3,4 +3,15 @@
 //elementos HTML presentes.
 document.addEventListener("DOMContentLoaded", function(e){
 
+    // Inicializador de tooltips
+    $(document).ready(function() {
+        $("[data-toggle=tooltip]").tooltip();
+    });
+
+    // Inicializador de popovers
+    $(document).ready(function(){
+        $('[data-toggle="popover"]').popover({
+        });
+    });
 });
+
