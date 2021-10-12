@@ -14,9 +14,12 @@
     content="428794117897-af3u2j4lhobceldnrq8s6cdnnuucd6l8.apps.googleusercontent.com">
   <link href="https://fonts.googleapis.com/css?family=Raleway:300,300i,400,400i,700,700i,900,900i" rel="stylesheet">
 
-  <!-- Bootstrap core CSS -->
+  <!-- Bootstrap CSS/JS -->
   <link rel="canonical" href="https://getbootstrap.com/docs/4.3/examples/album/">
-
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <script src="js/bootstrap.min.js"></script>
+  <link href="css/styles.css" rel="stylesheet">
+  
   <!-- Font awesome source -->
   <link href="css/font-awesome.min.css" rel="stylesheet">
 
@@ -36,30 +39,126 @@
       }
     }
   </style>
-  <link href="css/bootstrap.min.css" rel="stylesheet">
-  <link href="css/styles.css" rel="stylesheet">
 </head>
-
+  
 <body>
-  <nav class="site-header sticky-top py-1 bg-dark">
-    <div class="container d-flex flex-column flex-md-row justify-content-between">
-      <a class="py-2 d-none d-md-inline-block" href="home.html">Inicio</a>
-      <a class="py-2 d-none d-md-inline-block" href="categories.html">Categorías</a>
-      <a class="py-2 d-none d-md-inline-block" href="products.html">Productos</a>
-      <a class="py-2 d-none d-md-inline-block" href="sell.html">Vender</a>
+  <!-- Sidebar wrapper -->
+  <div class="wrapper d-md-none d-sm-block">
+  
+    <!-- Sidebar -->
+    <nav class="sidebar shadow">
+  
+      <!-- Close sidebar menu btn -->
+      <div class="dismiss">
+        <i class="fas fa-times"></i>
+      </div>
+  
+      <!-- Emercado logo -->
+      <div class="logo">
+        <h2 class="text-center"><a href="home.html"></a></h2>
+      </div>
+  
+      <!-- User login info -->
+      <div class="user">
+        <div class="text-muted">
+          <p class="m-0 text-center"><small id="user-sm"></small></p>
+        </div>
+      </div>
+  
+      <!-- Menu elements -->
+      <ul class="list-unstyled menu-elements">
+        <li class="active">
+          <a href="home.html" style="text-decoration: none;"><i class="fas fa-home"></i>Inicio</a>
+        </li>
+        <li>
+          <a href="categories.html" style="text-decoration: none;"><i class="fas fa-folder-open"></i>Categorías</a>
+        </li>
+        <li>
+          <a href="products.html" style="text-decoration: none;"><i class="fas fa-th-list"></i>Productos</a>
+        </li>
+        <li>
+          <a href="sell.html" style="text-decoration: none;"><i class="fas fa-handshake"></i>Vender</a>
+        </li>
+        <li>
+          <a href="cart.html" style="text-decoration: none;"><i class="fas fa-shopping-cart"></i>Carrito</a>
+        </li>
+        <li>
+          <a href="my-profile.html" style="text-decoration: none;"><i class="fas fa-user"></i>Mi perfil</a>
+        </li>
+  
+        <div class="logout">
+          <button class="btn btn-secondary btn-block shadow-sm" type="button" role="button"
+            onclick="signOut();">Salir</button>
+          <script>
+            function onLoad() {
+              gapi.load('auth2', function () {
+                gapi.auth2.init();
+              });
+            }
 
+            function signOut() {
+              let auth2 = gapi.auth2.getAuthInstance();
+              if (auth2 !== null) {
+                auth2.signOut().then(function () {
+                  localStorage.clear();
+                  window.location.href = "index.html";
+                });
+              } else {
+                localStorage.clear();
+                window.location.href = "index.html";
+              }
+            }
+          </script>
+          <script src="https://apis.google.com/js/platform.js?onload=onLoad" async defer></script>
+        </div>
+  
+    </nav>
+    <!-- End sidebar -->
+  
+    <!-- Overlay -->
+    <div class="overlay"></div>
+  
+    <!-- Open sidebar menu -->
+    <a class="btn btn-info open-menu shadow-sm" href="#" role="button">
+      <span><i class="fas fa-bars"></i></span>
+    </a>
+  
+  </div>
+  <!-- End Sidebar wrapper -->
+  
+  <!-- Navbar -->
+  <nav class="site-header sticky-top py-1 bg-dark d-none d-md-block">
+    <div class="container d-flex flex-column flex-md-row justify-content-between">
+      <a class="py-2 d-none d-md-inline-block" href="home.html" style="text-decoration: none;">
+        <i class="fas fa-home"></i>Inicio
+      </a>
+      <a class="py-2 d-none d-md-inline-block" href="categories.html" style="text-decoration: none;">
+        <i class="fas fa-folder-open"></i>Categorías
+      </a>
+      <a class="py-2 d-none d-md-inline-block" href="products.html" style="text-decoration: none;">
+        <i class="fas fa-th-list"></i>Productos
+      </a>
+      <a class="py-2 d-none d-md-inline-block" href="sell.html" style="text-decoration: none;">
+        <i class="fas fa-handshake"></i>Vender
+      </a>
+  
       <!-- Menú desplegable -->
       <div class="my-1 d-none d-md-inline-block">
         <div class="dropdown">
           <!-- Username del usuario logueado -->
           <button type="button" class="btn btn-info btn-sm dropdown-toggle" href="#" id="user" data-toggle="dropdown"
             aria-haspopup="true" aria-expanded="false" data-offset="10,15"></button>
-          <div class="dropdown-menu dropdown-menu-right bg-light shadow" aria-labelledby="user">
-            <a class="dropdown-item" href="my-profile.html">Mi perfil</a>
-            <a class="dropdown-item" href="cart.html">Carrito</a>
-            <div class="dropdown-divider"></div>
+          <div class="dropdown-menu dropdown-menu-right bg-light shadow" aria-labelledby="user" x-placement="bottom-end"
+            style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(10px, 46px, 0px);">
+            <a class="dropdown-item px-3 py-2" href="my-profile.html">
+              <i class="fas fa-user"></i>Mi perfil
+            </a>
+            <a class="dropdown-item px-3 py-2" href="cart.html">
+              <i class="fas fa-shopping-cart"></i>Carrito
+            </a>
+            <div class="dropdown-divider m-0"></div>
             <!-- Logout -->
-            <a class="dropdown-item" href="#" id="signOut" onclick="signOut();">Salir</a>
+            <a class="dropdown-item px-3 py-2" href="#" id="signOut" onclick="signOut();">Salir</a>
             <script>
               function onLoad() {
                 gapi.load('auth2', function () {
@@ -68,9 +167,7 @@
               }
 
               function signOut() {
-
                 let auth2 = gapi.auth2.getAuthInstance();
-
                 if (auth2 !== null) {
                   auth2.signOut().then(function () {
                     localStorage.clear();
@@ -82,13 +179,16 @@
                 }
               }
             </script>
-            <script src="https://apis.google.com/js/platform.js?onload=onLoad" async defer></script>
+            <script src="https://apis.google.com/js/platform.js?onload=onLoad" async="" defer=""
+              gapi_processed="true"></script>
           </div>
         </div>
       </div>
     </div>
   </nav>
-  <!-- Contenedor con los elementos que conforman los datos del articulo a vender -->
+  <!-- End Navbar -->
+
+  <!-- Contenedor con los elementos que conforman el carrito de articulos -->
   <main role="main" class="pb-5">
     <div class="container my-4">
       <div class="text-center p-4">
@@ -101,67 +201,18 @@
         <!--Grid row-->
         <div class="row">
       
-          <!--Grid column-->
-          <div class="col-lg-8">
+          <!--Grid productos-->
+          <div class="col-md-8 col-sm-12">
       
             <!-- Cart items -->
             <div class="card wish-list mb-3">
               <div class="card-body">
-      
-                <h5 class="mb-4">Artículos (<span>2</span> items)</h5>
-                
-                <!-- Cart item -->
-                <div class="row">
-                  <div class="col-md-5 col-lg-3">
-                    <div class="d-block h-100">
-                      <img class="img-fluid img-thumbnail"
-                        src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Vertical/12a.jpg" alt="Sample">
-                    </div>
-                  </div>
-                  <div class="col-md-7 col-lg-9">
-                    <div>
-                      <div class="d-flex justify-content-between">
-                        <div>
-                          <h5>Blue denim shirt</h5>
-                          <p class="my-3 text-muted text-uppercase small">Item cost</p>
-                        </div>
-
-                        <!-- Item unit controls -->
-                        <div>
-                          <div class="def-number-input number-input safari_only mb-0 w-100">
-                            <div class="input-group">
-                              <span class="input-group-prepend">
-                                <button type="button" class="btn btn-outline-info btn-number" disabled="disabled" data-type="minus"
-                                  data-field="quant[1]">
-                                  <span class="fa fa-minus"></span>
-                                </button>
-                              </span>
-                              <input type="number" name="quant[1]" class="form-control input-number text-center" value="1" min="1" max="10">
-                              <span class="input-group-append">
-                                <button type="button" class="btn btn-outline-info btn-number" data-type="plus" data-field="quant[1]">
-                                  <span class="fa fa-plus"></span>
-                                </button>
-                              </span>
-                            </div>
-                          </div>
-                        </div>
-
-                        <!-- Item unit controls -->
-                      </div>
-                      <div class="d-flex justify-content-between align-items-center">
-                        <div>
-                          <a href="#!" type="button" class="text-danger small text-uppercase mr-3"><i
-                              class="fas fa-trash-alt mr-1"></i> Borrar </a>
-                        </div>
-                        <p class="mb-0"><span><strong>$17.99</strong></span></p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                
-                <hr class="my-4">
-
-              </div>
+                <h5 class="mb-4">
+                  Artículos (<span id="productCount"></span> items)
+                </h5>
+                <!-- Info de productos agregados al carrito -->
+                <div id="cart-items"></div>
+               </div>
             </div>
             <!-- Cart items -->
       
@@ -172,9 +223,9 @@
               <div class="card mb-3">
                 <div class="card-header" id="headingOne">
                   <div class="mb-0">
-                    <h5 class="collapsed my-1" data-toggle="collapse" data-target="#collapseShippingCard" aria-expanded="true" aria-controls="collapseShippingCard">
+                    <h5 class="my-1 collapsed" data-toggle="collapse" data-target="#collapseShippingCard" aria-expanded="true" aria-controls="collapseShippingCard">
                       Tipo de envío
-                      <span><i class="fas fa-chevron-down pt-1" style="float: right;"></i></span>
+                      <span><i class="fas fa-chevron-down text-muted pt-1" style="float: right;"></i></span>
                     </h5>
                   </div>
                 </div>
@@ -191,7 +242,7 @@
                         <input id="expressradio" name="shippingType" type="radio" class="custom-control-input" required="">
                         <label class="custom-control-label" for="expressradio">Express (5-8 días)</label>
                       </div>
-                      <div class="custom-control custom-radio">
+                      <div class="custom-control custom-radio mb-2">
                         <input id="standardradio" name="shippingType" type="radio" class="custom-control-input" required="">
                         <label class="custom-control-label" for="standardradio">Standard (12-15 días)</label>
                       </div>
@@ -206,9 +257,9 @@
               <div class="card mb-3">
                 <div class="card-header" id="headingTwo">
                   <div class="mb-0">
-                    <h5 class="collapsed my-1" data-toggle="collapse" data-target="#collapsePaymentCard" aria-expanded="false" aria-controls="collapsePaymentCard">
+                    <h5 class="my-1 collapsed" data-toggle="collapse" data-target="#collapsePaymentCard" aria-expanded="false" aria-controls="collapsePaymentCard">
                       Método de pago
-                      <span><i class="fas fa-chevron-down pt-1" style="float: right;"></i></span>
+                      <span><i class="fas fa-chevron-down text-muted pt-1" style="float: right;"></i></span>
                     </h5>
                   </div>
                 </div>
@@ -249,25 +300,21 @@
             <!-- Shipping and payment -->
       
           </div>
-          <!--Grid column -->
+          <!--Grid productos -->
       
-          <!--Grid column summary -->
-          <div class="col-lg-4">
+          <!--Grid cart summary -->
+          <div class="col-md-4 col-sm-12">
       
             <!-- Card summary -->
             <div class="card mb-3">
               <div class="card-body">
-      
                 <h5 class="mb-3">Resumen del pedido</h5>
-      
                 <ul class="list-group list-group-flush">
-                  <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-2" id="summaryItems">
-                    Item name
-                    <span>$25.98</span>
-                  </li>
+                  <!-- Info resumida de productos agregados al carrito -->
+                  <div class="mb-2" id="summaryItems"></div>
                   <li class="list-group-item d-flex justify-content-between align-items-center border-1 px-0 pb-2">
                     Sub-total
-                    <span>$25.98</span>
+                    <span>-</span>
                   </li>
                   <li class="list-group-item d-flex justify-content-between align-items-center border-1 px-0 pb-2">
                     Costo de envío
@@ -278,15 +325,15 @@
                       <strong>TOTAL
                         <span class="mr-1">
                           <!-- Cotización de USD-UYU -->
-                        <a class="text-info" tabindex="0" role="button" data-toggle="popover" data-trigger="focus" data-placement="top"
-                        title="Tipo de Cambio" data-content="1 USD = 40 UYU">
-                        <i class="fas fa-info-circle"></i>
-                      </a>
-                      <!-- Cotización de USD-UYU -->
+                          <a class="text-info" tabindex="0" role="button" data-toggle="popover" data-trigger="focus" data-placement="top"
+                            title="Tipo de Cambio" data-content="1 USD = 40 UYU">
+                            <i class="fas fa-info-circle"></i>
+                          </a>
+                          <!-- Cotización de USD-UYU -->
                         </span>
                       </strong>
                     </div>
-                    <span><strong>$53.98</strong></span>
+                    <span><strong>-</strong></span>
                   </li>
                 </ul>
       
@@ -294,10 +341,10 @@
       
               </div>
             </div>
-            <!-- Card -->
+            <!-- Card summary -->
       
           </div>
-          <!-- Grid column summary -->
+          <!-- Grid cart summary -->
       
         </div>
         <!--Grid row-->
