@@ -4,16 +4,17 @@ var productInfo = {};
 
 var productsList = [];
 
+// Función para mostrar un carousel de imágenes
 function showCarousel(id, array) {
 
     var html = $("#" + id).append( `
     <ol class="carousel-indicators"></ol>
-    <div class="carousel-inner"></div>
-    <a class="carousel-control-prev" href="#` + id + `" role="button" data-slide="prev">
+    <div class="carousel-inner" role="listbox"></div>
+    <a class="carousel-control-prev" href="#${id}" role="button" data-slide="prev">
         <span class="carousel-control-prev-icon" aria-hidden="true">
         </span><span class="sr-only">Previous</span>
     </a>
-    <a class="carousel-control-next" href="#` + id + `" role="button" data-slide="next">
+    <a class="carousel-control-next" href="#${id}" role="button" data-slide="next">
         <span class="carousel-control-next-icon" aria-hidden="true">
         </span><span class="sr-only">Next</span>
     </a>
@@ -22,18 +23,22 @@ function showCarousel(id, array) {
     let indicatorItem = html.find('.carousel-indicators');
     let carouselItem = html.find('.carousel-inner');
 
-    array.forEach((imgSrc, indicator) => {
+    array.forEach((image, indicator) => {
 
         var activeclass = indicator == 0 ? "active" : "";
 
         indicatorItem.append(`
-        <li data-target="#`+ id +`" data-slide-to="` + indicator + `" class="` + activeclass + `">
-        </li>
+        <li data-target="#${id}" data-slide-to="${indicator}" class="${activeclass}"></li>
         `);
 
         carouselItem.append(`
-        <div class="carousel-item ` + activeclass + `">
-            <img class="d-block w-100 rounded" src="` + imgSrc + `" alt="First slide">
+        <div class="carousel-item ${activeclass}">
+            <picture>
+                <source srcset="${image}" media="(min-width: 1400px)">
+                <source srcset="${image}" media="(min-width: 769px)">
+                <source srcset="${image}" media="(min-width: 577px)">
+                <img srcset="${image}" alt="responsive image" class="d-block img-responsive">
+            </picture>
         </div>
         `);
     });
@@ -64,20 +69,20 @@ function showCommentsList(commentsList) {
 
         htmlContentToAppend += `
         <div class="row mb-4">
-            <div class="col-sm-9">
+            <div class="col-sm-12">
                 <div class="card ">
                     <div class="card-header">
-                        <strong>`+ comment.user +`</strong>
+                        <strong>${comment.user}</strong>
                         <div class="star-rating">
-                            <span class="fa fa-star `+ starRating[0] +`"></span>
-                            <span class="fa fa-star `+ starRating[1] +`"></span>
-                            <span class="fa fa-star `+ starRating[2] +`"></span>
-                            <span class="fa fa-star `+ starRating[3] +`"></span>
-                            <span class="fa fa-star `+ starRating[4] +`"></span>
+                            <span class="fa fa-star ${starRating[0]}"></span>
+                            <span class="fa fa-star ${starRating[1]}"></span>
+                            <span class="fa fa-star ${starRating[2]}"></span>
+                            <span class="fa fa-star ${starRating[3]}"></span>
+                            <span class="fa fa-star ${starRating[4]}"></span>
                         </div><br>
-                        <div class="text-muted">`+ (new Date(comment.dateTime)).toLocaleString() +`</div>
+                        <div class="text-muted">${(new Date(comment.dateTime)).toLocaleString()}</div>
                     </div>
-                    <div class="card-body">`+ comment.description +`</div>
+                    <div class="card-body">${comment.description}</div>
                 </div>
             </div>
         </div>
@@ -158,11 +163,11 @@ function showRelatedProducts(productsList, relatedProducts) {
         if (relatedProducts.indexOf(item.id) !== -1) {
 
             htmlContentToAppend += `
-            <div class="card" id="relatedProdCards" onclick="setProductInfo('`+ product.id +`');">
-                <img src="`+ product.imgSrc +`" class="card-img-top" alt="`+ product.description +`">
+            <div class="card" id="relatedProdCards" onclick="setProductInfo('${product.id}');">
+                <img src="${product.imgSrc}" class="card-img-top" alt="${product.description}">
                 <div class="card-body">
-                    <h5 class="card-title">`+ product.name +`</h5>
-                    <p class="card-text">`+ product.description +`</p>
+                    <h5 class="card-title">${product.name}</h5>
+                    <p class="card-text">${product.description}</p>
                 </div>
             </div>
             `
