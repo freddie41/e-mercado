@@ -41,24 +41,49 @@ var getJSONData = function (url) {
     });
 }
 
+//Funcion que activa/desactiva el offcanvas sidebar
+function offCanvasInit() {
+  
+  $(document).ready(function() {
+ 
+      $('.dismiss, .overlay').on('click', function() {
+          $('.sidebar').removeClass('active');
+          $('.overlay').removeClass('active');
+      });
+   
+      $('.open-menu').on('click', function(e) {
+          e.preventDefault();
+          $('.sidebar').addClass('active');
+          $('.overlay').addClass('active');
+          // close opened sub-menus
+          $('.collapse.show').toggleClass('show');
+          $('a[aria-expanded=true]').attr('aria-expanded', 'false');
+      });
+  });
+}
+
 //Función que se ejecuta una vez que se haya lanzado el evento de
 //que el documento se encuentra cargado, es decir, se encuentran todos los
 //elementos HTML presentes.
 document.addEventListener("DOMContentLoaded", function (e) {
-  
 
-  // User data y google user data
+  offCanvasInit();
+
+  //User data y google user data
   var userLogged = localStorage.getItem("userLogged");
   var googleUserLogged = localStorage.getItem("googleUserLogged");
   var user = document.getElementById("user");
+  var userSm = document.getElementById("user-sm");
 
-  // Control para mostrar user logged o google user logged
+  //Control para mostrar user logged o google user logged
   if (userLogged) {
     userLogged = JSON.parse(userLogged);
     user.innerText = "Hola," + " " + userLogged.user;
+    userSm.innerText = "Hola," + " " + userLogged.user;
   }
   if (googleUserLogged) {
     googleUserEmail = googleUserLogged;
     user.innerText = "Hola," + " " + googleUserEmail;
+    userSm.innerText = "Hola," + " " + googleUserEmail;
   }
 });

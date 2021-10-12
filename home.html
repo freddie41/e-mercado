@@ -13,22 +13,117 @@
   <!-- Google source data -->
   <meta name="google-signin-client_id"
     content="428794117897-af3u2j4lhobceldnrq8s6cdnnuucd6l8.apps.googleusercontent.com">
-
-  <link rel="canonical" href="https://getbootstrap.com/docs/4.3/examples/album/">
   <link href="https://fonts.googleapis.com/css?family=Raleway:300,300i,400,400i,700,700i,900,900i" rel="stylesheet">
 
-  <!-- Bootstrap core CSS -->
+  <!-- Bootstrap CSS/JS -->
+  <link rel="canonical" href="https://getbootstrap.com/docs/4.3/examples/album/">
   <link href="css/bootstrap.min.css" rel="stylesheet">
+  <script src="js/bootstrap.min.js"></script>
   <link href="css/styles.css" rel="stylesheet">
+  
+  <!-- Font awesome source -->
+  <link href="css/font-awesome.min.css" rel="stylesheet">
 </head>
 
 <body>
-  <nav class="site-header sticky-top py-1 bg-dark">
+  <!-- Sidebar wrapper -->
+  <div class="wrapper d-md-none d-sm-block">
+  
+    <!-- Sidebar -->
+    <nav class="sidebar shadow">
+  
+      <!-- Close sidebar menu btn -->
+      <div class="dismiss">
+        <i class="fas fa-times"></i>
+      </div>
+
+      <!-- Emercado logo -->
+      <div class="logo">
+        <h2 class="text-center"><a href="home.html"></a></h2>
+      </div>
+
+      <!-- User login info -->
+      <div class="user">
+        <div class="text-muted">
+          <p class="m-0 text-center"><small id="user-sm"></small></p>
+        </div>
+      </div>
+
+      <!-- Menu elements -->
+      <ul class="list-unstyled menu-elements">
+        <li class="active">
+          <a href="home.html" style="text-decoration: none;"><i class="fas fa-home"></i>Inicio</a>
+        </li>
+        <li>
+          <a href="categories.html" style="text-decoration: none;"><i class="fas fa-folder-open"></i>Categorías</a>
+        </li>
+        <li>
+          <a href="products.html" style="text-decoration: none;"><i class="fas fa-th-list"></i>Productos</a>
+        </li>
+        <li>
+          <a href="sell.html" style="text-decoration: none;"><i class="fas fa-handshake"></i>Vender</a>
+        </li>
+        <li>
+          <a href="cart.html" style="text-decoration: none;"><i class="fas fa-shopping-cart"></i>Carrito</a>
+        </li>
+        <li>
+          <a href="my-profile.html" style="text-decoration: none;"><i class="fas fa-user"></i>Mi perfil</a>
+        </li>
+  
+      <div class="logout">
+        <button class="btn btn-secondary btn-block shadow-sm" type="button" role="button" onclick="signOut();">Salir</button>
+        <script>
+          function onLoad() {
+            gapi.load('auth2', function () {
+              gapi.auth2.init();
+            });
+          }
+          
+          function signOut() {
+            let auth2 = gapi.auth2.getAuthInstance();
+            if (auth2 !== null) {
+              auth2.signOut().then(function () {
+                localStorage.clear();
+                window.location.href = "index.html";
+              });
+            } else {
+              localStorage.clear();
+              window.location.href = "index.html";
+            }
+          }
+        </script>
+        <script src="https://apis.google.com/js/platform.js?onload=onLoad" async defer></script>
+      </div>
+  
+    </nav>
+    <!-- End sidebar -->
+  
+    <!-- Overlay -->
+    <div class="overlay"></div>
+  
+    <!-- Open sidebar menu -->
+    <a class="btn btn-info open-menu shadow-sm" href="#" role="button">
+      <span><i class="fas fa-bars"></i></span>
+    </a>
+  
+  </div>
+  <!-- End Sidebar wrapper -->
+
+  <!-- Navbar -->
+  <nav class="site-header sticky-top py-1 bg-dark d-none d-md-block">
     <div class="container d-flex flex-column flex-md-row justify-content-between">
-      <a class="py-2 d-none d-md-inline-block" href="home.html">Inicio</a>
-      <a class="py-2 d-none d-md-inline-block" href="categories.html">Categorías</a>
-      <a class="py-2 d-none d-md-inline-block" href="products.html">Productos</a>
-      <a class="py-2 d-none d-md-inline-block" href="sell.html">Vender</a>
+      <a class="py-2 d-none d-md-inline-block" href="home.html" style="text-decoration: none;">
+        <i class="fas fa-home"></i>Inicio
+      </a>
+      <a class="py-2 d-none d-md-inline-block" href="categories.html" style="text-decoration: none;">
+        <i class="fas fa-folder-open"></i>Categorías
+      </a>
+      <a class="py-2 d-none d-md-inline-block" href="products.html" style="text-decoration: none;">
+        <i class="fas fa-th-list"></i>Productos
+      </a>
+      <a class="py-2 d-none d-md-inline-block" href="sell.html" style="text-decoration: none;">
+        <i class="fas fa-handshake"></i>Vender
+      </a>
 
       <!-- Menú desplegable -->
       <div class="my-1 d-none d-md-inline-block">
@@ -36,40 +131,51 @@
           <!-- Username del usuario logueado -->
           <button type="button" class="btn btn-info btn-sm dropdown-toggle" href="#" id="user" data-toggle="dropdown"
             aria-haspopup="true" aria-expanded="false" data-offset="10,15"></button>
-          <div class="dropdown-menu dropdown-menu-right bg-light shadow" aria-labelledby="user">
-            <a class="dropdown-item" href="my-profile.html">Mi perfil</a>
-            <a class="dropdown-item" href="cart.html">Carrito</a>
-            <div class="dropdown-divider"></div>
-            <!-- Logout -->
-            <a class="dropdown-item" href="#" id="signOut" onclick="signOut();">Salir</a>
-            <script>
-              function onLoad() {
-                gapi.load('auth2', function () {
-                  gapi.auth2.init();
-                });
-              }
-              
-              function signOut() {
-                let auth2 = gapi.auth2.getAuthInstance();
-                if (auth2 !== null) {
-                  auth2.signOut().then(function () {
+            <div class="dropdown-menu dropdown-menu-right bg-light shadow" aria-labelledby="user" x-placement="bottom-end" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(10px, 46px, 0px);">
+              <a class="dropdown-item px-3 py-2" href="my-profile.html">
+                <i class="fas fa-user"></i>Mi perfil
+              </a>
+              <a class="dropdown-item px-3 py-2" href="cart.html">
+                <i class="fas fa-shopping-cart"></i>Carrito
+              </a>
+              <div class="dropdown-divider m-0"></div>
+              <!-- Logout -->
+              <a class="dropdown-item px-3 py-2" href="#" id="signOut" onclick="signOut();">Salir</a>
+              <script>
+                function onLoad() {
+                  gapi.load('auth2', function () {
+                    gapi.auth2.init();
+                  });
+                }
+                
+                function signOut() {
+                  let auth2 = gapi.auth2.getAuthInstance();
+                  if (auth2 !== null) {
+                    auth2.signOut().then(function () {
+                      localStorage.clear();
+                      window.location.href = "index.html";
+                    });
+                  } else {
                     localStorage.clear();
                     window.location.href = "index.html";
-                  });
-                } else {
-                  localStorage.clear();
-                  window.location.href = "index.html";
+                  }
                 }
-              }
-            </script>
-            <script src="https://apis.google.com/js/platform.js?onload=onLoad" async defer></script>
-          </div>
+              </script>
+              <script src="https://apis.google.com/js/platform.js?onload=onLoad" async="" defer="" gapi_processed="true"></script>
+            </div>
         </div>
       </div>
     </div>
   </nav>
+  <!-- End Navbar -->
+
   <main role="main">
-    <section class="jumbotron text-center">
+    <section class="jumbotron text-center d-none d-md-block">
+      <div class="m-5">
+        <h1></h1>
+      </div>
+    </section>
+    <section class="jumbotron-fluid text-center d-md-none">
       <div class="m-5">
         <h1></h1>
       </div>
@@ -79,7 +185,7 @@
         <div class="row">
           <div class="col-md-4">
             <a href="categories.html" class="card mb-4 custom-card">
-              <img class="bd-placeholder-img card-img-top" src="img/cat1.jpg">
+              <img class="bd-placeholder-img card-img-top " src="img/cat1.jpg">
               <h3 class="m-3">Autos (122)</h3>
               <div class="card-body">
                 <p class="card-text">Los mejores precios en autos 0 kilómetro, de alta y media gama.</p>
@@ -133,18 +239,18 @@
           </div>
         </div>
         <div class="row">
-          <a type="button" class="btn btn-outline-info btn-lg btn-block" href="categories.html">Ver todas</a>
+          <a type="button" class="btn btn-outline-info btn-lg btn-block mx-3" href="categories.html">Ver todas</a>
         </div>
       </div>
     </div>
   </main>
-  <footer class="text-muted">
+  <footer class="text-muted bg-light">
     <div class="container">
       <p class="float-right">
-        <a href="#">Volver arriba</a>
+        <a href="#" class="text-info">Volver arriba</a>
       </p>
       <p>Este sitio forma parte de Desarrollo Web - JAP - 2021</p>
-      <p>Clickea <a target="_blank" href="Letra.pdf">aquí</a> para descargar la letra del obligatorio.</p>
+      <p>Clickea <a class="text-info" target="_blank" href="Letra.pdf">aquí</a> para descargar la letra del obligatorio.</p>
     </div>
   </footer>
   <script src="js/jquery-3.4.1.min.js"></script>

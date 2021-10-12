@@ -14,9 +14,16 @@
     content="428794117897-af3u2j4lhobceldnrq8s6cdnnuucd6l8.apps.googleusercontent.com">
   <link href="https://fonts.googleapis.com/css?family=Raleway:300,300i,400,400i,700,700i,900,900i" rel="stylesheet">
 
-  <!-- Bootstrap core CSS -->
+  <!-- Bootstrap CSS/JS -->
   <link rel="canonical" href="https://getbootstrap.com/docs/4.3/examples/album/">
-
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <script src="js/bootstrap.min.js"></script>
+  <link href="css/styles.css" rel="stylesheet">
+  <link href="css/dropzone.css" rel="stylesheet">
+  
+  <!-- Font awesome source -->
+  <link href="css/font-awesome.min.css" rel="stylesheet">
+  
   <style>
     .bd-placeholder-img {
       font-size: 1.125rem;
@@ -33,42 +40,136 @@
       }
     }
   </style>
-  <link href="css/bootstrap.min.css" rel="stylesheet">
-  <link href="css/styles.css" rel="stylesheet">
-  <link href="css/dropzone.css" rel="stylesheet">
+  
 </head>
-
+  
 <body>
-  <nav class="site-header sticky-top py-1 bg-dark">
-    <div class="container d-flex flex-column flex-md-row justify-content-between">
-      <a class="py-2 d-none d-md-inline-block" href="home.html">Inicio</a>
-      <a class="py-2 d-none d-md-inline-block" href="categories.html">Categorías</a>
-      <a class="py-2 d-none d-md-inline-block" href="products.html">Productos</a>
-      <a class="py-2 d-none d-md-inline-block" href="sell.html">Vender</a>
+  <!-- Sidebar wrapper -->
+  <div class="wrapper d-md-none d-sm-block">
+  
+    <!-- Sidebar -->
+    <nav class="sidebar shadow">
+  
+      <!-- Close sidebar menu btn -->
+      <div class="dismiss">
+        <i class="fas fa-times"></i>
+      </div>
+  
+      <!-- Emercado logo -->
+      <div class="logo">
+        <h2 class="text-center"><a href="home.html"></a></h2>
+      </div>
+  
+      <!-- User login info -->
+      <div class="user">
+        <div class="text-muted">
+          <p class="m-0 text-center"><small id="user-sm"></small></p>
+        </div>
+      </div>
+  
+      <!-- Menu elements -->
+      <ul class="list-unstyled menu-elements">
+        <li class="active">
+          <a href="home.html" style="text-decoration: none;"><i class="fas fa-home"></i>Inicio</a>
+        </li>
+        <li>
+          <a href="categories.html" style="text-decoration: none;"><i class="fas fa-folder-open"></i>Categorías</a>
+        </li>
+        <li>
+          <a href="products.html" style="text-decoration: none;"><i class="fas fa-th-list"></i>Productos</a>
+        </li>
+        <li>
+          <a href="sell.html" style="text-decoration: none;"><i class="fas fa-handshake"></i>Vender</a>
+        </li>
+        <li>
+          <a href="cart.html" style="text-decoration: none;"><i class="fas fa-shopping-cart"></i>Carrito</a>
+        </li>
+        <li>
+          <a href="my-profile.html" style="text-decoration: none;"><i class="fas fa-user"></i>Mi perfil</a>
+        </li>
+  
+        <div class="logout">
+          <button class="btn btn-secondary btn-block shadow-sm" type="button" role="button"
+            onclick="signOut();">Salir</button>
+          <script>
+            function onLoad() {
+              gapi.load('auth2', function () {
+                gapi.auth2.init();
+              });
+            }
 
+            function signOut() {
+              let auth2 = gapi.auth2.getAuthInstance();
+              if (auth2 !== null) {
+                auth2.signOut().then(function () {
+                  localStorage.clear();
+                  window.location.href = "index.html";
+                });
+              } else {
+                localStorage.clear();
+                window.location.href = "index.html";
+              }
+            }
+          </script>
+          <script src="https://apis.google.com/js/platform.js?onload=onLoad" async defer></script>
+        </div>
+  
+    </nav>
+    <!-- End sidebar -->
+  
+    <!-- Overlay -->
+    <div class="overlay"></div>
+  
+    <!-- Open sidebar menu -->
+    <a class="btn btn-info open-menu shadow-sm" href="#" role="button">
+      <span><i class="fas fa-bars"></i></span>
+    </a>
+  
+  </div>
+  <!-- End Sidebar wrapper -->
+  
+  <!-- Navbar -->
+  <nav class="site-header sticky-top py-1 bg-dark d-none d-md-block">
+    <div class="container d-flex flex-column flex-md-row justify-content-between">
+      <a class="py-2 d-none d-md-inline-block" href="home.html" style="text-decoration: none;">
+        <i class="fas fa-home"></i>Inicio
+      </a>
+      <a class="py-2 d-none d-md-inline-block" href="categories.html" style="text-decoration: none;">
+        <i class="fas fa-folder-open"></i>Categorías
+      </a>
+      <a class="py-2 d-none d-md-inline-block" href="products.html" style="text-decoration: none;">
+        <i class="fas fa-th-list"></i>Productos
+      </a>
+      <a class="py-2 d-none d-md-inline-block" href="sell.html" style="text-decoration: none;">
+        <i class="fas fa-handshake"></i>Vender
+      </a>
+  
       <!-- Menú desplegable -->
       <div class="my-1 d-none d-md-inline-block">
         <div class="dropdown">
           <!-- Username del usuario logueado -->
           <button type="button" class="btn btn-info btn-sm dropdown-toggle" href="#" id="user" data-toggle="dropdown"
             aria-haspopup="true" aria-expanded="false" data-offset="10,15"></button>
-          <div class="dropdown-menu dropdown-menu-right bg-light shadow" aria-labelledby="user">
-            <a class="dropdown-item" href="my-profile.html">Mi perfil</a>
-            <a class="dropdown-item" href="cart.html">Carrito</a>
-            <div class="dropdown-divider"></div>
+          <div class="dropdown-menu dropdown-menu-right bg-light shadow" aria-labelledby="user" x-placement="bottom-end"
+            style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(10px, 46px, 0px);">
+            <a class="dropdown-item px-3 py-2" href="my-profile.html">
+              <i class="fas fa-user"></i>Mi perfil
+            </a>
+            <a class="dropdown-item px-3 py-2" href="cart.html">
+              <i class="fas fa-shopping-cart"></i>Carrito
+            </a>
+            <div class="dropdown-divider m-0"></div>
             <!-- Logout -->
-            <a class="dropdown-item" href="#" id="signOut" onclick="signOut();">Salir</a>
+            <a class="dropdown-item px-3 py-2" href="#" id="signOut" onclick="signOut();">Salir</a>
             <script>
               function onLoad() {
                 gapi.load('auth2', function () {
                   gapi.auth2.init();
                 });
               }
-              
+
               function signOut() {
-                
                 let auth2 = gapi.auth2.getAuthInstance();
-                
                 if (auth2 !== null) {
                   auth2.signOut().then(function () {
                     localStorage.clear();
@@ -80,145 +181,148 @@
                 }
               }
             </script>
-            <script src="https://apis.google.com/js/platform.js?onload=onLoad" async defer></script>
+            <script src="https://apis.google.com/js/platform.js?onload=onLoad" async="" defer=""
+              gapi_processed="true"></script>
           </div>
         </div>
       </div>
     </div>
   </nav>
+  <!-- End Navbar -->
 
-<!-- Contenedor con los elementos que conforman los datos del articulo a vender -->
-<main role="main" class="pb-5">
-  <div class="container my-4">
-    <div class="text-center p-4">
-      <h2>Vender</h2>
-      <p class="lead">Ingresa los datos del artículo a vender.</p>
-    </div>
-    <div class="row justify-content-md-center">
-      <div class="col-md-8 order-md-1">
-        <h4 class="mb-3">Información del producto</h4>
-        <form class="needs-validation" id="sell-info">
-          <div class="row">
-            <div class="col-md-6 mb-3">
-              <label for="productName">Nombre</label>
-              <input type="text" class="form-control" id="productName" placeholder="" value="">
-              <div class="invalid-feedback">
-                Ingresa un nombre
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-8 order-md-1">
-              <label for="zip">Imágenes</label>
-              <div class="needsclick dz-clickable" id="file-upload">
-                <div class="dz-message needsclick">
-                  Arrastra tus fotos aquí<br>
+  <!-- Contenedor con los elementos que conforman los datos del articulo a vender -->
+  <main role="main" class="pb-5">
+    <div class="container my-4">
+      <div class="text-center p-4">
+        <h2>Vender</h2>
+        <p class="lead">Ingresa los datos del artículo a vender.</p>
+      </div>
+      <div class="row justify-content-md-center">
+        <div class="col-md-8 order-md-1">
+          <h4 class="mb-3">Información del producto</h4>
+          <form class="needs-validation" id="sell-info">
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="productName">Nombre</label>
+                <input type="text" class="form-control" id="productName" placeholder="" value="">
+                <div class="invalid-feedback">
+                  Ingresa un nombre
                 </div>
               </div>
             </div>
-          </div>
-          <div class="row">
-            <div class="col-md-12 mb-3">
-              <label for="productDescription">Descripción</label>
-              <textarea class="form-control" id="productDescription" rows="3"></textarea>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-3 mb-3">
-              <label for="zip">Costo</label>
-              <input type="number" class="form-control" id="productCostInput" placeholder="" required="" value="0"
-                min="0">
-              <div class="invalid-feedback">
-                El costo debe ser mayor que 0.
+            <div class="row">
+              <div class="col-md-8 order-md-1">
+                <label for="zip">Imágenes</label>
+                <div class="needsclick dz-clickable" id="file-upload">
+                  <div class="dz-message needsclick">
+                    Arrastra tus fotos aquí<br>
+                  </div>
+                </div>
               </div>
-            </div>
-            <div class="col-md-4 mb-3">
-              <label for="state">Moneda</label>
-              <select class="custom-select d-block w-100" id="productCurrency" required="">
-                <option selected>Pesos Uruguayos (UYU)</option>
-                <option>Dólares (USD)</option>
-              </select>
-              <div class="invalid-feedback">
-                Ingresa una categoría válida.
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-7 mb-3">
-              <label for="state">Categoría</label>
-              <select class="custom-select d-block w-100" id="productCategory">
-                <option value="">Elija la categoría...</option>
-                <option>Autos</option>
-                <option>Juguetes</option>
-                <option>Muebles</option>
-                <option>Herramientas</option>
-                <option>Computadoras</option>
-                <option>Vestimenta</option>
-              </select>
-              <div class="invalid-feedback">
-                Por favor ingresa una categoría válida.
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-3 mb-3">
-              <label for="productCountInput">Cantidad en stock</label>
-              <input type="number" class="form-control" id="productCountInput" placeholder="" required="" value="1"
-                min="0">
-              <div class="invalid-feedback">
-                La cantidad es requerida.
-              </div>
-            </div>
-          </div>
-          <hr class="mb-4">
-          <h5 class="mb-3">Tipo de publicación</h5>
-          <div class="d-block my-3">
-            <div class="custom-control custom-radio">
-              <input id="goldradio" name="publicationType" type="radio" class="custom-control-input" checked=""
-                required="">
-              <label class="custom-control-label" for="goldradio">Gold (13%)</label>
-            </div>
-            <div class="custom-control custom-radio">
-              <input id="premiumradio" name="publicationType" type="radio" class="custom-control-input" required="">
-              <label class="custom-control-label" for="premiumradio">Premium (7%)</label>
-            </div>
-            <div class="custom-control custom-radio">
-              <input id="standardradio" name="publicationType" type="radio" class="custom-control-input" required="">
-              <label class="custom-control-label" for="standardradio">Estándar (3%)</label>
             </div>
             <div class="row">
-              <button type="button" class="m-1 btn btn-link text-info" data-toggle="modal" data-target="#contidionsModal">Ver
-                condiciones</button>
+              <div class="col-md-12 mb-3">
+                <label for="productDescription">Descripción</label>
+                <textarea class="form-control" id="productDescription" rows="3"></textarea>
+              </div>
             </div>
-          </div>
-          <hr class="mb-4">
-          <h4 class="mb-3">Costos</h4>
-          <ul class="list-group mb-4">
-            <li class="list-group-item d-flex justify-content-between lh-condensed">
-              <div>
-                <h6 class="my-0">Precio</h6>
-                <small class="text-muted">Unitario del producto</small>
+            <div class="row">
+              <div class="col-md-3 mb-3">
+                <label for="zip">Costo</label>
+                <input type="number" class="form-control" id="productCostInput" placeholder="" required="" value="0"
+                  min="0">
+                <div class="invalid-feedback">
+                  El costo debe ser mayor que 0.
+                </div>
               </div>
-              <span class="text-muted" id="productCostText">-</span>
-            </li>
-            <li class="list-group-item d-flex justify-content-between lh-condensed">
-              <div>
-                <h6 class="my-0">Porcentaje</h6>
-                <small class="text-muted">Según el tipo de publicación</small>
+              <div class="col-md-4 mb-3">
+                <label for="state">Moneda</label>
+                <select class="custom-select d-block w-100" id="productCurrency" required="">
+                  <option selected>Pesos Uruguayos (UYU)</option>
+                  <option>Dólares (USD)</option>
+                </select>
+                <div class="invalid-feedback">
+                  Ingresa una categoría válida.
+                </div>
               </div>
-              <span class="text-muted" id="comissionText">-</span>
-            </li>
-            <li class="list-group-item d-flex justify-content-between">
-              <span>Total ($)</span>
-              <strong id="totalCostText">-</strong>
-            </li>
-          </ul>
-          <button class="btn btn-info btn-lg btn-block mb-4" type="submit">Vender</button>
-        </form>
+            </div>
+            <div class="row">
+              <div class="col-md-7 mb-3">
+                <label for="state">Categoría</label>
+                <select class="custom-select d-block w-100" id="productCategory">
+                  <option value="">Elija la categoría...</option>
+                  <option>Autos</option>
+                  <option>Juguetes</option>
+                  <option>Muebles</option>
+                  <option>Herramientas</option>
+                  <option>Computadoras</option>
+                  <option>Vestimenta</option>
+                </select>
+                <div class="invalid-feedback">
+                  Por favor ingresa una categoría válida.
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-3 mb-3">
+                <label for="productCountInput">Cantidad en stock</label>
+                <input type="number" class="form-control" id="productCountInput" placeholder="" required="" value="1"
+                  min="0">
+                <div class="invalid-feedback">
+                  La cantidad es requerida.
+                </div>
+              </div>
+            </div>
+            <hr class="mb-4">
+            <h5 class="mb-3">Tipo de publicación</h5>
+            <div class="d-block my-3">
+              <div class="custom-control custom-radio">
+                <input id="goldradio" name="publicationType" type="radio" class="custom-control-input" checked=""
+                  required="">
+                <label class="custom-control-label" for="goldradio">Gold (13%)</label>
+              </div>
+              <div class="custom-control custom-radio">
+                <input id="premiumradio" name="publicationType" type="radio" class="custom-control-input" required="">
+                <label class="custom-control-label" for="premiumradio">Premium (7%)</label>
+              </div>
+              <div class="custom-control custom-radio">
+                <input id="standardradio" name="publicationType" type="radio" class="custom-control-input" required="">
+                <label class="custom-control-label" for="standardradio">Estándar (3%)</label>
+              </div>
+              <div class="row">
+                <button type="button" class="m-1 btn btn-link text-info" data-toggle="modal"
+                  data-target="#contidionsModal">Ver
+                  condiciones</button>
+              </div>
+            </div>
+            <hr class="mb-4">
+            <h4 class="mb-3">Costos</h4>
+            <ul class="list-group mb-4">
+              <li class="list-group-item d-flex justify-content-between lh-condensed">
+                <div>
+                  <h6 class="my-0">Precio</h6>
+                  <small class="text-muted">Unitario del producto</small>
+                </div>
+                <span class="text-muted" id="productCostText">-</span>
+              </li>
+              <li class="list-group-item d-flex justify-content-between lh-condensed">
+                <div>
+                  <h6 class="my-0">Porcentaje</h6>
+                  <small class="text-muted">Según el tipo de publicación</small>
+                </div>
+                <span class="text-muted" id="comissionText">-</span>
+              </li>
+              <li class="list-group-item d-flex justify-content-between">
+                <span>Total ($)</span>
+                <strong id="totalCostText">-</strong>
+              </li>
+            </ul>
+            <button class="btn btn-info btn-lg btn-block mb-4" type="submit">Vender</button>
+          </form>
+        </div>
       </div>
     </div>
-  </div>
-</main>
+  </main>
   <footer class="text-muted bg-light">
     <div class="container">
       <p class="float-right">
@@ -235,7 +339,7 @@
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
-
+  
   <div class="modal fade" tabindex="-1" role="dialog" id="contidionsModal">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -285,6 +389,6 @@
   <script src="js/dropzone.js"></script>
   <script src="js/init.js"></script>
   <script src="js/sell.js"></script>
-</body>
+  </body>
 
 </html>
