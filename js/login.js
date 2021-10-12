@@ -42,7 +42,7 @@ document.addEventListener("DOMContentLoaded", function (e) {
 
         if (camposCompletos) {
             localStorage.setItem("userLogged", (JSON.stringify({ user: user.value })));
-            window.location = "homepage.html";
+            window.location = "home.html";
         }
     });
 });

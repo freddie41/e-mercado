@@ -86,7 +86,7 @@
       <script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
       <script>
         function onSuccess(googleUser) {
-          window.location = "homepage.html";
+          window.location = "home.html";
           var profile = googleUser.getBasicProfile();
           localStorage.setItem("googleUserLogged", profile.getEmail());
         }
