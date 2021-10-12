@@ -91,18 +91,18 @@ function showProductsList() {
                 product.description.toLowerCase().indexOf(foundProducts) != -1) {
 
                 htmlContentToAppend += `
-                <a href="#" class="list-group-item list-group-item-action" onclick="setProductInfo('`+ product.id +`');">
+                <a href="#" class="list-group-item list-group-item-action" onclick="setProductInfo('${product.id}');">
                     <div class="row">
                         <div class="col-3">
-                            <img src="` + product.imgSrc + `" alt="` + product.description + `" class="img-thumbnail">
+                            <img src="${product.imgSrc}" alt="${product.description}" class="img-thumbnail">
                         </div>
                         <div class="col">
                             <div class="d-flex w-100 justify-content-between">
                                 <div class="mb-1">
-                                    <h4 class="mb-1">`+ product.name + `</h4>
-                                    <p>` + product.description + `</p>
+                                    <h4 class="mb-1">${product.name}</h4>
+                                    <p>${product.description}</p>
                                 </div>
-                                <small class="text-muted">` + product.currency + ` ` + product.cost + `</small>
+                                <small class="text-muted">${product.currency + " " + product.cost}</small>
                             </div>
                         </div>
                     </div>
@@ -112,7 +112,6 @@ function showProductsList() {
         }
 
         document.getElementById("product-list-container").innerHTML = htmlContentToAppend;
-
     }
 }
 
