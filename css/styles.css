@@ -17,6 +17,7 @@
   color: #888;
   transition: all .3s;
   text-align: left;
+  overflow-y: auto;
 }
 
 .sidebar.active {
