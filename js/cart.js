@@ -284,14 +284,14 @@ document.addEventListener("DOMContentLoaded", function(e){
 
       cartPoruducts = resultObj.data.articles;
 
+      // Muestro la info de los productos agregados al carrito
+      showCartProducts(cartPoruducts);
+      
       // Muestro el conteo de productos agregados al carrito
       showProductsCount(cartPoruducts);
 
       // Muestro los productos del carrito en el resumen de pedido
       showSummaryProducts(cartPoruducts);
-
-      // Muestro la info de los productos agregados al carrito
-      showCartProducts(cartPoruducts);
 
       //Muestro los controles de cantidad
       itemCountControls();
