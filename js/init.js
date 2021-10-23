@@ -67,23 +67,37 @@ function offCanvasInit() {
 //elementos HTML presentes.
 document.addEventListener("DOMContentLoaded", function (e) {
 
+  //Inicializador del componente.
   offCanvasInit();
 
-  //User data y google user data
+  //Get User/googleUser data
   var userLogged = localStorage.getItem("userLogged");
-  var googleUserLogged = localStorage.getItem("googleUserLogged");
-  var user = document.getElementById("user");
-  var userSm = document.getElementById("user-sm");
+  var gUserProfile = localStorage.getItem("googleUserProfile");
 
-  //Control para mostrar user logged o google user logged
+  //Get offcanvas and navbar user data fields
+  var userNavbar = document.getElementById("user");
+  var userOffcanvas = document.getElementById("user-sm");
+
+  //Control para mostrar user logged o google user logged.
   if (userLogged) {
+    
     userLogged = JSON.parse(userLogged);
-    user.innerText = "Hola," + " " + userLogged.user;
-    userSm.innerText = "Hola," + " " + userLogged.user;
+
+    //Email mostrado en el navbar.
+    userNavbar.innerText = "Hola," + " " + userLogged.user;
+
+    //Mail mostrado en el offcanvas.
+    userOffcanvas.innerText = "Hola," + " " + userLogged.user;
   }
-  if (googleUserLogged) {
-    googleUserEmail = googleUserLogged;
-    user.innerText = "Hola," + " " + googleUserEmail;
-    userSm.innerText = "Hola," + " " + googleUserEmail;
+
+  if (gUserProfile) {
+    
+    gUserProfile = JSON.parse(gUserProfile);
+
+    //Google name mostrado en el navbar.
+    userNavbar.innerText = "Hola," + " " + gUserProfile.gUserName;
+
+    //Google name mostrado en el offcanvas.
+    userOffcanvas.innerText = "Hola," + " " + gUserProfile.gUserName;
   }
 });
