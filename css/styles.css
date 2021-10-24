@@ -210,7 +210,7 @@ only screen and (                min-resolution: 2dppx) {
 }
 
 .jumbotron-fluid {
-  height: 41vh;
+  height: 29vh;
   padding: 1em inherit;
   margin-bottom: 0;
   background-color: #53C0FB;
