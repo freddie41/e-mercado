@@ -88,7 +88,16 @@
         function onSuccess(googleUser) {
           window.location = "home.html";
           var profile = googleUser.getBasicProfile();
-          localStorage.setItem("googleUserLogged", profile.getEmail());
+          console.log(profile.getGivenName());
+          localStorage.setItem("googleUserProfile", (JSON.stringify(
+            {
+              gUserFullName: profile.getName(),
+              gUserName: profile.getGivenName(),
+              gUserLastnames: profile.getFamilyName(),
+              gUserEmail: profile.getEmail(),
+              gUserImg: profile.getImageUrl()
+            }
+          )));
         }
 
         function onFailure(error) {
