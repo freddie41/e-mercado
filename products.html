@@ -12,40 +12,55 @@
   <meta name="google-signin-client_id"
     content="428794117897-af3u2j4lhobceldnrq8s6cdnnuucd6l8.apps.googleusercontent.com">
   <link href="https://fonts.googleapis.com/css?family=Raleway:300,300i,400,400i,700,700i,900,900i" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&display=swap"
+    rel="stylesheet">
 
   <!-- Bootstrap CSS/JS -->
   <link rel="canonical" href="https://getbootstrap.com/docs/4.3/examples/album/">
   <link href="css/bootstrap.min.css" rel="stylesheet">
   <link href="css/styles.css" rel="stylesheet">
-  
+
   <!-- Font awesome source -->
-  <link href="css/font-awesome.min.css" rel="stylesheet"> 
+  <link href="css/font-awesome.min.css" rel="stylesheet">
+
+  <style>
+  /* Ancho del container del listado unicamente para el layout de esta página */
+  @media (min-width: 1200px) {
+
+    .container.products-list {
+      max-width: 1320px;
+    }
+  }
+  </style>
 </head>
-  
+
 <body>
   <!-- Sidebar wrapper -->
   <div class="wrapper d-md-none d-sm-block">
-  
+
     <!-- Sidebar -->
     <nav class="sidebar shadow">
-  
+
       <!-- Close sidebar menu btn -->
       <div class="dismiss">
         <i class="fas fa-times"></i>
       </div>
-  
+
       <!-- Emercado logo -->
       <div class="logo">
         <h2 class="text-center"><a href="home.html"></a></h2>
       </div>
-  
+
       <!-- User login info -->
       <div class="user">
         <div class="text-muted">
           <p class="m-0 text-center"><small id="user-sm"></small></p>
         </div>
       </div>
-  
+
       <!-- Menu elements -->
       <ul class="list-unstyled menu-elements">
         <li class="active">
@@ -66,7 +81,7 @@
         <li>
           <a href="my-profile.html" style="text-decoration: none;"><i class="fas fa-user"></i>Mi perfil</a>
         </li>
-  
+
         <div class="logout">
           <button class="btn btn-secondary btn-block shadow-sm" type="button" role="button"
             onclick="signOut();">Salir</button>
@@ -92,21 +107,21 @@
           </script>
           <script src="https://apis.google.com/js/platform.js?onload=onLoad" async defer></script>
         </div>
-  
+
     </nav>
     <!-- End sidebar -->
-  
+
     <!-- Overlay -->
     <div class="overlay"></div>
-  
+
     <!-- Open sidebar menu -->
     <a class="btn btn-info open-menu shadow-sm" href="#" role="button">
       <span><i class="fas fa-bars"></i></span>
     </a>
-  
+
   </div>
   <!-- End Sidebar wrapper -->
-  
+
   <!-- Navbar -->
   <nav class="site-header sticky-top py-1 bg-dark d-none d-md-inline-block">
     <div class="container d-flex flex-column flex-md-row justify-content-between">
@@ -122,7 +137,7 @@
       <a class="py-2 d-none d-md-inline-block" href="sell.html" style="text-decoration: none;">
         <i class="fas fa-handshake"></i>Vender
       </a>
-  
+
       <!-- Menú desplegable -->
       <div class="my-1 d-none d-md-inline-block">
         <div class="dropdown">
@@ -138,7 +153,7 @@
             <a class="dropdown-item px-3 py-2" href="cart.html">
               <i class="fas fa-shopping-cart"></i>Carrito
             </a>
-            
+
             <!-- Logout -->
             <a class="dropdown-item px-3 py-2" href="#" id="signOut" onclick="signOut();">
               <i class="fas fa-sign-out-alt"></i>Salir</a>
@@ -172,90 +187,160 @@
   <!-- End Navbar -->
 
   <main role="main" class="pb-5">
-    <div class="container my-4">
+    <div class="container products-list my-4">
       <div class="text-center p-4">
         <h2>Listado de productos</h2>
         <p class="lead">Aquí encontrarás el listado general de productos.</p>
       </div>
 
-      <!-- Botones de ordenamiento -->
-      <div class="row no-gutters justify-content-end">
-        <div class="col-12 col-sm-8 col-md-6 col-lg-4 px-0 mx-0">
-          <p class="font-weight-normal text-center my-2">Orden</p>
-        </div>
-      </div>
-      <div class="row no-gutters justify-content-end mb-3">
-        <div class="col-12 col-md-7 col-lg-4 text-right d-inline-block px-0 mx-0">
-          <div class="btn-group btn-group-toggle" data-toggle="buttons">
-            <label class="btn btn-light active" id="sortByRelevance">
-              <input type="radio" name="options" autocomplete="off" checked="">
-              <i class="fas fa-medal mr-1"></i>Relevancia
-            </label>
-            <label class="btn btn-light" id="sortDescCost">
-              <input type="radio" name="options" autocomplete="off">
-              <i class="fas fa-sort-amount-up mr-1"></i>
-              <div class="d-inline-block">
-                Mayor $
-              </div>
-            </label>
-            <label class="btn btn-light" id="sortAscCost">
-              <input type="radio" name="options" autocomplete="off">
-              <i class="fas fa-sort-amount-down-alt mr-1"></i>
-              <div class="d-inline-block">
-                Menor $
-              </div>
-            </label>
-          </div>
-        </div>
-      </div>
-
-      <!-- Filtro por busqueda por titulo y/o descripción -->
-      <div class="row no-gutters">
-        <!-- Filtro por precio y btn para restablecer lista -->
-        <div class="col-12 col-md-8 col-lg-7 mb-3">
-          <div class="row justify-content-left p-0 m-0">
-            <div class="col-2 col-md-2 col-lg-1 px-2">
-              <p class="font-weight-normal text-right my-2">Precio</p>
-            </div>
-            <div class="col-3 col-md-2 col-lg-2 px-2">
-              <input class="form-control" type="number" placeholder="min." id="rangeFilterMinCost">
-            </div>
-            <div class="col-3 col-md-2 col-lg-2 px-2">
-              <input class="form-control" type="number" placeholder="máx." id="rangeFilterMaxCost">
-            </div>
-            <div class="col-4 col-md-6 col-lg-5 text-center m-0 pl-2">
-              <div class="btn-group" role="group">
-                <button class="btn btn-light" id="rangeFilterCost">
-                  <i class="fa fa-funnel-dollar mr-1"></i>
-                  <span class="d-none d-md-inline-block">
-                    Filtrar
-                  </span>
-                </button>
-                <button class="btn btn-light" id="clearFilters">
-                  <i class="fas fa-eraser mr-1"></i>
-                  <span class="d-none d-md-inline-block">
-                    Limpiar
-                  </span>
-                </button>
+      
+      <div class="row gutters mb-2">
+        <div class="col-3"></div>
+        <!-- Botones de ordenamiento y visualizacion -->
+        <div class="col-12 col-md-9 text-right">
+          <div class="row no-gutters justify-content-end">
+            <!-- Botones de visualizacion -->
+            <div class="col-4 d-none d-md-block">
+              <div class="text-muted text-left small mt-2 ml-3"><span class="mr-1">Ver:</span>
+                <div class="btn-group btn-group-sm btn-group-toggle" data-toggle="buttons">
+                  <label class="btn btn-light active" id="showGrid">
+                    <input type="radio" name="viewProducts" checked>
+                    <i class="fas fa-th text-dark mr-1"></i><span class="text-dark">Grilla</span>
+                  </label>
+                  <label class="btn btn-light" id="showList">
+                    <input type="radio" name="viewProducts">
+                    <i class="fas fa-th-list text-dark mr-1"></i><span class="text-dark">Lista</span>
+                  </label>
+                </div>
               </div>
             </div>
+            <!-- END Botones de visualizacion -->
+
+            <div class="col-3"></div>
+            <!-- Botones de ordenamiento -->
+            <div class="col-12 col-md-5">
+              <div class="text-muted text-right mt-2 small"><span class="mr-1">Orden:</span>
+                <div class="btn-group btn-group-sm btn-group-toggle" data-toggle="buttons">
+                  <label class="btn btn-light active" id="sortByRelevance">
+                    <input type="radio" name="options" autocomplete="off" checked>
+                    <i class="fas fa-award mr-1"></i>Relevancia
+                  </label>
+                  <label class="btn btn-light text-dark" id="sortDescCost">
+                    <input type="radio" name="options" autocomplete="off">
+                    <i class="fas fa-sort-amount-up mr-1"></i>
+                    <div class="d-inline-block">
+                      Mayor $
+                    </div>
+                  </label>
+                  <label class="btn btn-light" id="sortAscCost">
+                    <input type="radio" name="options" autocomplete="off">
+                    <i class="fas fa-sort-amount-down-alt mr-1"></i>
+                    <div class="d-inline-block">
+                      Menor $
+                    </div>
+                  </label>
+                </div>
+              </div>
+            </div>
+            <!-- END Botones de ordenamiento -->
           </div>
         </div>
+        <!-- END Botones de ordenamiento y visualizacion -->
+      </div>
 
-        <div class="col-12 col-md-4 col-lg-5 mb-3">
-          <div class="col-12 px-0">
-            <div class="inner-addon left-addon">
-              <i class="fa fa-search"></i>
-              <input class="form-control" type="search" placeholder="Buscar..." id="search">
+      <div class="row gutters">
+        <!-- Panel de filtros -->
+        <div class="col-12 col-sm-12 col-md-5 col-lg-3 px-3">
+          <div class="card mb-4">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-4 col-md-6 col-lg-6 mb-3">
+                  <div class="text-muted">
+                    <i class="fas fa-filter text-dark mr-2"></i><span class="text-muted">Filtros</span>
+                  </div>
+                </div>
+                <div class="col-8 col-md-6 col-lg-6 text-right mb-3">
+                  <button class="btn btn-light btn-sm" id="clearFilters">Limpiar</button>
+                </div>
+              </div>
+              <div class="row">
+                
+                <!-- Acordeon de filtros -->
+                <div class="col-12 col-md-12 col-lg-12 px-1">
+                    <!-- Filtro por busqueda por titulo y/o descripción -->
+                    <div class="card mb-3">
+                      <div class="card-header" id="heading1">
+                        <div class="my-1" role="button" data-toggle="collapse" data-target="#collapseSearchFilter"
+                          aria-expanded="false" aria-controls="collapseSearchFilter">
+                          <span>Palabra clave</span>
+                          <span class="flip-chevron"><i class="fas fa-chevron-down text-muted pt-1" style="float: right;"></i></span>
+                        </div>
+                      </div>
+                  
+                      <div id="collapseSearchFilter" class="collapse show" aria-labelledby="heading1">
+                        <div class="card-body px-2 py-2">
+                          <div class="row">
+                            <div class="col-12">
+                              <div class="inner-addon left-addon">
+                                <i class="fa fa-search text-muted"></i>
+                                <input class="form-control" type="search" placeholder="Buscar..." id="search">
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- END Filtro por busqueda por titulo y/o descripción -->
+                
+                    <!-- Filtro por precio -->
+                    <div class="card">
+                      <div class="card-header" id="heading2">
+                        <div class="my-1" role="button" data-toggle="collapse" data-target="#collapsePriceFilter"
+                          aria-expanded="false" aria-controls="collapsePriceFilter">
+                          <span>Precio</span>
+                          <span class="flip-chevron"><i class="fas fa-chevron-down text-muted pt-1" style="float: right;"></i></span>
+                        </div>
+                      </div>
+                      <div id="collapsePriceFilter" class="collapse show" aria-labelledby="heading2">
+                        <div class="card-body px-2 py-3">
+                          <div class="row no-gutters">
+                            <div class="col-4 col-md-4 col-lg-4 px-1">
+                              <input class="form-control form-control-sm" type="number" placeholder="$ Min." id="rangeFilterMinCost">
+                            </div>
+                            <div class="col-4 col-md-4 col-lg-4 px-1">
+                              <input class="form-control form-control-sm" type="number" placeholder="$ Máx." id="rangeFilterMaxCost">
+                            </div>
+                            <div class="col-4 col-md-4 col-lg-4 px-1 text-center">
+                              <button class="btn btn-light btn-sm" id="rangeFilterCost">Aplicar</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- END Filtro por precio -->
+                
+                </div>
+                <!-- END Acordeon de filtros -->
+              </div>
             </div>
           </div>
         </div>
+        <!-- END Panel de filtros -->
 
-      </div>
-
-      <!--Se agrega una fila vacia para luego colocar la lista de productos desde "productos.js"-->
-      <div class="row no-gutters">
-        <div class="list-group" id="product-list-container"></div>
+        <!-- Lista de productos -->
+        <div id="showGridCol" class="col-12 col-sm-12 col-md-7 col-lg-9">
+          <div class="card pt-3">
+            <div class="container">
+              <div class="row" id="product-grid-container"></div>
+            </div>
+          </div>
+        </div>
+        <div id="showListCol" class="col-12 col-sm-12 col-md-7 col-lg-9 d-none">
+          <div class="container">
+            <div class="row" id="product-list-container"></div>
+          </div>
+        </div>
+        <!-- END Lista de productos -->
       </div>
     </div>
   </main>
@@ -279,7 +364,7 @@
       <div></div>
     </div>
   </div>
-  
+
   <script src="js/jquery-3.4.1.min.js"></script>
   <script src="js/bootstrap.bundle.min.js"></script>
   <script src="js/init.js"></script>

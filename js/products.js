@@ -73,9 +73,47 @@ function setProductInfo (id) {
 }
 
 
+// Muestro todos los productos de la lista en formato grid con su imagen, nombre, descripcion y precio
+function showProductsGrid() {
+
+    let htmlContentToAppend = "";
+
+    for (let item of currentProductsArray) {
+
+        let product = item;
+
+        // Control para modificar el listado a mostrar aplicando el filtro por precio minimo y maximo
+        if (((minCost == undefined) || (minCost != undefined && product.cost >= minCost)) &&
+            ((maxCost == undefined) || (maxCost != undefined && product.cost <= maxCost))) {
+
+            if (foundProducts == undefined ||
+                product.name.toLowerCase().indexOf(foundProducts) != -1 ||
+                product.description.toLowerCase().indexOf(foundProducts) != -1) {
+
+                htmlContentToAppend += `
+                <div class="col-12 col-md-6 col-lg-4">
+                    <a href="#" class="card mb-3 custom-card" onclick="setProductInfo('${product.id}');">
+                        <img class="bd-placeholder-img card-img-top" src="${product.imgSrc}">
+                        <h4 class="m-3">${product.name}</h4>
+                        <div class="card-body pt-0">
+                            <p class="card-text">${product.description}</p>
+                            <div class="row justify-content-end">
+                                <div class="col-12 text-info text-right">${product.currency + " " + product.cost}</div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                `
+            }
+        }
+
+        document.getElementById("product-grid-container").innerHTML = htmlContentToAppend;
+    }
+}
+
 // Muestro todos los productos de la lista en formato lista con su imagen, nombre, descripcion y precio
 function showProductsList() {
-
+    
     let htmlContentToAppend = "";
 
     for (let item of currentProductsArray) {
@@ -102,7 +140,7 @@ function showProductsList() {
                                     <h4 class="mb-1">${product.name}</h4>
                                     <p>${product.description}</p>
                                 </div>
-                                <small class="text-muted">${product.currency + " " + product.cost}</small>
+                                <small class="text-info">${product.currency + " " + product.cost}</small>
                             </div>
                         </div>
                     </div>
@@ -125,8 +163,26 @@ function sortAndShowProducts(sortCriteria, productsArray) {
 
     currentProductsArray = sortProducts(currentSortCriteria, currentProductsArray);
 
-    //Muestro los productos ordenadados
+    //Muestro los productos ordenadados en formato de grilla.
+    showProductsGrid();
     showProductsList();
+}
+
+//Funcion que activa visualizar el listado de productos en formato grilla.
+function showListView() {
+    document.getElementById("showList").addEventListener("click", function () {
+        showProductsList();
+        document.getElementById("showGridCol").classList.add("d-none");
+        document.getElementById("showListCol").classList.remove("d-none");
+    });
+}
+
+//Funcion que activa visualizar el listado de productos en formato de lista.
+function showGridView() {
+    document.getElementById("showGrid").addEventListener("click", function () {
+        document.getElementById("showGridCol").classList.remove("d-none");
+        document.getElementById("showListCol").classList.add("d-none");
+    });
 }
 
 //Función que se ejecuta una vez que se haya lanzado el evento de
@@ -150,6 +206,7 @@ document.addEventListener("DOMContentLoaded", function (e) {
 
         foundProducts = document.getElementById("search").value.toLowerCase();
 
+        showProductsGrid();
         showProductsList();
 
     });
@@ -183,6 +240,7 @@ document.addEventListener("DOMContentLoaded", function (e) {
 
         foundProducts = undefined;
 
+        showProductsGrid();
         showProductsList();
     });
 
@@ -211,6 +269,11 @@ document.addEventListener("DOMContentLoaded", function (e) {
             maxCost = undefined;
         }
 
+        showProductsGrid();
         showProductsList();
     });
+
+    //Funcion que habilita seleccionar vista de lista o grilla.
+    showListView();
+    showGridView(); 
 });
