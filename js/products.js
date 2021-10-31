@@ -73,7 +73,7 @@ function setProductInfo (id) {
 }
 
 
-// Muestro todos los productos de la lista con su imagen, nombre, descripcion y precio
+// Muestro todos los productos de la lista en formato lista con su imagen, nombre, descripcion y precio
 function showProductsList() {
 
     let htmlContentToAppend = "";
