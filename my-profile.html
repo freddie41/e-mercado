@@ -12,7 +12,6 @@
   <!-- Google source data -->
   <meta name="google-signin-client_id"
     content="428794117897-af3u2j4lhobceldnrq8s6cdnnuucd6l8.apps.googleusercontent.com">
-
   <link rel="canonical" href="https://getbootstrap.com/docs/4.3/examples/album/">
   <link href="https://fonts.googleapis.com/css?family=Raleway:300,300i,400,400i,700,700i,900,900i" rel="stylesheet">
 
@@ -21,7 +20,9 @@
   <link href="css/bootstrap.min.css" rel="stylesheet">
   <link href="css/styles.css" rel="stylesheet">
   <link href="css/dropzone.css" rel="stylesheet">
-  
+  <link href="css/bootstrap-datepicker3.css" rel="stylesheet">
+
+
   <!-- Font awesome source -->
   <link href="css/font-awesome.min.css" rel="stylesheet">
 
@@ -44,7 +45,7 @@
 </head>
 
 <body>
-  <!-- Sidebar wrapper -->
+  <!-- Sidebar -->
   <div class="wrapper d-md-none d-sm-block">
 
     <!-- Sidebar -->
@@ -76,7 +77,7 @@
           <a href="categories.html" style="text-decoration: none;"><i class="fas fa-th"></i>Categorías</a>
         </li>
         <li>
-          <a href="products.html" style="text-decoration: none;"><i class="fas fa-th-list"></i>Productos</a>
+          <a href="products.html" style="text-decoration: none;"><i class="fas fa-tags"></i>Productos</a>
         </li>
         <li>
           <a href="sell.html" style="text-decoration: none;"><i class="fas fa-handshake"></i>Vender</a>
@@ -126,7 +127,7 @@
     </a>
 
   </div>
-  <!-- End Sidebar wrapper -->
+  <!-- End Sidebar -->
 
   <!-- Navbar -->
   <nav class="site-header sticky-top py-1 bg-dark d-none d-md-block">
@@ -138,7 +139,7 @@
         <i class="fas fa-th"></i>Categorías
       </a>
       <a class="py-2 d-none d-md-inline-block" href="products.html" style="text-decoration: none;">
-        <i class="fas fa-th-list"></i>Productos
+        <i class="fas fa-tags"></i>Productos
       </a>
       <a class="py-2 d-none d-md-inline-block" href="sell.html" style="text-decoration: none;">
         <i class="fas fa-handshake"></i>Vender
@@ -190,14 +191,188 @@
   </nav>
   <!-- End Navbar -->
 
-  <div class="container p-5">
-    <div class="alert alert-danger" role="alert" style="position: relative; width:auto; top: 0;">
-      <h4 class="alert-heading">¡A trabajar! :)</h4>
-      <p>Esta sección corresponde a: Entrega 6 (Fecha de entrega: 31/10/2021).</p>
-      <hr>
-      <p class="mb-0">Para saber qué debes hacer, fijate en la actividad en CREA correspondiente a esta entrega.</p>
+  <!-- Contenedor con datos del perfil de usuario -->
+  <div class="container my-4">
+    <div class="text-center p-4 mb-4">
+      <h2>Mi perfil</h2>
+      <p class="lead">Verás aquí toda la información del usuario ingresado.</p>
+    </div>
+
+    <!-- Alerts -->
+    <div id="alertInfo"></div>
+    <div id="alertPic"></div>
+    <!-- END Alerts -->
+
+    <div class="row gutters">
+      <!-- Visualización de datos -->
+      <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12">
+        <div class="card mb-4">
+          <div class="card-body">
+            <div class="account-settings">
+              <div class="user-profile mb-4">
+                <div class="profile-pic-wrapper">
+                  <div class="pic-holder">
+                    <!-- Foto por defecto -->
+                    <img id="profilePic" class="pic" src="img/profile-pic-color.jpg">
+                    <!-- End Foto por defecto -->
+                
+                    <!-- Nueva foto de perfil -->
+                    <label for="newProfilePhoto" class="upload-file-block">
+                      <div class="text-center">
+                        <div class="mb-2">
+                          <i class="fa fa-camera fa-2x"></i>
+                        </div>
+                        <div class="font-weight-bold text-uppercase small">
+                          cambiar <br /> foto del perfil
+                        </div>
+                      </div>
+                    </label>
+                    <Input class="uploadProfileInput" type="file" name="profile_pic" id="newProfilePhoto" accept="image/*"
+                      style="display: none;" />
+                    <!-- End Nueva foto de perfil -->
+                  </div>
+                </div>
+                <h5 class="user-name" id="profileName">-</h5>
+                <div class="user-profile user-email mb-1">
+                    <i class="fa fa-envelope mr-1"></i>
+                    <a class="user-email" href="#" style="text-decoration: none;"id="profileEmail"></a>
+                </div>
+                <div class="user-profile user-phone mb-4">
+                  <i class="fab fa-whatsapp fa-lg mr-1"></i>
+                  <a class="user-phone" href="#" id="profilePhone" style="text-decoration: none;">(Sin registro)</a>
+                </div>
+                <div class="user-profile mb-4">
+                  <h6 class="user-age">Edad</h6>
+                  <h6 class="user-years" id="profileAge">(Sin registro)</h6>
+                </div>
+              </div>
+              <div class="about">
+                <h5>Acerca de mi</h5>
+                <p id="profileBio">(Sin registro)</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- End Visualización de datos -->
+
+      <!-- Edicion de datos -->
+      <div class="col-xl-8 col-lg-8 col-md-12 col-sm-12 col-12">
+        <div class="card mb-5">
+          <div class="card-body">
+            <!-- Pestañas de navegación -->
+            <nav>
+              <div class="nav nav-tabs mb-4" id="nav-tab" role="tablist">
+                <a class="text-info nav-item nav-link active" id="nav-userdata-tab" data-toggle="tab"
+                  href="#nav-userdata" role="tab" aria-controls="nav-userdata" aria-selected="true">Info</a>
+              </div>
+            </nav>
+            <!-- End Pestañas de navegación -->
+
+            <div class="tab-content" id="nav-tabContent">
+              <!-- Datos personales -->
+              <div class="tab-pane fade show active" id="nav-userdata" role="tabpanel"
+                aria-labelledby="nav-userdata-tab">
+                <form class="needs-validation" id="userProfileData" novalidate="">
+                  <div class="row gutters">
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                      <div class="form-group mb-4">
+                        <label for="firstName">Nombre</label>
+                        <input type="text" class="form-control user-profile mb-1" id="firstName"
+                          placeholder="Primer nombre" required>
+                        <div class="invalid-feedback">
+                          Debe ingresar un nombre.
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                      <div class="form-group mb-4">
+                        <label for="lastName">Apellidos</label>
+                        <input type="text" class="form-control user-profile" id="lastNames" placeholder="Primer y segundo apellido" required>
+                        <div class="invalid-feedback">
+                          Debe ingresar al menos un apellido.
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                      <div class="form-group mb-4">
+                        <label for="email">Email</label>
+                        <input type="email" class="form-control user-profile" id="email" placeholder="usuario@mail.com" required>
+                        <div class="invalid-feedback">
+                          Debe ingresar una dirección de email.
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                      <div class="form-group mb-4">
+                        <label for="phone">Teléfono</label>
+                        <input type="tel" class="form-control user-profile" id="phone" placeholder="Teléfono o celular" minlength="8" maxlength="9" required>
+                        <div class="invalid-feedback">
+                          Debe ingresar un teléfono de contacto válido.
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                      <label for="datepicker">Fecha de nacimiento</label>
+                      <div class="input-group date mb-4">
+                        <input type="text" class="form-control user-profile" id="dob" placeholder="dd/mm/aaaa" minlength="10" maxlength="10" required>
+                        <div class="input-group-append">
+                          <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
+                        </div>
+                        <div class="invalid-feedback">
+                          Debe ingresar una fecha de nacimiento válida.
+                        </div>
+                        <script type="text/javascript">
+                          var initDatePicker = function () {
+                            $('.input-group.date').datepicker({
+                              language: 'es',
+                              autoclose: true,
+                              todayHighlight: true
+                            });
+                          };
+                          window.onload = initDatePicker;
+                        </script>
+                      </div>
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                      <div class="form-group mb-4">
+                        <label for="document">Documento</label>
+                        <input type="tel" class="form-control user-profile" id="document"
+                          placeholder="C.I. o pasaporte" minlength="8" maxlength="8" required>
+                        <div class="invalid-feedback">
+                          Debe ingresar un documento válido.
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                      <div class="form-group mb-4">
+                        <label for="document">Acerca de mi</label>
+                        <textarea class="form-control user-profile" id="bio" cols="10" rows="3"
+                          placeholder="Escriba una breve descripción (opcional)."></textarea>
+                      </div>
+                    </div>
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                      <div class="text-right">
+                        <button type="button" id="cancelSaveUserData" name="cancel"
+                          class="btn btn-secondary mr-2">Cancelar</button>
+                        <button type="submit" id="saveUserData" name="submit" class="btn btn-info">Guardar</button>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </div>
+              <!-- End Datos personales -->
+
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- End Edicion de datos -->
+
     </div>
   </div>
+  <!-- End Contenedor con datos del perfil de usuario -->
+
   <footer class="text-muted bg-light">
     <div class="container">
       <p class="float-right">
@@ -208,12 +383,6 @@
       </p>
     </div>
   </footer>
-  <div class="alert fade alert-success" role="alert" id="alertResult">
-    <span id="resultSpan"></span>
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
   <div id="spinner-wrapper">
     <div class="lds-ring">
       <div></div>
@@ -223,6 +392,10 @@
     </div>
   </div>
   <script src="js/jquery-3.4.1.min.js"></script>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <script src="js/bootstrap-datepicker.js"></script>
+  <script src="js/bootstrap-datepicker.min.js"></script>
+  <script src="js/bootstrap-datepicker.es.min.js"></script>
   <script src="js/bootstrap.bundle.min.js"></script>
   <script src="js/dropzone.js"></script>
   <script src="js/init.js"></script>
