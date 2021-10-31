@@ -284,9 +284,9 @@ document.addEventListener("DOMContentLoaded", function(e){
 
       cartPoruducts = resultObj.data.articles;
 
-      // Muestro la info de los productos agregados al carrito
-      showCartProducts(cartPoruducts);
-      
+       // Muestro la info de los productos agregados al carrito
+       showCartProducts(cartPoruducts);
+       
       // Muestro el conteo de productos agregados al carrito
       showProductsCount(cartPoruducts);
 

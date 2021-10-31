@@ -53,7 +53,9 @@ function offCanvasInit() {
    
       $('.open-menu').on('click', function(e) {
           e.preventDefault();
-          $('.sidebar').addClass('active');
+          setTimeout(function(){
+            $('.sidebar').addClass('active');
+          }, 100);
           $('.overlay').addClass('active');
           // close opened sub-menus
           $('.collapse.show').toggleClass('show');
