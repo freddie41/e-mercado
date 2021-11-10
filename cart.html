@@ -37,6 +37,43 @@
         font-size: 3.5rem;
       }
     }
+
+    /* Control de ancho de las alertas responsive
+    para mobile y resoluciones superiores */
+    @media (max-width: 576px) {
+      .alert {
+        position: absolute;
+        display: block;
+        font-size: 0.9rem;
+        z-index: 10;
+        top: 157px;
+        width: 92%;
+        left: 50%;
+        transform: translate(-50%, 0);
+      }
+      
+      .dangerAlert {
+        position: absolute;
+        display: block;
+        font-size: 0.9rem;
+        z-index: 10;
+        top: 2875px;
+        width: 92%;
+        left: 50%;
+        transform: translate(-50%, 0);
+      }
+
+      .successAlert {
+        position: absolute;
+        display: block;
+        font-size: 0.9rem;
+        z-index: 10;
+        top: 2875px;
+        width: 92%;
+        left: 50%;
+        transform: translate(-50%, 0);
+      }
+    }
   </style>
 </head>
   
@@ -195,6 +232,10 @@
         <p class="lead">Verás aquí todos los productos agregados al carrito.</p>
       </div>
 
+      <!-- Alerts -->
+    <div id="alertInfo"></div>
+    <!-- END Alerts -->
+
       <!--Article Section: Content-->
       <section>
 
@@ -225,30 +266,34 @@
               <div class="card mb-3">
                 <div class="card-header" id="heading1">
                   <div class="mb-0">
-                    <h5 class="my-1 collapsed" data-toggle="collapse" data-target="#collapseShippingCard" aria-expanded="true" aria-controls="collapseShippingCard">
+                    <h5 id="collapseShippingHead" class="my-1" data-toggle="collapse" data-target="#collapseShippingCard" aria-expanded="true" aria-controls="collapseShippingCard">
                       <span>Tipo de envío</span>
-                      <span><i class="fas fa-chevron-down text-muted pt-1" style="float: right;"></i></span>
+                      <span class="flip-chevron">
+                        <i class="fas fa-chevron-down text-muted pt-1" style="float: right;"></i>
+                      </span>
                     </h5>
                   </div>
                 </div>
                 <!-- Shipping radio options -->
-                <div id="collapseShippingCard" class="collapse" aria-labelledby="heading1" data-parent="#accordion">
+                <div id="collapseShippingCard" class="collapse show" aria-labelledby="heading1" data-parent="#accordion">
                   <div class="card-body">
-                    <div class="d-block my-3 mx-3">
-                      <div class="custom-control custom-radio mb-2">
-                        <input id="premiumradio" name="shippingType" type="radio" class="custom-control-input" checked=""
-                          required="">
-                        <label class="custom-control-label" for="premiumradio">Premium (2-5 días)</label>
+                    <form id="shippingTypeForm" class="needs-validation" novalidate="">
+                      <div class="d-block my-3 mx-3">
+                        <div class="custom-control custom-radio mb-2">
+                          <input id="premiumradio" name="shippingType" type="radio" class="custom-control-input" value="0.15" required>
+                          <label class="custom-control-label" for="premiumradio">Premium (2-5 días)</label>
+                        </div>
+                        <div class="custom-control custom-radio mb-2">
+                          <input id="expressradio" name="shippingType" type="radio" class="custom-control-input" value="0.07" required>
+                          <label class="custom-control-label" for="expressradio">Express (5-8 días)</label>
+                        </div>
+                        <div class="custom-control custom-radio mb-2">
+                          <input id="standardradio" name="shippingType" type="radio" class="custom-control-input" value="0.05" required>
+                          <label class="custom-control-label" for="standardradio">Standard (12-15 días)</label>
+                          <div class="invalid-feedback">Debe seleccionar un tipo de envío.</div>
+                        </div>
                       </div>
-                      <div class="custom-control custom-radio mb-2">
-                        <input id="expressradio" name="shippingType" type="radio" class="custom-control-input" required="">
-                        <label class="custom-control-label" for="expressradio">Express (5-8 días)</label>
-                      </div>
-                      <div class="custom-control custom-radio mb-2">
-                        <input id="standardradio" name="shippingType" type="radio" class="custom-control-input" required="">
-                        <label class="custom-control-label" for="standardradio">Standard (12-15 días)</label>
-                      </div>
-                    </div>
+                    </form>
                   </div>
                 </div>
                 <!-- End Shipping radio options -->
@@ -259,16 +304,18 @@
               <div class="card mb-3">
                 <div class="card-header" id="heading2">
                   <div class="mb-0">
-                    <h5 class="my-1 collapsed" data-toggle="collapse" data-target="#collapseAddressCard" aria-expanded="true" aria-controls="collapseShippingCard">
+                    <h5 id="collapseAddressHead" class="my-1 collapsed" data-toggle="collapse" data-target="#collapseAddressCard" aria-expanded="true" aria-controls="collapseShippingCard">
                       <span>Dirección de envío</span>
-                      <span><i class="fas fa-chevron-down text-muted pt-1" style="float: right;"></i></span>
+                      <span class="flip-chevron">
+                        <i class="fas fa-chevron-down text-muted pt-1" style="float: right;"></i>
+                      </span>
                     </h5>
                   </div>
                 </div>
                 <!-- Shipping Address form -->
                 <div id="collapseAddressCard" class="collapse" aria-labelledby="heading2" data-parent="#accordion">
                   <div class="card-body">
-                    <form class="needs-validation" novalidate="">
+                    <form id="addressForm" class="needs-validation" novalidate="">
                       <div class="row">
                         <div class="col-md-6 mb-3">
                           <label for="firstName">Nombre</label>
@@ -308,9 +355,9 @@
                       </div>
           
                       <div class="row">
-                        <div class="col-md-5 mb-3">
+                        <div class="col-md-4 mb-3">
                           <label for="country">País</label>
-                          <input type="text" class="form-control" id="" placeholder="Pais" required>
+                          <input type="text" class="form-control" id="country" placeholder="" required>
                           <div class="invalid-feedback">
                             Debe ingresar un país.
                           </div>
@@ -322,22 +369,13 @@
                             Debe ingresar un departamento.
                           </div>
                         </div>
-                        <div class="col-md-3 mb-3">
+                        <div class="col-md-4 mb-3">
                           <label for="zip">Código postal</label>
                           <input type="text" class="form-control" id="codigoPostal" placeholder="" required>
                           <div class="invalid-feedback">
                             Debe ingresar un código postal.
                           </div>
                         </div>
-                      </div>
-                      <hr class="mb-4">
-                      <div class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input" id="same-address">
-                        <label class="custom-control-label" for="same-address">Misma dirección de envío y facturación.</label>
-                      </div>
-                      <div class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input" id="save-info">
-                        <label class="custom-control-label" for="save-info">Guardar dirección</label>
                       </div>
                     </form>
                   </div>
@@ -351,118 +389,149 @@
               <div class="card mb-4">
                 <div class="card-header" id="heading3">
                   <div class="mb-0">
-                    <h5 class="my-1 collapsed" data-toggle="collapse" data-target="#collapsePaymentCard" aria-expanded="false" aria-controls="collapsePaymentCard">
+                    <h5 id="collapsePaymentHead" class="my-1 collapsed" data-toggle="collapse" data-target="#collapsePaymentCard" aria-expanded="false" aria-controls="collapsePaymentCard">
                       <span>Método de pago</span>
                       <span><i class="fas fa-chevron-down text-muted pt-1" style="float: right;"></i></span>
                     </h5>
                   </div>
                 </div>
+                
                 <!-- Payment radio options -->
                 <div id="collapsePaymentCard" class="collapse" aria-labelledby="heading3" data-parent="#accordion">
-                    <div class="card-body">
-                      <div class="d-block my-3 mx-3">
-                        <!-- Banks option-->
-                        <div class="custom-control custom-radio mb-4">
-                          <input id="banksradio" name="paymentType" type="radio" class="custom-control-input" value="banksradio" required>
-                          <label class="custom-control-label" for="banksradio">Transferencia bancaria</label>
-                          <div class="banks my-1">
-                            <img class="mr-1" src="img/logos/brou2.webp" alt="Brou" style="border-radius: 25.2%;">
-                            <img class="mr-1" src="img/logos/itau2.webp" alt="Itau" style="border-radius: 25.2%;">
-                            <img class="mr-1" src="img/logos/santander.jpeg" alt="Santander" style="border-radius: 25.2%;">
-                            <img class="mr-1" src="img/logos/bbva.png" alt="BBVA" style="border-radius: 25.2%;">
-                            <img class="mr-1" src="img/logos/scotia.png" alt="Scotia" style="border-radius: 25.2%;">
-                          </div>
+                  <div class="card-body">
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#paymentModal">
+                      Seleccionar...
+                    </button>
+                    <input class="form-control" type="hidden" id="showModalBtn">
+                    <input type="hidden" id="paymentInfo">
+                    <div class="invalid-feedback">
+                      Debe seleccionar un método de pago.
+                    </div>
 
-                          <!-- Banks form-->
-                          <form id="bankPaymentForm" class="needs-validation mt-4" novalidate="">
-                            <div class="row">
-                              <div class="col-md-5 mb-3">
-                                <label for="country">Banco</label>
-                                <select class="custom-select d-block w-100" id="bankOption" required>
-                                  <option value="">Elige...</option>
-                                  <option>eBrou</option>
-                                  <option>Itaú</option>
-                                  <option>Santander</option>
-                                  <option>BBVA</option>
-                                  <option>Scotiabank</option>
-                                </select>
-                                <div class="invalid-feedback">
-                                  Debe elegir uno de los bancos.
+                    <!-- Modal -->
+                    <div class="modal fade" id="paymentModal" tabindex="-1" role="dialog" aria-labelledby="paymentModalLabel"
+                      aria-hidden="true">
+                      <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title" id="paymentModalLabel">Seleccione un método de pago</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+                          <div class="modal-body">
+                            <div class="d-block my-3 mx-3">
+                              <!-- Banks option-->
+                              <div class="custom-control custom-radio mb-4">
+                                <input id="banksradio" name="paymentType" type="radio" class="custom-control-input" required>
+                                <label class="custom-control-label" for="banksradio">Transferencia bancaria</label>
+                                <div class="banks my-1">
+                                  <img class="mr-1" src="img/logos/brou2.webp" alt="Brou" style="border-radius: 25.2%;">
+                                  <img class="mr-1" src="img/logos/itau2.webp" alt="Itau" style="border-radius: 25.2%;">
+                                  <img class="mr-1" src="img/logos/santander.jpeg" alt="Santander" style="border-radius: 25.2%;">
+                                  <img class="mr-1" src="img/logos/bbva.png" alt="BBVA" style="border-radius: 25.2%;">
+                                  <img class="mr-1" src="img/logos/scotia.png" alt="Scotia" style="border-radius: 25.2%;">
                                 </div>
-                              </div>
-                              <div class="col-md-4 mb-3">
-                                <label for="state">Moneda</label>
-                                <select class="custom-select d-block w-100" id="transferCurrency" required>
-                                  <option value="">Elige...</option>
-                                  <option>Pesos Uruguayos (UYU)</option>
-                                  <option>Dólares Americanos (USD)</option>
-                                </select>
-                                <div class="invalid-feedback">
-                                  Debe ingresar una moneda.
-                                </div>
-                              </div>
-                            </div>
-                          </form>
-                          <!-- End banks form-->
-                        </div>
-                        <!-- End Banks option-->
                         
-                        <!-- Cards option-->
-                        <div class="custom-control custom-radio mt-4">
-                          <input id="cardsradio" name="paymentType" type="radio" class="custom-control-input" value="cardsradio" required>
-                          <label class="custom-control-label" for="cardsradio">Tarjeta de crédito</label>
-                          <div class="cards my-1">
-                            <img class="mr-1" src="img/logos/oca.jpeg" alt="Oca" style="border-radius: 3px;">
-                            <img class="mr-1" src="img/logos/visa.svg" alt="Visa">
-                            <img class="mr-1" src="img/logos/mastercard.svg" alt="Mastercard">
-                            <img class="mr-1" src="img/logos/amex.svg" alt="American Express">
-                            <img class="mr-1" src="img/logos/prex.jpeg" alt="Prex" style="border-radius: 3px;">
-
-                            <!-- Credit card form-->
-                            <form id="cardPaymentForm" class="needs-validation mb-4" novalidate="">
-                              <div class="d-block my-3">
-                                <div class="row">
-                                  <div class="col-md-6 mb-3">
-                                    <label for="cc-name">Nombre en la tarjeta</label>
-                                    <input type="text" class="form-control" id="cc-name" placeholder="" required>
-                                    <small class="text-muted">Nombre completo como se muestra en la tarjeta.</small>
-                                    <div class="invalid-feedback">
-                                      Debe ingresar el nombre en la tarjeta
+                                <!-- Banks form-->
+                                <form id="bankPaymentForm" class="needs-validation mt-4" style="display: none;" novalidate="">
+                                  <div class="row">
+                                    <input type="hidden" name="payType" value="bank">
+                                    <div class="col-md-5 mb-3">
+                                      <label for="bankOption">Banco</label>
+                                      <select class="custom-select d-block w-100" name="bank" id="bankOption" required>
+                                        <option value="">Seleccionar...</option>
+                                        <option>Brou</option>
+                                        <option>Itaú</option>
+                                        <option>Santander</option>
+                                        <option>BBVA</option>
+                                        <option>Scotiabank</option>
+                                      </select>
+                                      <div class="invalid-feedback">
+                                        Debe elegir un banco.
+                                      </div>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                      <label for="transferCurrency">Moneda</label>
+                                      <select class="custom-select d-block w-100" name="currency" id="transferCurrency" required>
+                                        <option>Seleccionar...</option>
+                                        <option>Pesos (UYU)</option>
+                                        <option>Dólares (USD)</option>
+                                      </select>
+                                      <div class="invalid-feedback">
+                                        Debe ingresar una moneda.
+                                      </div>
                                     </div>
                                   </div>
-                                  <div class="col-md-6 mb-3">
-                                    <label for="cc-number">Número de tarjeta</label>
-                                    <input type="text" class="form-control" id="cc-number" placeholder="" required>
-                                    <div class="invalid-feedback">
-                                      Debe ingresar el número de tarjeta
+                                </form>
+                                <!-- End banks form-->
+                              </div>
+                              <!-- End Banks option-->
+                        
+                              <!-- Cards option-->
+                              <div class="custom-control custom-radio mt-4">
+                                <input id="cardsradio" name="paymentType" type="radio" class="custom-control-input" required>
+                                <label class="custom-control-label" for="cardsradio">Tarjeta de crédito</label>
+                                <div class="cards my-1">
+                                  <img class="mr-1" src="img/logos/oca.jpeg" alt="Oca" style="border-radius: 3px;">
+                                  <img class="mr-1" src="img/logos/visa.svg" alt="Visa">
+                                  <img class="mr-1" src="img/logos/mastercard.svg" alt="Mastercard">
+                                  <img class="mr-1" src="img/logos/amex.svg" alt="American Express">
+                                  <img class="mr-1" src="img/logos/prex.jpeg" alt="Prex" style="border-radius: 3px;">
+                        
+                                  <!-- Credit card form-->
+                                  <form id="cardPaymentForm" class="needs-validation mb-4" style="display: none;" novalidate="">
+                                    <div class="d-block my-3">
+                                      <input type="hidden" name="payType" value="card">
+                                      <div class="row">
+                                        <div class="col-md-6 mb-3">
+                                          <label for="cc-name">Nombre en la tarjeta</label>
+                                          <input type="text" class="form-control" name="name" id="cc-name" placeholder="" required>
+                                          <div class="invalid-feedback">
+                                            Debe ingresar el nombre en la tarjeta.
+                                          </div>
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                          <label for="cc-number">Número de tarjeta</label>
+                                          <input type="text" class="form-control" name="number" id="cc-number" placeholder="" required>
+                                          <div class="invalid-feedback">
+                                            Debe ingresar el número de tarjeta.
+                                          </div>
+                                        </div>
+                                      </div>
+                                      <div class="row">
+                                        <div class="col-md-6 mb-3">
+                                          <label for="cc-expiration">Fecha de vencimiento</label>
+                                          <input type="text" class="form-control" name="expiration" id="cc-expiration" placeholder="MM/AA" minlength="5" maxlength="5" required>
+                                          <div class="invalid-feedback">
+                                            Debe ingresar la fecha de vencimiento.
+                                          </div>
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                          <label for="cc-cvv">Código de seguridad</label>
+                                          <input type="text" class="form-control" name="cvv" id="cc-cvv" placeholder="CVV" required>
+                                          <div class="invalid-feedback">
+                                            Debe ingresar el código de seguridad.
+                                          </div>
+                                        </div>
+                                      </div>
                                     </div>
-                                  </div>
-                                </div>
-                                <div class="row">
-                                  <div class="col-md-3 mb-3">
-                                    <label for="cc-expiration">Vencimiento</label>
-                                    <input type="text" class="form-control" id="cc-expiration" placeholder="MM/AA" required>
-                                    <div class="invalid-feedback">
-                                      Debe ingresar la fecha de vencimiento
-                                    </div>
-                                  </div>
-                                  <div class="col-md-3 mb-3">
-                                    <label for="cc-expiration">CVV</label>
-                                    <input type="text" class="form-control" id="cc-cvv" placeholder="" required>
-                                    <div class="invalid-feedback">
-                                      Debe ingresar el código de seguridad
-                                    </div>
-                                  </div>
+                                  </form>
+                                  <!-- End Credit card form-->
                                 </div>
                               </div>
-                            </form>
-                            <!-- End Credit card form-->
+                              <!-- End Cards option-->
+                            </div>
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                            <button id="validatePaymentModal" type="button" class="btn btn-info">Aceptar</button>
                           </div>
                         </div>
-                        <!-- End Cards option-->
                       </div>
                     </div>
-                  </form>
+                  </div>
                 </div>
                 <!-- End Payment radio options -->
               </div>
@@ -475,12 +544,10 @@
           <!--Grid Cart Summary -->
           <div class="col-12 col-lg-4">
             <!-- Article Summary Section Title -->
-            <div class="">
-              <h4 class="card-title d-flex justify-content-between align-items-center text-muted px-4 mb-2 mt-3">
-                Resumen del pedido
-                <span class="badge badge-secondary badge-pill" id="productSummaryCount"></span>
-              </h4>
-            </div>
+            <h4 class="card-title d-flex justify-content-between align-items-center text-muted px-4 mb-2 mt-3">
+              Resumen del pedido
+              <span class="badge badge-secondary badge-pill" id="productSummaryCount"></span>
+            </h4>
             <!-- Article Summary Section Title -->
 
             <!-- Cart summary -->
@@ -495,9 +562,11 @@
                       <div class="font-weight-bold" id="subtotalCarrito"></div>
                     </div>
                   </li>
-                  <li class="list-group-item d-flex justify-content-between align-items-center border-top px-0 pb-2">
-                    Costo de envío
-                    <span>-</span>
+                  <li class="list-group-item d-flex justify-content-between align-items-center border-top px-0 pb-2">Costo de envío
+                    <div class="d-flex align-items-center">
+                      <div class="small font-weight-bold mr-1">USD</div>
+                      <div class="font-weight-bold" id="shippingCost">-</div>
+                    </div>
                   </li>
                   <li class="list-group-item d-flex justify-content-between align-items-center border-bottom-0 px-0 pb-1 mb-3 pb-2">
                     <div>
@@ -516,7 +585,7 @@
                   </li>
                 </ul>
       
-                <button type="submit" class="btn btn-info btn-lg btn-block">Finalizar compra</button>
+                <button id="submitCart" type="submit" class="btn btn-info btn-lg btn-block">Finalizar compra</button>
       
               </div>
             </div>

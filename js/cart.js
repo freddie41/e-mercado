@@ -4,85 +4,29 @@ var cartPoruducts = [];
 //Valor de la cotización del USD
 var conversionValueUSD = 40;
 
-//Controles para sumar/restar cantidad de articulos agregados al carrito
-function itemCountControls() {
-  
-  $('.btn-number').click(function (event) {
-
-    event.preventDefault();
-
-    fieldId = $(this).attr('data-id');
-    type = $(this).attr('data-type');
-    var input = $(`#${fieldId}`);
-    var currentVal = parseInt(input.val());
-
-    if (currentVal) {
-      if (type == 'minus') {
-
-        if (currentVal > input.attr('min')) {
-          input.val(currentVal - 1).change();
-        }
-
-      } else if (type == 'plus') {
-
-        if (currentVal < input.attr('max')) {
-          input.val(currentVal + 1).change();
-        }
-      }
-    } else {
-      input.val(0);
-    }
-  });
-
-  $('.input-number').focusin(function () {
-    $(this).data('oldValue', $(this).val());
-  });
-
-  $('.input-number').change(function (event, flag) {
-
-    minValue = parseInt($(this).attr('min'));
-    maxValue = parseInt($(this).attr('max'));
-    valueCurrent = parseInt($(this).val());
-
-    let countId = $(this).attr('id');
-
-    if (valueCurrent > minValue) {
-      $(".btn-number[data-type='minus'][data-id='" + countId + "']").prop('disabled', false);
-    } else {
-      $(".btn-number[data-type='minus'][data-id='" + countId + "']").prop('disabled', true);
-    }
-    if (valueCurrent < maxValue) {
-      $(".btn-number[data-type='plus'][data-id='" + countId + "']").prop('disabled', false);
-    } else {
-      $(".btn-number[data-type='plus'][data-id='" + countId + "']").attr('disabled', true);
-    }
-
-    if (flag !== "not_subtotal") {
-      calcSubTotal();  
-    }
-
-  });
-}
+//Valor del costo de envio elegido.
+var shippingCost;
 
 //Funcion para calcular el total del carrito
 function calcTotal() {
 
   let totalCarrito = 0;
 
-  totalCarrito = $("#subtotalCarrito").text();
-  
-  //Costo de envio se agrega AQUI para sumar al total del carrito
+  totalCarrito = parseInt($("#subtotalCarrito").text());
 
-  $("#totalCarrito").html(totalCarrito);
+  //Costo de envio se agrega AQUI para sumar al total del carrito
+  if (shippingCost != null) {
+    $("#totalCarrito").html(shippingCost + totalCarrito);
+  } else {
+    $("#totalCarrito").html(totalCarrito); 
+  }
 }
 
 //Funcion para recalcular el subtotal en tiempo real al modificar cantidades
 function calcSubTotal() {
 
   let counts = $("[data-count]");
-
   let subTotals = 0;
-
   let totalCarrito = 0;
 
   for (let i = 0; i < counts.length; i++) {
@@ -95,40 +39,66 @@ function calcSubTotal() {
 
     //Control para hacer la conversion de moneda de UYU a USD
     if (currencyConv === "UYU") {
-      subTotals = (unitCost * count) / conversionValueUSD;
+
+      subTotals = Math.round((unitCost * count) / conversionValueUSD);
+
     } else {
-      subTotals = unitCost * count;
+
+      subTotals = Math.round(unitCost * count);
     }
 
     $(`#artSubtotal${countIndex}`).html(subTotals);
     $(`#artSummarySubTotal${countIndex}`).html(subTotals);
-
     totalCarrito += subTotals;
   }
-  $("#subtotalCarrito").html(totalCarrito);
 
+  $("#subtotalCarrito").html(totalCarrito);
   calcTotal();
+}
+
+//Funcion para calcular el envío.
+function calcShipping() {
+
+  let subtotal = parseInt(document.getElementById('subtotalCarrito').innerText);
+  let shipTypes = document.getElementsByName('shippingType')
+  
+  if (shipTypes[0].checked) {
+
+    shippingCost = Math.round(shipTypes[0].value * subtotal);
+  }
+
+  if (shipTypes[1].checked) {
+
+    shippingCost = Math.round(shipTypes[1].value * subtotal);
+  }
+
+  if (shipTypes[2].checked) {
+  
+    shippingCost = Math.round(shipTypes[2].value * subtotal);
+  }
+
+  document.getElementById('shippingCost').innerText = shippingCost;
 }
 
 //Funcion para mostrar el listado de productos del carrito
 function showCartProducts(array) {
 
-    let htmlContent = "";
+  let htmlContent = "";
 
-    for (let i = 0; i < array.length; i++) {
+  for (let i = 0; i < array.length; i++) {
 
-        let article = array[i];
-        let currencyConv = article.currency;
-        let artSubTotal = 0;
+    let article = array[i];
+    let currencyConv = article.currency;
+    let artSubTotal = 0;
 
-        //Control para hacer la conversion de moneda de UYU a USD
-        if (currencyConv === "UYU") {
-          artSubTotal = (article.unitCost * article.count) / conversionValueUSD;
-        } else {
-          artSubTotal = article.unitCost * article.count;
-        }
+    //Control para hacer la conversion de moneda de UYU a USD
+    if (currencyConv === "UYU") {
+      artSubTotal = (article.unitCost * article.count) / conversionValueUSD;
+    } else {
+      artSubTotal = article.unitCost * article.count;
+    }
 
-        htmlContent += `
+    htmlContent += `
         <!-- Cart item -->
         <div class="row">
           <div class="col-12 col-md-4">
@@ -196,38 +166,38 @@ function showCartProducts(array) {
         <hr class="mb-4">
         
         `
+  }
+
+  //Control para que los controles de cantidad se muestren en el estilo correcto desde el comienzo
+  // y se haga el calculo de subtotal y total una sola vez
+  $("#cart-items").html(htmlContent).ready(function () {
+    for (let i = 0; i < array.length; i++) {
+
+      $(`#count${i}`).trigger("change", "not_subtotal");
     }
-
-    //Control para que los controles de cantidad se muestren en el estilo correcto desde el comienzo
-    // y se haga el calculo de subtotal y total una sola vez
-    $("#cart-items").html(htmlContent).ready(function(){
-      for (let i = 0; i < array.length; i++) {
-
-        $(`#count${i}`).trigger("change", "not_subtotal");
-      }
-      calcSubTotal();
-    });
+    calcSubTotal();
+  });
 }
 
 //Funcion para mostrar los articulos en el resumen de pedido
 function showSummaryProducts(array) {
-  
+
   let htmlContent = "";
 
-    for (let i = 0; i < array.length; i++) {
+  for (let i = 0; i < array.length; i++) {
 
-        let article = array[i];
-        let currencyConv = article.currency;
-        let artSubTotal = 0;
+    let article = array[i];
+    let currencyConv = article.currency;
+    let artSubTotal = 0;
 
-        //Control para hacer la conversion de moneda de UYU a USD
-        if (currencyConv === "UYU") {
-          artSubTotal = (article.unitCost * article.count) / conversionValueUSD;
-        } else {
-          artSubTotal = article.unitCost * article.count;
-        }
+    //Control para hacer la conversion de moneda de UYU a USD
+    if (currencyConv === "UYU") {
+      artSubTotal = (article.unitCost * article.count) / conversionValueUSD;
+    } else {
+      artSubTotal = article.unitCost * article.count;
+    }
 
-        htmlContent += `
+    htmlContent += `
         <li class="list-group-item font-weight-lighter d-flex justify-content-between align-items-center border-0 px-0 py-1">
           <div>${article.name}</div>
           <div class="d-flex align-items-center">
@@ -236,79 +206,238 @@ function showSummaryProducts(array) {
           </div>
         </li>
         `
-        document.getElementById("summaryItems").innerHTML = htmlContent;
-    }
+    document.getElementById("summaryItems").innerHTML = htmlContent;
+  }
 }
 
-// Funcion para contar la cantidad de articulos agregados al carrito
+//Funcion para contar la cantidad de articulos agregados al carrito
 function showProductsCount(array) {
   document.getElementById("productCount").innerText = array.length;
   document.getElementById("productSummaryCount").innerText = array.length;
 }
 
-//Funcion para mostrar el formulario de pago segun se elija la opcion de banco o tarjeta
-function showPaymentForms() {
+//Funcion para validar los campos del metodo de pago elegido.
+function validatePaymentModal() {
+ 
+  let paymentOptions = document.getElementsByName("paymentType");
+  let validateForms = true;
 
-  let radios = document.getElementsByName("paymentType");
-  let cardPaymentForm = document.getElementById("cardPaymentForm");
-  let bankPaymentForm = document.getElementById("bankPaymentForm");
-
-  cardPaymentForm.style.display = 'none';
-  bankPaymentForm.style.display = 'none';
-
-  for (let i = 0; i < radios.length; i++) {
-    radios[i].onclick = function () {
-
-      let val = this.value;
-
-      if (val == 'cardsradio') {
-        cardPaymentForm.style.display = 'block';
-        bankPaymentForm.style.display = 'none';
-      }
-      if (val == 'banksradio') {
-        cardPaymentForm.style.display = 'none';
-        bankPaymentForm.style.display = 'block';
-      }
-    }
+  if (!paymentOptions[0].checked && !paymentOptions[1].checked) {
+    validateForms = false;
   }
+
+  if (paymentOptions[0].checked) {
+    let form = document.getElementById("bankPaymentForm");
+    if (form.checkValidity() === false) {
+      validateForms = false;
+    }
+    form.classList.add('was-validated');
+  }
+
+  if (paymentOptions[1].checked) {
+    let form = document.getElementById("cardPaymentForm");
+    if (form.checkValidity() === false) {
+      validateForms = false;
+    }
+    form.classList.add('was-validated');
+  }
+
+  return validateForms;
 }
-//Función que se ejecuta una vez que se haya lanzado el evento de
-//que el documento se encuentra cargado, es decir, se encuentran todos los
-//elementos HTML presentes.
-document.addEventListener("DOMContentLoaded", function(e){
-  
-  // Traer el listado de productos desde el json a traves de la url
+//Funcion para validar todos los campos del carrito antes de generar la orden.
+function validateForms() {
+
+  let cartValid = true;
+  let shippingTypeForm = document.getElementById("shippingTypeForm");
+  let addressForm = document.getElementById("addressForm");
+  let selectPaymentBtn = document.getElementById("showModalBtn");
+
+  //Validar seleccion de tipo de envio.
+  if (shippingTypeForm.checkValidity() === false) {
+
+    cartValid = false;
+
+    document.getElementById("collapseShippingHead").classList.add("collapsed");
+    document.getElementById("collapseShippingCard").classList.add("show");
+  }
+  shippingTypeForm.classList.add('was-validated');
+
+  //Validar formulario de direccion.
+  if (addressForm.checkValidity() === false) {
+
+    cartValid = false;
+
+    document.getElementById("collapseAddressHead").classList.add("collapsed");
+    document.getElementById("collapseAddressCard").classList.add("show");
+  }
+  addressForm.classList.add('was-validated');
+
+  //Validar seleccion de metodo de pago.
+  if (!validatePaymentModal()) {
+
+    cartValid = false;
+
+    document.getElementById("collapsePaymentHead").classList.add("collapsed");
+    document.getElementById("collapsePaymentCard").classList.add("show");
+    selectPaymentBtn.classList.add("is-invalid");
+
+  } else {
+    selectPaymentBtn.classList.remove("is-invalid");
+  }
+
+  if (!cartValid) {
+    setTimeout(function () {
+      $('<div class="dangerAlert alert alert-danger">' +
+        '<i class="fa fa-times-circle text-danger mx-2"></i>' +
+        '<strong>Error.</strong> Corrija los campos señalados.' +
+        '<button type="button" class="close" data-dismiss="alert">' +
+        '&times;</button></div>').hide().appendTo('#alertInfo').fadeIn(300);
+
+      $(".alert").delay(3000).fadeOut(
+        "normal",
+        function () {
+          $(this).remove().fadeIn(300);
+        }
+      );
+    }, 300);
+  }
+  return cartValid;
+}
+
+//Función que se ejecuta una vez que el evento de carga de todos los elementos
+// html del documento ha finalizado.
+$(document).ready(function () {
+  //Funcion que trae el listado de productos desde el json a traves de la url
   getJSONData(CART_INFO_URL_ARRAY).then(function (resultObj) {
 
     if (resultObj.status === "ok") {
 
       cartPoruducts = resultObj.data.articles;
 
-       // Muestro la info de los productos agregados al carrito
-       showCartProducts(cartPoruducts);
-       
+      // Muestro la info de los productos agregados al carrito
+      showCartProducts(cartPoruducts);
+
       // Muestro el conteo de productos agregados al carrito
       showProductsCount(cartPoruducts);
 
       // Muestro los productos del carrito en el resumen de pedido
       showSummaryProducts(cartPoruducts);
-
-      //Muestro los controles de cantidad
-      itemCountControls();
-
-      //Muestro el formulario correspondiente al metodo de pago elegido
-      showPaymentForms();
     }
-  });
 
-  // Inicializador de tooltips
-  $(this).ready(function() {
-      $("[data-toggle=tooltip]").tooltip();
-  });
+    // Inicializador de popovers
+    $('[data-toggle="popover"]').popover();
 
-  // Inicializador de popovers
-  $(this).ready(function(){
-      $('[data-toggle="popover"]').popover();
-  });    
+  }); 
+})
+//Funciones de evento para sumar/restar cantidad de articulos agregados al carrito
+.on("click", ".btn-number", function (event) {
+  
+  event.preventDefault();
+
+  fieldId = $(this).attr('data-id');
+  type = $(this).attr('data-type');
+  var input = $(`#${fieldId}`);
+  var currentVal = parseInt(input.val());
+
+  if (currentVal) {
+    if (type == 'minus') {
+
+      if (currentVal > input.attr('min')) {
+        input.val(currentVal - 1).change();
+      }
+
+    } else if (type == 'plus') {
+
+      if (currentVal < input.attr('max')) {
+        input.val(currentVal + 1).change();
+      }
+    }
+  } else {
+    input.val(0);
+  }
+}).on("focusin", ".input-number", function () {
+  
+  $(this).data('oldValue', $(this).val());
+}).on("change", ".input-number", function (event, flag) {
+  
+  minValue = parseInt($(this).attr('min'));
+  maxValue = parseInt($(this).attr('max'));
+  valueCurrent = parseInt($(this).val());
+
+  let countId = $(this).attr('id');
+
+  if (valueCurrent > minValue) {
+    $(".btn-number[data-type='minus'][data-id='" + countId + "']").prop('disabled', false);
+  } else {
+    $(".btn-number[data-type='minus'][data-id='" + countId + "']").prop('disabled', true);
+  }
+  if (valueCurrent < maxValue) {
+    $(".btn-number[data-type='plus'][data-id='" + countId + "']").prop('disabled', false);
+  } else {
+    $(".btn-number[data-type='plus'][data-id='" + countId + "']").prop('disabled', true);
+  }
+  if (flag !== "not_subtotal") {
+    calcSubTotal();
+  }
+})
+//Control de evemto para cambiar tipo y costo de envio.
+.on("change", 'input[type=radio][name="shippingType"]', function () {
+  calcShipping();
+  calcTotal();
+})
+//Control de evento para validar el colocar la orden y enviar los datos
+.on("click", "#submitCart", function (event) {
+  
+  if (!validateForms()) {
+    event.preventDefault();
+    event.stopPropagation();
+  }
+})
+//Funcion de evento para restablecer seleccion del metodo de pago al cerrar
+//el modal sin aceptar un metodo de pago.
+.on("click", "#paymentModal [data-dismiss=modal]", function () {
+  
+  if (!validatePaymentModal()) {
+    $("[name=paymentType]").each(function (i) {
+      $(this).prop("checked", false);
+    });
+    $("#cardPaymentForm").hide();
+    $("#bankPaymentForm").hide();
+  }
+})
+//Funcion de evento para validar el metodo de pago elegido al hacer clic en aceptar.
+.on("click", "#validatePaymentModal", function () {
+
+  if (validatePaymentModal()) {
+
+    let formID;
+    
+    if ($("#banksradio").is(":checked")) {
+      formID = "#bankPaymentForm";
+    } else {
+      formID = "#cardPaymentForm";
+    }
+    
+    let paymentData = $(formID).serializeArray();
+
+    $("#paymentModal").modal('hide');
+    $("#paymentInfo").val(JSON.stringify(paymentData));
+  }
+})
+//Funcion de evento para mostrar solo el form del metodo de pago seleccionado.
+.on("change", "[name=paymentType]", function (event) {
+  
+  let cardPaymentForm = $("#cardPaymentForm");
+  let bankPaymentForm = $("#bankPaymentForm");
+  
+  if (event.target.id == 'cardsradio') {
+    cardPaymentForm.show();
+    bankPaymentForm.hide();
+    bankPaymentForm.removeClass("was-validated");
+  }
+  if (event.target.id == 'banksradio') {
+    cardPaymentForm.hide();
+    bankPaymentForm.show();
+    cardPaymentForm.removeClass("was-validated");
+  }
 });
-
