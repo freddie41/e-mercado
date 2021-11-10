@@ -41,6 +41,43 @@
         font-size: 3.5rem;
       }
     }
+
+    /* Control de ancho de las alertas responsive
+    para mobile y resoluciones superiores */
+    @media (max-width: 576px) {
+      .alert {
+        position: absolute;
+        display: block;
+        font-size: 0.9rem;
+        z-index: 10;
+        top: 157px;
+        width: 92%;
+        left: 50%;
+        transform: translate(-50%, 0);
+      }
+      
+      .dangerAlert {
+        position: absolute;
+        display: block;
+        font-size: 0.9rem;
+        z-index: 10;
+        top: 1640px;
+        width: 92%;
+        left: 50%;
+        transform: translate(-50%, 0);
+      }
+
+      .successAlert {
+        position: absolute;
+        display: block;
+        font-size: 0.9rem;
+        z-index: 10;
+        top: 1536px;
+        width: 92%;
+        left: 50%;
+        transform: translate(-50%, 0);
+      }
+    }
   </style>
 </head>
 

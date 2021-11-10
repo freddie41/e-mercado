@@ -1,4 +1,4 @@
-/********************************* ESTILO MOBILE RESPONSIVE *********************************/
+/***** ESTILO MOBILE RESPONSIVE *****/
 
 /***** Wrapper *****/ 
 .wrapper {
@@ -21,21 +21,24 @@
 }
 
 .sidebar.active {
-  left: 0;
+  transform: translateX(255px);
 }
 
 /***** Sidebar/Overlay *****/ 
 .overlay {
-  display: none;
   position: fixed;
   width: 100vw;
   height: 100vh;
+  background-color: rgba(0, 0, 0, 0.600);
   z-index: 998;
   transition: opacity 0.3s;
+  opacity: 0;
+  pointer-events: none;
   -webkit-transition: opacity 0.3s;
 }
 
 .overlay.active {
+  pointer-events: auto;
   display: block;
   opacity: 1;
   
@@ -180,15 +183,27 @@ only screen and (                min-resolution: 2dppx) {
   border-bottom: 1px solid #eee;
 }
 
-/********************************* ESTILO DESKTOP RESPONSIVE *********************************/
+/***** ESTILO DESKTOP RESPONSIVE *****/
 
 /* Tipografia utilizada en el sitio */
-.jumbotron, .card-body, .container, .site-header {
-    font-family: 'Raleway', serif !important;
+.jumbotron, .card-body, .container, .container-fluid, .site-header {
+    font-family: 'Open Sans', sans-serif !important;
 }
 
 .light-text {
   color: white;
+}
+
+/* Espaciado para mantener todo el contenido del body
+ visible y el footer siempre al final del viewport */
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+footer {
+  margin-top: auto;
 }
 
 /* Estilo de la img de bienvenida al sitio */
@@ -252,7 +267,7 @@ only screen and (                min-resolution: 2dppx) {
   font-size: 38px;
 }
 
-/* Estilo de pie de pagina */
+/* Estilo del footer */
 footer {
   border-top: .0425rem solid rgba(0, 0, 0, .1);
   background: #fff;
@@ -264,7 +279,7 @@ footer p {
   margin-bottom: .1rem;
 }
 
-/* Estilo del cabezal de navegacion */
+/* Estilo del navbar */
 .site-header a {
   color: #fff;
   transition: color 0.10s;
@@ -289,7 +304,8 @@ footer p {
   color:white;
 }
 
-/* Estilo de los iconos presentes en el site header y dropdown */
+/* Estilo de los iconos presentes en 
+el site header y dropdown */
 .site-header a i {
   margin-right: 10px;
 }
@@ -301,16 +317,22 @@ footer p {
   background: white;
 }
 
-.alert{
-  position: fixed;
-  top:80px;
-  width: 50%;
-  left: 50%;
-  transform: translate(-50%, 0);
+@media (min-width: 720px) {
+  .alert{
+    position: absolute;
+    display: block;
+    text-align: center;
+    top: 175px;
+    z-index: 10;
+    width: 41%;
+    left: 50%;
+    transform: translate(-50%, 0);
+  }
 }
 
-/* Estilo de los spinners de carga del sitio */
+/* Spinners de carga del sitio */
 .lds-ring {
+  color: #17a2b8;
   display: inline-block;
   position: relative;
   width: 64px;
@@ -365,10 +387,6 @@ a.custom-card:hover {
   text-decoration: inherit;
 }
 
-.checked {
-  color: orange;
-}
-
 /* enable absolute positioning */
 .inner-addon { 
   position: relative; 
@@ -390,17 +408,15 @@ a.custom-card:hover {
   padding-left:  35px;
 }
 
-/*
-Forces image to be 100% width and not max width of 100%
-*/
+/* Forces image to be 100% width
+ and not max width of 100% */
 .carousel-item .img-responsive {
   width:100%;
   border-radius: 0.25rem;
 }
 
-/* 
-anchors are inline so you need ot make them block to go full width
-*/
+/* Anchors are inline so you need ot make
+them block to go full width */
 .carousel-item a {
   display: block;
   width:100%;
@@ -412,19 +428,24 @@ anchors are inline so you need ot make them block to go full width
   border-radius: 100%;
 }
 
+#commentDate {
+  float: left;
+}
+
+/* Estilo en las calificaciones por estrellas */
 .star-rating {
   line-height:32px;
   font-size:15px;
   float: right;
 }
 
-#commentDate {
-  float: left;
+.checked {
+  color: orange;
 }
 
 .set-star-rating {
   direction: rtl;
-  display: inline-block;
+  display: block;
   padding: 2px;
   font-size: 15px;
   float: left;
@@ -467,7 +488,7 @@ anchors are inline so you need ot make them block to go full width
    box-shadow: 0 10px 20px rgba(0,0,0,.12), 0 4px 8px rgba(0,0,0,.06);
 }
 
-/* Estilo de tarjetas de la pagina de categorias de productos */
+/* Estilo de cards en home y listado de productos */
 .custom-card {
   border-radius: 4px;
   background: #fff;
@@ -491,11 +512,19 @@ anchors are inline so you need ot make them block to go full width
   border-radius: 5px;
   background-color: #dae0e5;
 }
-
+/* Color y sombreado de los input box */
 .form-control:focus,
 .custom-select:focus {
   border-color: #17a2b8;
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(19, 132, 150, 0.6);
+}
+
+#search, #search:focus {
+  border-bottom: 1px solid #ced4da;
+  border-top: 0px;
+  border-right: 0px;
+  border-left: 0px;
+  box-shadow: none; 
 }
 
 /* Radio checked state */
@@ -534,11 +563,11 @@ a i {
 }
 
 /* Animacion de despliegue del collapse de shipping y payment */
-.card-header .fas {
-  transform: rotate(180deg);
+.card-header .flip-chevron .fas  {
+  transform: rotate(-180deg);
   transition: .20s transform ease-in-out;
 }
-.card-header .collapsed .fas {
+.card-header .collapsed .flip-chevron .fas {
   transform: rotate(0deg);
 }
 
@@ -550,4 +579,112 @@ a i {
 /* Dimensiones de img de metodo banco */
 .banks img, .cards img {
   width: 39px;
+}
+
+/* Estilo del pefil de usuario */
+.account-settings {
+  margin: 0 0 1rem 0;
+  padding-bottom: 1rem;
+  text-align: center;
+}
+
+.account-settings h5.user-name,
+.account-settings .user-age {
+  margin: 0 0 0.5rem 0;
+}
+.account-settings .user-profile .user-email,
+.account-settings .user-profile .user-phone,
+.account-settings .user-years {
+  margin: 0;
+  font-size: 0.8rem;
+  font-weight: 400;
+  color: #9fa8b9;
+}
+.account-settings .about {
+  margin: 2rem 0 0 0;
+  text-align: center;
+}
+.account-settings .about h5 {
+  margin: 0 0 15px 0;
+  color: #17a2b8;
+}
+.account-settings .about p {
+  font-size: 0.825rem;
+}
+
+.card .h-100 {
+  background: #ffffff;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  border: 0;
+  margin-bottom: 1rem;
+}
+.input-group-text {
+  border-top-right-radius: .25rem !important;
+  border-bottom-right-radius: .25rem !important;
+  cursor: pointer;
+}
+
+.profile-pic-wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.pic-holder {
+  text-align: center;
+  position: relative;
+  border-radius: 50%;
+  width: 125px;
+  height: 125px;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.pic-holder .pic {
+  height: 100%;
+  width: 100%;
+  -o-object-fit: cover;
+  object-fit: cover;
+  -o-object-position: center;
+  object-position: center;
+}
+
+.pic-holder .upload-file-block,
+.pic-holder .upload-loader {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(120, 122, 136, 0.7);
+  color: #f8f9fc;
+  font-size: 12px;
+  font-weight: 600;
+  opacity: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.pic-holder .upload-file-block {
+  cursor: pointer;
+}
+
+.pic-holder:hover .upload-file-block {
+  opacity: 1;
+}
+
+.pic-holder.uploadInProgress .upload-file-block {
+  display: none;
+}
+
+.pic-holder.uploadInProgress .upload-loader {
+  opacity: 1;
 }
