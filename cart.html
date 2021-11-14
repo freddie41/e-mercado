@@ -18,6 +18,9 @@
   <link rel="canonical" href="https://getbootstrap.com/docs/4.3/examples/album/">
   <link href="css/bootstrap.min.css" rel="stylesheet">
   <link href="css/styles.css" rel="stylesheet">
+
+  <!-- Sweet Alert CSS/JS -->
+  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   
   <!-- Font awesome source -->
   <link href="css/font-awesome.min.css" rel="stylesheet">
@@ -245,14 +248,23 @@
           <!--Grid productos-->
           <div class="col-12 col-lg-8">
             <!-- Article section title -->
-            <h4 class="card-title text-muted px-4 mb-2 mt-3">
-              Artículos (<span id="productCount"></span> items)
-            </h4>
+            <div class="row no-gutters justify-content-between align-items-center">
+              <div class="col-6 m-0">
+                <h4 class="card-title text-muted pl-4 mb-2">Artículos
+                  <span class="badge badge-secondary badge-pill ml-1 py-1 px-3" id="productCount">6</span>
+                </h4>
+              </div>
+              <div class="col-6 text-right">
+                <a type="button" class="text-danger small text-uppercase px-4" onclick="deleteCartAll()">
+                  <i class="far fa-trash-alt mr-1"></i>Vaciar carrito
+                </a>
+              </div>
+            </div>
             <!--End Article section title -->
 
             <!-- Cart items title -->
             <div class="card wish-list mb-3">
-              <div class="card-body">
+              <div class="card-body pb-0">
                 <!-- Info de productos agregados al carrito -->
                 <div id="cart-items"></div>
               </div>
@@ -261,7 +273,6 @@
   
             <!-- Shipping and payment -->
             <div id="accordion">
-
               <!-- Shipping options collapse -->
               <div class="card mb-3">
                 <div class="card-header" id="heading1">
@@ -276,7 +287,7 @@
                 </div>
                 <!-- Shipping radio options -->
                 <div id="collapseShippingCard" class="collapse show" aria-labelledby="heading1" data-parent="#accordion">
-                  <div class="card-body">
+                  <div class="card-body p-3">
                     <form id="shippingTypeForm" class="needs-validation" novalidate="">
                       <div class="d-block my-3 mx-3">
                         <div class="custom-control custom-radio mb-2">
@@ -294,6 +305,42 @@
                         </div>
                       </div>
                     </form>
+                    <!-- Shipping conditions modal-->
+                    <button type="button" class="m-1 btn btn-link text-info" data-toggle="modal" data-target="#shippingConditions">Ver condiciones</button>
+                    <div class="modal fade" tabindex="-1" role="dialog" id="shippingConditions" style="display: none;" aria-hidden="true">
+                      <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title">Condiciones de envío</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">×</span>
+                            </button>
+                          </div>
+                          <div class="modal-body">
+                            <div class="container">
+                              <div class="row">
+                                <h5 class="text-warning">Premium (15%)</h5>
+                                <p class="muted text-justify">El envío de tipo Premium tiene un costo del 15% sobre el subtotal del carrito y tiene un tiempo de entrega de entre 2-5 días.</p>
+                              </div>
+                              <hr>
+                              <div class="row">
+                                <h5 class="text-primary">Express (7%)</h5>
+                                <p class="muted text-justify">El envío de tipo Express tiene un costo del 7% sobre el subtotal del carrito y tiene un tiempo de entrega de entre 5-8 días.</p>
+                              </div>
+                              <hr>
+                              <div class="row">
+                                <h5 class="text-secondary">Standard (5%)</h5>
+                                <p class="muted text-justify">El envío de tipo Standard tiene un costo del 5% sobre el subtotal del carrito y tiene un tiempo de entrega de entre 12-15 días.</p>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-info" data-dismiss="modal">Cerrar</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- END Shipping conditions modal-->
                   </div>
                 </div>
                 <!-- End Shipping radio options -->
@@ -408,8 +455,7 @@
                     <div class="invalid-feedback">
                       Debe seleccionar un método de pago.
                     </div>
-
-                    <!-- Modal -->
+                    <!-- Payment Modal -->
                     <div class="modal fade" id="paymentModal" tabindex="-1" role="dialog" aria-labelledby="paymentModalLabel"
                       aria-hidden="true">
                       <div class="modal-dialog" role="document">
@@ -531,6 +577,7 @@
                         </div>
                       </div>
                     </div>
+                    <!-- END Payment Modal -->
                   </div>
                 </div>
                 <!-- End Payment radio options -->
@@ -544,9 +591,9 @@
           <!--Grid Cart Summary -->
           <div class="col-12 col-lg-4">
             <!-- Article Summary Section Title -->
-            <h4 class="card-title d-flex justify-content-between align-items-center text-muted px-4 mb-2 mt-3">
+            <h4 class="card-title d-flex justify-content-between align-items-center text-muted px-3 mb-2">
               Resumen del pedido
-              <span class="badge badge-secondary badge-pill" id="productSummaryCount"></span>
+              <span class="badge badge-secondary badge-pill py-1 px-3" id="productSummaryCount"></span>
             </h4>
             <!-- Article Summary Section Title -->
 
