@@ -161,7 +161,7 @@ function validateAndSaveData() {
               }
             );
           }, 300);
-
+          window.scrollTo(0, 0);
         } else {
 
           localStorage.setItem("userProfile", (JSON.stringify({

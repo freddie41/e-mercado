@@ -317,14 +317,31 @@ el site header y dropdown */
   background: white;
 }
 
-@media (min-width: 720px) {
-  .alert{
+/* Control de ancho de las alertas responsive
+    para mobile y resoluciones superiores */
+@media (max-width: 576px) {
+  .alert {
     position: absolute;
     display: block;
     text-align: center;
-    top: 175px;
+    font-size: 0.9rem;
     z-index: 10;
-    width: 41%;
+    top: 158px;
+    width: 92%;
+    left: 50%;
+    transform: translate(-50%, 0);
+  }
+}
+
+@media (min-width: 576px) {
+  .alert {
+    position: absolute;
+    display: block;
+    text-align: center;
+    font-size: 0.9rem;
+    z-index: 10;
+    top: 178px;
+    width: 50%;
     left: 50%;
     transform: translate(-50%, 0);
   }

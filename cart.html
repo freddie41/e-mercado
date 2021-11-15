@@ -40,43 +40,6 @@
         font-size: 3.5rem;
       }
     }
-
-    /* Control de ancho de las alertas responsive
-    para mobile y resoluciones superiores */
-    @media (max-width: 576px) {
-      .alert {
-        position: absolute;
-        display: block;
-        font-size: 0.9rem;
-        z-index: 10;
-        top: 157px;
-        width: 92%;
-        left: 50%;
-        transform: translate(-50%, 0);
-      }
-      
-      .dangerAlert {
-        position: absolute;
-        display: block;
-        font-size: 0.9rem;
-        z-index: 10;
-        top: 2875px;
-        width: 92%;
-        left: 50%;
-        transform: translate(-50%, 0);
-      }
-
-      .successAlert {
-        position: absolute;
-        display: block;
-        font-size: 0.9rem;
-        z-index: 10;
-        top: 2875px;
-        width: 92%;
-        left: 50%;
-        transform: translate(-50%, 0);
-      }
-    }
   </style>
 </head>
   
@@ -455,6 +418,9 @@
                     <div class="invalid-feedback">
                       Debe seleccionar un método de pago.
                     </div>
+                    <div class="valid-feedback">
+                      Método de pago seleccionado correctamente.
+                    </div>
                     <!-- Payment Modal -->
                     <div class="modal fade" id="paymentModal" tabindex="-1" role="dialog" aria-labelledby="paymentModalLabel"
                       aria-hidden="true">
@@ -572,6 +538,9 @@
                             <input class="form-control" type="hidden" id="payRadioErrFeed">
                             <div class="invalid-feedback">
                               Debe seleccionar una opción.
+                          </div>
+                          <div class="valid-feedback">
+                            Método de pago seleccionado correctamente.
                           </div>
                           <div class="modal-footer pb-2">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>

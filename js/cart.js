@@ -346,7 +346,7 @@ function validateForms() {
   let cartValid = true;
   let shippingTypeForm = document.getElementById("shippingTypeForm");
   let addressForm = document.getElementById("addressForm");
-  let selectPaymentBtn = document.getElementById("showModalBtn");
+  let selectPaymentBtnErrFeed = document.getElementById("showModalBtn");
 
   //Validar seleccion de tipo de envio.
   if (shippingTypeForm.checkValidity() === false) {
@@ -375,10 +375,10 @@ function validateForms() {
 
     document.getElementById("collapsePaymentHead").classList.add("collapsed");
     document.getElementById("collapsePaymentCard").classList.add("show");
-    selectPaymentBtn.classList.add("is-invalid");
+    selectPaymentBtnErrFeed.classList.add("is-invalid");
 
   } else {
-    selectPaymentBtn.classList.remove("is-invalid");
+    selectPaymentBtnErrFeed.classList.remove("is-invalid");
   }
 
   if (!cartValid) {
@@ -523,21 +523,28 @@ $(document).ready(function () {
     event.preventDefault();
     event.stopPropagation();
   }
+  window.scrollTo(0, 0);
 })
 //Funcion de evento para restablecer seleccion del metodo de pago al cerrar
 //el modal sin aceptar un metodo de pago.
 .on("click", "#paymentModal [data-dismiss=modal]", function () {
-  
+  let selectPaymentBtnErrFeed = document.getElementById("showModalBtn");
+
   if (!validatePaymentModal()) {
     $("[name=paymentType]").each(function (i) {
       $(this).prop("checked", false);
     });
     $("#cardPaymentForm").hide();
     $("#bankPaymentForm").hide();
+    selectPaymentBtnErrFeed.classList.add("is-invalid");
+    selectPaymentBtnErrFeed.classList.remove("is-valid");
   }
 })
 //Funcion de evento para validar el metodo de pago elegido al hacer clic en aceptar.
 .on("click", "#validatePaymentModal", function () {
+
+  let payRadioErrFeed = document.getElementById("payRadioErrFeed");
+  let selectPaymentBtnErrFeed = document.getElementById("showModalBtn");
 
   if (validatePaymentModal()) {
 
@@ -550,6 +557,8 @@ $(document).ready(function () {
     }
     
     let paymentData = $(formID).serializeArray();
+    selectPaymentBtnErrFeed.classList.remove("is-invalid");
+    selectPaymentBtnErrFeed.classList.add("is-valid");
 
     $("#paymentModal").modal('hide');
     $("#paymentInfo").val(JSON.stringify(paymentData));
@@ -566,12 +575,12 @@ $(document).ready(function () {
     cardPaymentForm.show();
     bankPaymentForm.hide();
     bankPaymentForm.removeClass("was-validated");
-    payRadioErrFeed.classList.remove("is-valid");
+    payRadioErrFeed.classList.remove("is-invalid");
   }
   if (event.target.id == 'banksradio') {
     cardPaymentForm.hide();
     bankPaymentForm.show();
     cardPaymentForm.removeClass("was-validated");
-    payRadioErrFeed.classList.remove("is-valid");
+    payRadioErrFeed.classList.remove("is-invalid");
   }
 });
