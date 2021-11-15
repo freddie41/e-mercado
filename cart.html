@@ -230,7 +230,7 @@
   <!-- Contenedor con los elementos que conforman el carrito de articulos -->
   <main role="main" class="pb-5">
     <div class="container my-4">
-      <div class="text-center p-4">
+      <div class="text-center p-4 mb-4">
         <h2>Mi carrito</h2>
         <p class="lead">Verás aquí todos los productos agregados al carrito.</p>
       </div>
@@ -501,7 +501,7 @@
                                     <div class="col-md-6 mb-3">
                                       <label for="transferCurrency">Moneda</label>
                                       <select class="custom-select d-block w-100" name="currency" id="transferCurrency" required>
-                                        <option>Seleccionar...</option>
+                                        <option value="">Seleccionar...</option>
                                         <option>Pesos (UYU)</option>
                                         <option>Dólares (USD)</option>
                                       </select>
@@ -569,10 +569,14 @@
                               </div>
                               <!-- End Cards option-->
                             </div>
+                            <input class="form-control" type="hidden" id="payRadioErrFeed">
+                            <div class="invalid-feedback">
+                              Debe seleccionar una opción.
                           </div>
-                          <div class="modal-footer">
+                          <div class="modal-footer pb-2">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
                             <button id="validatePaymentModal" type="button" class="btn btn-info">Aceptar</button>
+                            </div>
                           </div>
                         </div>
                       </div>
