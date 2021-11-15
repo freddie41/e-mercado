@@ -185,6 +185,11 @@ only screen and (                min-resolution: 2dppx) {
 
 /***** ESTILO DESKTOP RESPONSIVE *****/
 
+/* Animación al ejecutar un scrollUp */
+html {
+  scroll-behavior: smooth;
+}
+
 /* Tipografia utilizada en el sitio */
 .jumbotron, .card-body, .container, .container-fluid, .site-header {
     font-family: 'Open Sans', sans-serif !important;
@@ -213,7 +218,7 @@ footer {
 
 .jumbotron {
   height: 50vh;
-  padding: 5em inherit;
+  padding: 5em;
   margin-bottom: 0;
   background-color: #53C0FB;
   background: url('../img/cover_back.png');
@@ -225,9 +230,9 @@ footer {
 }
 
 .jumbotron-fluid {
-  height: 29vh;
-  padding: 1em inherit;
-  margin-bottom: 0;
+  align-self: center;
+  height: 30vh;
+  padding: 15px;  margin-bottom: 0;
   background-color: #53C0FB;
   background: url('../img/cover_back_sm.png');
   background-size: cover;
@@ -239,12 +244,10 @@ footer {
 
 @media (min-width: 375px) {
   .jumbotron {
-    padding-top: 6rem;
-    padding-bottom: 6rem;
+    padding: 6rem;
   }
   .jumbotron-fluid {
-    padding-top: 1rem;
-    padding-bottom: 1rem;
+    padding: 6rem;
   }
 }
 
@@ -257,7 +260,6 @@ footer {
 }
 
 .jumbotron .container {
-  max-width: 40rem;
   background-color: rgba(255, 255, 255, 0.5);
   border-radius: 10px;
   text-shadow: 1px 1px 2px grey;
