@@ -1,10 +1,13 @@
+//URL base para construir el nombre del archivo JSON.
 var PRODUCT_INFO = "https://freddie41.github.io/e-mercado.sandbox/cars_api/";
 
+//Objeto para guardar la info de productos del endpoint.
 var productInfo = {};
 
+//Array para guardar la lista de productos del endpoint.
 var productsList = [];
 
-// Función para mostrar un carousel de imágenes
+//Función para mostrar un carousel de imágenes.
 function showCarousel(id, array) {
 
     var html = $("#" + id).append( `
@@ -44,21 +47,16 @@ function showCarousel(id, array) {
     });
 }
 
-// Función para mostrar info de producto al cliquear en una de las opciones de la lista
-function setProductInfo (id) {
-    localStorage.setItem("productID", JSON.stringify({productID: id}));
-    window.location = "product-info.html";
-}
-
-// Función para mostrar los comentarios y rating 
+//Función para mostrar los comentarios y rating 
 function showCommentsList(commentsList) {
 
     let htmlContentToAppend = document.getElementById("commentsList").innerHTML;
 
-    for(let item of commentsList) {
+    for (let item of commentsList) {
         
         let comment = item;
 
+        //Control para definir el rating de cada comentario en base al valor del endpoint.
         let starRating = [
             comment.score >= 1 ? "checked" : "",
             comment.score >= 2 ? "checked" : "",
@@ -87,12 +85,11 @@ function showCommentsList(commentsList) {
             </div>
         </div>
         `
-
-        document.getElementById("commentsList").innerHTML = htmlContentToAppend;
     }
+    document.getElementById("commentsList").innerHTML = htmlContentToAppend;
 }
 
-// Función para obtener el valor de rating de estrella al hacer clic sobre una de las opciones
+//Función para obtener valor de rating.
 function getStarRating() {
 
     var stars = document.getElementsByName("rating");
@@ -105,8 +102,7 @@ function getStarRating() {
     return 0;
 }
 
-// Función para limpiar los campos de entrada de texto y rating de un comentario nuevo
-// al hacer clic sobre el boton cancelar
+//Función para limpiar inputs y rating de comentario nuevo.
 function cleanCommentAndRating() {
     document.getElementById("commentText").value = "";
     document.getElementById("star-1").checked = false;
@@ -116,20 +112,21 @@ function cleanCommentAndRating() {
     document.getElementById("star-5").checked = false;
 }
 
-// Función para mostrar el usuario que genera un comentario nuevo
-function getUserLogged() {
+//Función para mostrar usuario que genera comentario nuevo.
+function showUserLogged() {
 
-    // User data y google user data
+    //Obtienen datos de usuario google y normal guardados en local.
     var userLogged = localStorage.getItem("userLogged");
     var googleUserLogged = localStorage.getItem("googleUserLogged");
     var user = document.getElementById("user");
   
-    // Control para mostrar user logged o google user logged
+    //Control para mostrar email de usuario normal.
     if (userLogged) {
       userLogged = JSON.parse(userLogged);
       user = userLogged.user;
       return user;
     }
+    //Control para mostrar email de usuario google.
     if (googleUserLogged) {
       googleUserEmail = googleUserLogged;
       user = googleUserEmail;
@@ -137,26 +134,26 @@ function getUserLogged() {
     }
 }
 
-// Función para publicar un nuevo comentario con rating
+//Función para publicar nuevo comentario y rating.
 function publishComment() {
     showCommentsList([
         {
             "score": getStarRating(),
             "description": document.getElementById("commentText").value,
-            "user": getUserLogged(),
+            "user": showUserLogged(),
             "dateTime": new Date().getTime()
         }
     ]);
-
+    //Se ejecuta para limpiar el input y rating luego de ingresar un comentario nuevo.
     cleanCommentAndRating();
 }
 
-// Función para mostrar los productos relacionados en el carrusel
+//Función para mostrar productos relacionados.
 function showRelatedProducts(productsList, relatedProducts) {
 
     let htmlContentToAppend = "";
 
-    for(let item of productsList) {
+    for (let item of productsList) {
 
         let product = item;
 
@@ -171,14 +168,22 @@ function showRelatedProducts(productsList, relatedProducts) {
                 </div>
             </div>
             `
-        }
-        document.getElementById("card-deck").innerHTML = htmlContentToAppend;   
+        } 
     }
+    document.getElementById("card-deck").innerHTML = htmlContentToAppend;
 }
 
-// Función para mostrar la info del producto segun el ID guardado en localStorage
+//Funcion para ver la pagina de info de producto al cliquear en una de las opciones de productos relacionados.
+function setProductInfo (id) {
+    localStorage.setItem("productID", JSON.stringify({productID: id}));
+    window.location = "product-info.html";
+}
+
+//Función para mostrar info del producto segun el ID guardado en local.
 function showProductInfo (productID) {
+
     getJSONData(PRODUCT_INFO + productID + ".json").then(function(resultObj) {
+
         if (resultObj.status === "ok") {
 
             productInfo = resultObj.data;
@@ -193,24 +198,25 @@ function showProductInfo (productID) {
             productCategoryHTML.innerHTML = productInfo.category;
             productCostHTML.innerHTML = productInfo.currency + " " + productInfo.cost;
 
-            //Muestro las imagenes en forma de carrusel
+            //Muestra imagenes de producto en formato carrusel.
             showCarousel("carouselIndicators", productInfo.images);
 
-            // Trae el listado de comentarios desde el json a traves de la url y los muestra
+            //Trae listado de comentarios desde el endpoint.
             getJSONData(PRODUCT_INFO_COMMENTS_URL).then(function (resultObj) {
             
                 if (resultObj.status === "ok") {
-                    
+
+                    //Muestra el listado de comentarios.
                     showCommentsList(resultObj.data);
 
-                    // Trae el listado de productos para mostrar productos relacionados
+                    //Trea el listado de productos desde el endpoint.
                     getJSONData(PRODUCTS_URL).then(function (resultObj) {
         
                         if (resultObj.status === "ok") {
         
                             productsList = resultObj.data;
         
-                            //Muestro los productos relacionados en el carrusel
+                            //Muestra los productos relacionados.
                             showRelatedProducts(productsList, productInfo.relatedProducts);
                         }
                     });
@@ -225,8 +231,9 @@ function showProductInfo (productID) {
 //elementos HTML presentes.
 document.addEventListener("DOMContentLoaded", function (e) {
 
-    // Importación del id almacenado al selecciponar el producto 
+    //Trae el ID de producto almacenado en local. 
     var product = JSON.parse(localStorage.getItem("productID"));
 
+    //Muestra el listado de productos.
     showProductInfo(product.productID);
 });

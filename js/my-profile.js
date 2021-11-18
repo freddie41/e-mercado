@@ -1,4 +1,4 @@
-// Fetch all the user fields to save and show values.
+//Obtienen todos los campos del panel de edicion derecho.
 var userFirstName = document.getElementById("firstName");
 var userLastNames = document.getElementById("lastNames");
 var userEmail = document.getElementById("email");
@@ -7,7 +7,7 @@ var userDob = document.getElementById("dob");
 var userDocument = document.getElementById("document");
 var userBio = document.getElementById("bio");
 
-//Fetch all profile fields to show data.
+//Obtienen todos los campos del panel de info izquierdo.
 var profileImg = document.getElementById("profilePic");
 var profileName = document.getElementById("profileName");
 var profileEmail = document.getElementById("profileEmail");
@@ -16,8 +16,9 @@ var profileAge = document.getElementById("profileAge");
 var profileBio = document.getElementById("profileBio");
 
 
-//Funcion para calcular la edad dada una fecha de nacimiento.
+//Funcion para calcular la edad, dada una fecha de nacimiento como input.
 function getAge(birth) {
+
   var today = new Date();
   var curr_date = today.getDate();
   var curr_month = today.getMonth() + 1;
@@ -42,8 +43,7 @@ function getAge(birth) {
   }
 }
 
-//Funcion para modificar la imagen de perfil por defecto por una
-// nueva imagen de perfil cargada por el usuario
+//Funcion para modificar imagen de perfil por defecto.
 function changeProfilePicture() {
 
   $(document).on("change", ".uploadProfileInput", function () {
@@ -57,14 +57,21 @@ function changeProfilePicture() {
     if (!files.length || !window.FileReader) {
       return;
     }
+
+    //Limitador de carga para un archivo img.
     if (/^image/.test(files[0].type)) {
-      // only image file
-      var reader = new FileReader(); // instance of the FileReader
-      reader.readAsDataURL(files[0]); // read the local file
+
+      //Instanciamiento del lector de archivos.
+      var reader = new FileReader(); 
+
+      //Lector de archivos locales.
+      reader.readAsDataURL(files[0]);
 
       reader.onloadend = function () {
         $(holder).addClass("uploadInProgress");
         $(holder).find(".pic").attr("src", this.result);
+
+        //Spinner loader mostrado para el tiempo de carga de la img.
         $(holder).append(
           `<div class="upload-loader">
                 <div class="spinner-border text-info" role="status">
@@ -74,15 +81,17 @@ function changeProfilePicture() {
               `
         );
 
-        //New img local save.
+        //Guarda la nueva img en local metodo base64.
         localStorage.setItem("newProfilePic", this.result);
 
-        // Dummy timeout; call API or AJAX below
+        //Dummy timeout; call API or AJAX below
         setTimeout(() => {
           $(holder).removeClass("uploadInProgress");
           $(holder).find(".upload-loader").remove();
-          // If upload successful
+
+          //Control para validar que la img pudo ser cargada de forma exitosa.
           if (Math.random() < 0.9) {
+            //Alerta para de exito al cambiar la imagen del perfil.
             $(alert).append(`
                 <div class="alert alert-success alert-dismissible fade show" role="alert">
                     <i class="fa fa-check-circle text-success mx-2"></i><strong>Éxito.</strong> Imagen de perfil actualizada.
@@ -91,16 +100,17 @@ function changeProfilePicture() {
                     </button>
                 </div>
                 `
-            ).removeClass("hide").hide().fadeIn(300);
+            ).removeClass("hide").hide().fadeIn(300);//Tiempo de aparición en ms.
 
-            // Clear input after upload
+            //Se limpia el valor del input de la carga de imagen luego de subida.
             $(triggerInput).val("");
 
             setTimeout(() => {
-              $(alert).find('[role="alert"]').animate({ opacity: 0 }, 300).remove(300);
-            }, 3000);
+              $(alert).find('[role="alert"]').animate({ opacity: 0 }, 300).remove(300);//Tiempo para remover alerta en ms.
+            }, 3000);//Tiempo de permanencia de alerta en ms.
           } else {
             $(holder).find(".pic").attr("src", currentImg);
+            //Alerta de error al intentar subir la imagen.
             $(alert).append(`
                 <div class="alert alert-danger alert-dismissible hide" role="alert">
                     <i class="fa fa-times-circle text-danger mx-2"></i><strong>Error.</strong> Inténtelo de nuevo más tarde.
@@ -109,102 +119,110 @@ function changeProfilePicture() {
                     </button>
                 </div>
                 `
-            ).removeClass("hide").hide().fadeIn(300);
+            ).removeClass("hide").hide().fadeIn(300);//Tiempo de aparición en ms.
 
-            // Clear input after upload
+            //Se limpia el valor del input de la carga de imagen luego de subida.
             $(triggerInput).val("");
             setTimeout(() => {
-              $(alert).find('[role="alert"]').animate({ opacity: 0 }, 300).hide(300);
-            }, 3000);
+              $(alert).find('[role="alert"]').animate({ opacity: 0 }, 300).hide(300);//Tiempo para remover alerta en ms.
+            }, 3000);//Tiempo de permanencia de alerta en ms.
           }
-        }, 1500);
+        }, 1500);//Tiempo de carga de img.
       };
     } else {
+      //Alerta de error al intentar subir una imagen en formato no valido.
       $(alert).append(
         `<div class="alert alert-danger d-inline-block p-2 small" role="alert">Por favor, elija una imagen válida.</div>`
       );
       setTimeout(() => {
-        $(alert).find('role="alert"').remove(300);
-      }, 3000);
+        $(alert).find('role="alert"').remove(300);//Tiempo para remover alerta en ms.
+      }, 3000);//Tiempo de permanencia de alerta en ms.
     }
   });
 }
 
-//Funcion para validar que todos los campos obligatorios del perfil
-// se hayan completado antes de ser guardados
+//Funcion para validar campos del perfil y guardar datos en local.
 function validateAndSaveData() {
   window.addEventListener('load', function () {
 
-    // Fetch all the forms we want to apply custom Bootstrap validation styles to
-    var forms = document.getElementsByClassName('needs-validation');
+    //Obtiene el formulario para validar con pseudoclases de BS.
+    var form = document.getElementById("userProfileData");
 
-    // Loop over them and prevent submission
-    var validation = Array.prototype.filter.call(forms, function (form) {
-      form.addEventListener('submit', function (event) {
+    form.addEventListener('submit', function (event) {
 
-        event.preventDefault();
-        event.stopPropagation();
+      event.preventDefault();
+      event.stopPropagation();
 
-        if (form.checkValidity() === false) {
+      if (form.checkValidity() === false) {
 
-          setTimeout(function () {
-            $('<div class="dangerAlert alert alert-danger">' +
+        //Alerta de error al no poder validar todos los campos.
+        setTimeout(function () {
+          $('<div class="dangerAlert alert alert-danger">' +
             '<i class="fa fa-times-circle text-danger mx-2"></i>' +
             '<strong>Error.</strong> Corrija los campos señalados.' +
             '<button type="button" class="close" data-dismiss="alert">' +
-            '&times;</button></div>').hide().appendTo('#alertInfo').fadeIn(300);
+            '&times;</button></div>').hide().appendTo('#alertInfo').fadeIn(300);//Tiempo de aparición en ms.
+
+          $(".alert").delay(3000).fadeOut(//Tiempo de permanencia de alerta en ms.
+            "normal",
+            function () {
+              $(this).remove().fadeIn(300);//Tiempo para remover alerta en ms.
+            }
+          );
+        }, 300);//Tiempo de espera hasta mostrar alerta.
+
+        //Scroll automatico al nivel superior de la pagina para visualizar alerta.
+        window.scrollTo(0, 0);
+
+      } else {
         
-            $(".alert").delay(3000).fadeOut(
-              "normal",
-              function () {
-                $(this).remove().fadeIn(300);
-              }
-            );
-          }, 300);
-          window.scrollTo(0, 0);
-        } else {
+        //Se guardan los nuevos datos de usuario.
+        localStorage.setItem("userProfile", (JSON.stringify({
+          userName: userFirstName.value,
+          userLastNames: userLastNames.value,
+          userEmail: userEmail.value,
+          userPhone: userPhone.value,
+          userDob: userDob.value,
+          userDocument: userDocument.value,
+          userBio: userBio.value
+        })));
 
-          localStorage.setItem("userProfile", (JSON.stringify({
-            userName: userFirstName.value,
-            userLastNames: userLastNames.value,
-            userEmail: userEmail.value,
-            userPhone: userPhone.value,
-            userDob: userDob.value,
-            userDocument: userDocument.value,
-            userBio: userBio.value
-          })));
-
-          setTimeout(function () {
-            $('<div class="successAlert alert alert-success">' +
+        //Alerta de exito al guardar nuevos datos de usuario.
+        setTimeout(function () {
+          $('<div class="successAlert alert alert-success">' +
             '<i class="fa fa-check-circle text-success mx-2"></i>' +
             '<strong>Éxito.</strong> Info del perfil actualizada.' +
             '<button type="button" class="close" data-dismiss="alert">' +
-            '&times;</button></div>').hide().appendTo('#alertInfo').fadeIn(300);
-        
-            $(".alert").delay(3000).fadeOut(
-              "normal",
-              function () {
-                $(this).remove().fadeIn(300);
-              }
-            );
-            showSavedData();
-          }, 300);
-        }
-        form.classList.add('was-validated');
-      });
+            '&times;</button></div>').hide().appendTo('#alertInfo').fadeIn(300);//Tiempo de aparición en ms.
+
+          $(".alert").delay(3000).fadeOut(//Tiempo de permanencia de alerta en ms.
+            "normal",
+            function () {
+              $(this).remove().fadeIn(300);//Tiempo para remover alerta en ms.
+            }
+          );
+
+          //Muestra los datos guardados en los inputs.
+          showSavedData();
+
+        }, 300);//Tiempo de espera hasta mostrar alerta.
+
+        //Scroll automatico al page top para ver alerta.
+        window.scrollTo(0, 0);
+      }
+      form.classList.add('was-validated');
     });
   });
 }
   
-
 //Funcion para mostrar todos los datos disponibles generados tras el login.
 function showLoginUserData() {
 
-  //Get User/googleUser data
+  //Obtienen datos de usuario google y normal guardados en local.
   var userLogged = localStorage.getItem("userLogged");
   var gUserProfile = localStorage.getItem("googleUserProfile");
 
-  //Control para mostrar user logged o google user logged.
+  //Control para mostrar email de usuario normal.
   if (userLogged) {
 
     userLogged = JSON.parse(userLogged);
@@ -217,12 +235,12 @@ function showLoginUserData() {
     userEmail.value = userLogged.user;
   }
 
+  //Control para mostrar email de usuario google.
   if (gUserProfile) {
 
     gUserProfile = JSON.parse(gUserProfile);
 
     //Google profile img mostrada en el perfil de usuario.
-    // + deshabilita cambio de img.
     profileImg.src = gUserProfile.gUserImg;
 
     //Google full name mostrado en el perfil del usuario.
@@ -247,12 +265,12 @@ function showLoginUserData() {
 //Funcion para mostrar los valores guardados en los campos.
 function showSavedData() {
 
-  //Get objeto con todos los datos ingresados.
+  //Obtienen los datos guardados en local con los datos ingresados.
   var userProfile = localStorage.getItem("userProfile");
   var userNewProfilePic = localStorage.getItem("newProfilePic");
   userProfile = JSON.parse(userProfile);
 
-  //Show saved user data.
+  //Muestra la info de usuario guardada en el panel de edición derecho.
   if (userProfile != null) {
     userFirstName.value = userProfile.userName;
     userLastNames.value = userProfile.userLastNames;
@@ -262,7 +280,7 @@ function showSavedData() {
     userDocument.value = userProfile.userDocument;
     userBio.value = userProfile.userBio;
 
-    //Show saved profile data.
+    //Muestra la info guardada en el panel de info izquierdo.
     profileName.innerText = userProfile.userName + " " + userProfile.userLastNames;
     profileEmail.innerText = userProfile.userEmail;
     profileEmail.setAttribute("href", `mailto:${userProfile.userEmail}`);
@@ -271,7 +289,7 @@ function showSavedData() {
     profileAge.innerText = getAge(userProfile.userDob) + " años";
     profileBio.innerText = userProfile.userBio;
   }
-  //Show new img saved.
+  //Muestra la nueva img guardada.
   if (userNewProfilePic != null) {
     profileImg.src = userNewProfilePic;
   }
@@ -279,7 +297,6 @@ function showSavedData() {
 
 //Funcion para refrescar la página y limpiar los cambios no guardados.
 function cleanFields() {
-
   document.getElementById("cancelSaveUserData").addEventListener("click", function (e) {
     window.location = "my-profile.html";
   });
@@ -290,19 +307,18 @@ function cleanFields() {
 //elementos HTML presentes.
 document.addEventListener("DOMContentLoaded", function (e) {
 
-  //Se muestra user data obtenida post login.
+  //Muestra datos de usuario de Google.
   showLoginUserData();
 
-  //Se ejecuta validación y guardado de valores en campos de user data.
+  //Ejecuta validación y guardado de valores inputs.
   validateAndSaveData();
 
-  //Se muestra la información guardada en todos los campos.
+  //Muestra la información guardada en inputs.
   showSavedData();
 
-  //Ejecuta el cambio de img del perfil.
+  //Ejecuta cambio de img del perfil.
   changeProfilePicture();
 
-  //Limplia los campos no guardados al refrescar el sitio.
+  //Limplia campos no guardados.
   cleanFields();
-
 });

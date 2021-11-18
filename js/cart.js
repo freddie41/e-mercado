@@ -1,16 +1,16 @@
-//Variable para almancenar el arreglo obtenido al llamar al endpoint
+//Variable para almancenar el array obtenido del endpoint.
 var cartProducts = [];
 
-//Valor de la cotización del USD
+//Valor de la cotización UYU a USD.
 var conversionValueUSD = 40;
 
-//Valor del costo de envio elegido.
+//Variable para guardar costo de envio elegido.
 var shippingCost;
 
-//Obtengo el nuevo articulo agregado al carrito.
-var newCartItems = localStorage.getItem("newCartArts");
+//Trae el nuevo articulo agregado al carrito.
+var newCartProducts = localStorage.getItem("newCartArts");
 
-//Configuración de botones de swal2 para mostrar btns de BS.
+//Config de btns de SweetAlert2 para mostrar btns de BS4.
 var swalBSCancelAcceptButtons = Swal.mixin({
   customClass: {
       confirmButton: 'btn btn-danger m-3',
@@ -26,7 +26,7 @@ var swalBSStandardBtn = Swal.mixin({
   buttonsStyling: false
 });
 
-//Funcion para calcular el total del carrito
+//Funcion para calcular el total del carrito.
 function calcTotal() {
 
   let totalCarrito = 0;
@@ -41,7 +41,7 @@ function calcTotal() {
   }
 }
 
-//Funcion para recalcular el subtotal en tiempo real al modificar cantidades
+//Funcion para recalcular el subtotal.
 function calcSubTotal() {
 
   let counts = $("[data-count]");
@@ -99,10 +99,10 @@ function calcShipping() {
     document.getElementById('shippingCost').innerText = shippingCost;
 }
 
-//Funcion para mostrar el listado de productos del carrito
+//Funcion para mostrar listado de productos del carrito.
 function showCartProducts() {
 
-
+  //Control para mostrar productos en el carrito si existen productos en el array de productos.
   if (cartProducts.length > 0) {
     let htmlContent = "";
 
@@ -112,7 +112,7 @@ function showCartProducts() {
       let currencyConv = article.currency;
       let artSubTotal = 0;
 
-      //Control para hacer la conversion de moneda de UYU a USD
+      //Control para hacer la conversion de moneda de UYU a USD.
       if (currencyConv === "UYU") {
         artSubTotal = (article.unitCost * article.count) / conversionValueUSD;
       } else {
@@ -169,7 +169,7 @@ function showCartProducts() {
               </div>
               <div class="row d-flex justify-content-between align-items-center">
                 <div class="col-5 col-lg-6 mt-4">
-                  <a type="button" class="text-danger small text-uppercase" onclick="deleteArticle('${article.name}')">
+                  <a type="button" class="text-danger small text-uppercase" onclick="deleteProduct('${article.name}')">
                     <i class="fas fa-trash-alt mr-1"></i>Borrar
                   </a>
                 </div>
@@ -191,22 +191,30 @@ function showCartProducts() {
     `
     }
 
-  //Control para que los controles de cantidad se muestren en el estilo correcto desde el comienzo
-  // y se haga el calculo de subtotal y total una sola vez
+  //Evento de escucha de tipo cambio para que los controles de cantidad se muestren estilo correcto al cargar el carrito.
   $("#cart-items").html(htmlContent).ready(function () {
     for (let i = 0; i < cartProducts.length; i++) {
 
+      //Controla que se calcule el subtotal una sola vez.
       $(`#count${i}`).trigger("change", "not_subtotal");
     }
+    //Recalcula el subtotal inicial.
     calcSubTotal();
   });
+
+  //Estado de carrito vacio.
   } else {
-    console.log("test")
+
+    //Inhabilita seleccion de opciones de tipo de envio.
     document.getElementById("premiumradio").setAttribute("disabled", "disabled");
     document.getElementById("expressradio").setAttribute("disabled", "disabled");
     document.getElementById("standardradio").setAttribute("disabled", "disabled");
+
+    //Muestra guiones en valores sin datos.
     document.getElementById("subtotalCarrito").innerText = "-";
     document.getElementById("totalCarrito").innerText = "-";
+
+    //Se muestra mensaje informativo para el carrito vacio.
     document.getElementById("cart-items").innerHTML =`
     <div class="card-body mb-0">
       <div class="col-sm-12 empty-cart-cls text-center"> <img src="img/logos/bag.png" width="180" height="180" class="img-fluid mb-3">
@@ -217,13 +225,15 @@ function showCartProducts() {
     </div>
     `
   }
+  //Muestra cantidad de productos en el resumen de pedido y carrito.
   showProductsCount();
-  // Muestro los productos del carrito en el resumen de pedido
-  showSummaryProducts();
+
+  //Muestra productos del carrito en el resumen de pedido.
+  showProductsSummary();
 }
 
-//Funcion para mostrar los articulos en el resumen de pedido
-function showSummaryProducts() {
+//Funcion para mostrar productos en resumen de pedido.
+function showProductsSummary() {
 
   let htmlContent = "";
 
@@ -253,10 +263,10 @@ function showSummaryProducts() {
   document.getElementById("summaryItems").innerHTML = htmlContent;
 }
 
-//Funcion para eliminar articulo del carrito.
-function deleteArticle(name) {
+//Funcion para eliminar producto del carrito.
+function deleteProduct(name) {
 
-  //Alerta de advertencia previa al borrado.
+  //Alerta de advertencia previa al borrado de tipo modal.
   swalBSCancelAcceptButtons.fire({
     title: '¡Advertencia!',
     text: "¿Estas seguro que quieres borrar el artículo el carrito?",
@@ -265,9 +275,11 @@ function deleteArticle(name) {
     confirmButtonText: 'Borrar',
     cancelButtonText: 'Cancelar',
     reverseButtons: true
+    
   }).then((result) => {
+
     if (result.isConfirmed) {
-      //Alerta de confirmación del borrado.
+      //Alerta de confirmación del borrado de tipo modal.
       swalBSStandardBtn.fire(
         '¡Éxito!',
         'Artículo borrado del carrito.',
@@ -277,15 +289,16 @@ function deleteArticle(name) {
       cartProducts = cartProducts.filter(function (product) {
         return product.name !== name;
       });
+      //Muestra el listado de productos actualizado.
       showCartProducts(cartProducts);
     }
   });
 }
 
-//Funcion para borrar el carrito.
+//Funcion para borrar carrito.
 function deleteCartAll() {
   
-  //Alerta de advertencia previa al borrado.
+  //Alerta de advertencia previa al borrado de tipo modal.
   swalBSCancelAcceptButtons.fire({
     title: '¡Advertencia!',
     text: "¿Estas seguro que quieres vaciar el carrito?",
@@ -295,6 +308,8 @@ function deleteCartAll() {
     cancelButtonText: 'Cancelar',
     reverseButtons: true
   }).then((result) => {
+
+    //Borrado del carrito
     if (result.isConfirmed) {
       cartProducts = [];
       showCartProducts();;
@@ -302,14 +317,10 @@ function deleteCartAll() {
   });
 }
 
-//Funcion para contar la cantidad de articulos agregados al carrito
+//Funcion para mostrar cantidad de productos en resumen de pedido y carrito.
 function showProductsCount() {
-  //if (cartProducts.length > 0) {
     document.getElementById("productCount").innerText = cartProducts.length;
     document.getElementById("productSummaryCount").innerText = cartProducts.length;
-  //} else {
-    
-  //}
 }
 
 //Funcion para validar los campos del metodo de pago elegido.
@@ -319,10 +330,12 @@ function validatePaymentModal() {
   let payRadioErrFeed = document.getElementById("payRadioErrFeed");
   let validateForms = true;
 
+  //Control para validar cuando no se selecciona ningun metodo de pago.
   if (!paymentOptions[0].checked && !paymentOptions[1].checked) {
     validateForms = false;
     payRadioErrFeed.classList.add("is-invalid");
   }
+  //Control para validar fomulario de transferencia bancaria.
   if (paymentOptions[0].checked) {
     let form = document.getElementById("bankPaymentForm");
     if (form.checkValidity() === false) {
@@ -330,6 +343,7 @@ function validatePaymentModal() {
     }
     form.classList.add('was-validated');
   }
+  //Control para validar fomulario de pago con tarjeta.
   if (paymentOptions[1].checked) {
     let form = document.getElementById("cardPaymentForm");
     if (form.checkValidity() === false) {
@@ -340,7 +354,7 @@ function validatePaymentModal() {
 
   return validateForms;
 }
-//Funcion para validar todos los campos del carrito antes de generar la orden.
+//Funcion para validar fomularios del carrito.
 function validateForms() {
 
   let cartValid = true;
@@ -348,7 +362,7 @@ function validateForms() {
   let addressForm = document.getElementById("addressForm");
   let selectPaymentBtnErrFeed = document.getElementById("showModalBtn");
 
-  //Validar seleccion de tipo de envio.
+  //Valida seleccion de tipo de envio.
   if (shippingTypeForm.checkValidity() === false) {
 
     cartValid = false;
@@ -358,9 +372,10 @@ function validateForms() {
   }
   shippingTypeForm.classList.add('was-validated');
 
-  //Validar formulario de direccion.
+  //Valida formulario de direccion.
   if (addressForm.checkValidity() === false) {
 
+    //Bandera de validacion.
     cartValid = false;
 
     document.getElementById("collapseAddressHead").classList.add("collapsed");
@@ -368,9 +383,10 @@ function validateForms() {
   }
   addressForm.classList.add('was-validated');
 
-  //Validar seleccion de metodo de pago.
+  //Valida modal de metodo de pago.
   if (!validatePaymentModal()) {
 
+    //Bandera de validacion.
     cartValid = false;
 
     document.getElementById("collapsePaymentHead").classList.add("collapsed");
@@ -381,21 +397,21 @@ function validateForms() {
     selectPaymentBtnErrFeed.classList.remove("is-invalid");
   }
 
+  //Control para mostrar alerta en caso de no validar todos los campos.
   if (!cartValid) {
     setTimeout(function () {
       $('<div class="dangerAlert alert alert-danger">' +
         '<i class="fa fa-times-circle text-danger mx-2"></i>' +
         '<strong>Error.</strong> Corrija los campos señalados.' +
         '<button type="button" class="close" data-dismiss="alert">' +
-        '&times;</button></div>').hide().appendTo('#alertInfo').fadeIn(300);
-
-      $(".alert").delay(3000).fadeOut(
+        '&times;</button></div>').hide().appendTo('#alertInfo').fadeIn(300);//Tiempo de aparición en ms.
+      $(".alert").delay(3000).fadeOut(//Tiempo de permanencia de alerta en ms.
         "normal",
         function () {
-          $(this).remove().fadeIn(300);
+          $(this).remove().fadeIn(300);//Tiempo para remover alerta en ms.
         }
       );
-    }, 300);
+    }, 300);//Tiempo de espera hasta mostrar alerta.
   }
   return cartValid;
 }
@@ -404,46 +420,46 @@ function validateForms() {
 // html del documento ha finalizado.
 $(document).ready(function () {
 
-  //Funcion que trae el listado de productos en un json a traves de la url.
+  //Funcion que trae listado de productos desde el endpoint.
   getJSONData(CART_INFO_URL_ARRAY).then(function (resultObj) {
 
     if (resultObj.status === "ok") {
 
       cartProducts = resultObj.data.articles;
 
-      //Control de existencia del elemento guardado en local.
-      if (newCartItems) {
+      //Control de existencia de objeto con nuevos productos guardados en local.
+      if (newCartProducts) {
 
-        let newCartItemsArray = JSON.parse(newCartItems).articles;
+        let newCartProductsArray = JSON.parse(newCartProducts).articles;
 
-        for (let i = 0; i < newCartItemsArray.length; i++) {
+        for (let i = 0; i < newCartProductsArray.length; i++) {
           
-          let newArticle = newCartItemsArray[i];
+          let newProduct = newCartProductsArray[i];
           
-          newArticle =
+          newProduct =
           {
-            id: newArticle.id,
-            name: newArticle.name,
-            count: newArticle.count,
-            unitCost: newArticle.unitCost,
-            currency: newArticle.currency,
-            src: newArticle.src
+            id: newProduct.id,
+            name: newProduct.name,
+            count: newProduct.count,
+            unitCost: newProduct.unitCost,
+            currency: newProduct.currency,
+            src: newProduct.src
           }
           //Agrega una instancia de articulo al array de productos.
-          cartProducts.push(newArticle);
+          cartProducts.push(newProduct);
         }
       }
 
-      // Muestro la info de los productos agregados al carrito
+      //Muestra productos actualizados en carrito.
       showCartProducts();
     }
 
-    // Inicializador de popovers
+    //Inicializador de popovers.
     $('[data-toggle="popover"]').popover();
 
   }); 
 })
-//Funciones de evento para sumar/restar cantidad de articulos agregados al carrito
+//Bindeo de evento para sumar/restar cantidad de articulos agregados al carrito.
 .on("click", ".btn-number", function (event) {
   
   event.preventDefault();
@@ -454,14 +470,17 @@ $(document).ready(function () {
   var currentVal = parseInt(input.val());
 
   if (currentVal) {
+    //Control al cliquear en btn sustraer.
     if (type == 'minus') {
 
+      //Control para sustraccion de un valor de cantidad.
       if (currentVal > input.attr('min')) {
         input.val(currentVal - 1).change();
       }
-
+    //Control al cliquear en btn adicionar.
     } else if (type == 'plus') {
 
+      //Control para adicion de un valor de cantidad.
       if (currentVal < input.attr('max')) {
         input.val(currentVal + 1).change();
       }
@@ -469,10 +488,13 @@ $(document).ready(function () {
   } else {
     input.val(0);
   }
-}).on("focusin", ".input-number", function () {
-  
+})
+//Bindeo de evento al hacer focusin en el valor seleccionado.
+.on("focusin", ".input-number", function () {
   $(this).data('oldValue', $(this).val());
-}).on("change", ".input-number", function (event, flag) {
+})
+//Bindeo de evento al cliquear en los btn sustraer y adicionar.
+.on("change", ".input-number", function (event, flag) {
   
   minValue = parseInt($(this).attr('min'));
   maxValue = parseInt($(this).attr('max'));
@@ -480,11 +502,13 @@ $(document).ready(function () {
 
   let countId = $(this).attr('id');
 
+  //Control para cambiar estilo de btn al tener un valor menor a 1.
   if (valueCurrent > minValue) {
     $(".btn-number[data-type='minus'][data-id='" + countId + "']").prop('disabled', false);
   } else {
     $(".btn-number[data-type='minus'][data-id='" + countId + "']").prop('disabled', true);
   }
+  //Control para cambiar estilo de btn al tener un valor menor al valor maximo configurado.
   if (valueCurrent < maxValue) {
     $(".btn-number[data-type='plus'][data-id='" + countId + "']").prop('disabled', false);
   } else {
@@ -493,7 +517,7 @@ $(document).ready(function () {
 
   let findProductName = $(this).attr("data-name");
 
-  //Funcion para actualizar cantidad de cada articulo en el cartProducts.
+  //Funcion para actualizar cantidad de cada articulo en array de productos.
   cartProducts.map(function (product) {
     if (product.name == findProductName) {
       product.count = valueCurrent;
@@ -501,22 +525,21 @@ $(document).ready(function () {
     return product;
   });
   
-  //Actualizar los calculos en summary.
+  //Control que actualiza costos de subtotal, envio y total en resumen de pedido.
   if (flag !== "not_subtotal") {
     calcSubTotal();
     if ($("#shippingCost").text() != "-") {
-
       calcShipping();
     }
     calcTotal();
   }
 })
-//Control de evemto para cambiar tipo y costo de envio.
+//Bindeo de evento al cambiar tipo de envio que recalcula costo de envio y total.
 .on("change", 'input[type=radio][name="shippingType"]', function () {
   calcShipping();
   calcTotal();
 })
-//Control de evento para validar el colocar la orden y enviar los datos
+//Bindeo de evento de click que valida crear orden.
 .on("click", "#submitCart", function (event) {
   
   if (!validateForms()) {
@@ -525,8 +548,7 @@ $(document).ready(function () {
   }
   window.scrollTo(0, 0);
 })
-//Funcion de evento para restablecer seleccion del metodo de pago al cerrar
-//el modal sin aceptar un metodo de pago.
+//Bindeo de evento que restablece metodo de pago elegido al hacer clic en btn cerrar.
 .on("click", "#paymentModal [data-dismiss=modal]", function () {
   let selectPaymentBtnErrFeed = document.getElementById("showModalBtn");
 
@@ -540,16 +562,17 @@ $(document).ready(function () {
     selectPaymentBtnErrFeed.classList.remove("is-valid");
   }
 })
-//Funcion de evento para validar el metodo de pago elegido al hacer clic en aceptar.
+//Bindeo de evento que valida metodo de pago elegido al hacer clic en aceptar.
 .on("click", "#validatePaymentModal", function () {
 
-  let payRadioErrFeed = document.getElementById("payRadioErrFeed");
   let selectPaymentBtnErrFeed = document.getElementById("showModalBtn");
 
   if (validatePaymentModal()) {
 
+    //Variable que guarda info de pago elegida.
     let formID;
     
+    //Control para guardar info de pago en atributo paymentData.
     if ($("#banksradio").is(":checked")) {
       formID = "#bankPaymentForm";
     } else {
@@ -557,26 +580,29 @@ $(document).ready(function () {
     }
     
     let paymentData = $(formID).serializeArray();
-    selectPaymentBtnErrFeed.classList.remove("is-invalid");
-    selectPaymentBtnErrFeed.classList.add("is-valid");
-
+  
     $("#paymentModal").modal('hide');
     $("#paymentInfo").val(JSON.stringify(paymentData));
+
+    selectPaymentBtnErrFeed.classList.remove("is-invalid");
+    selectPaymentBtnErrFeed.classList.add("is-valid");
   }
 })
-//Funcion de evento para mostrar solo el form del metodo de pago seleccionado.
+//Bindeo de evento para mostrar el form del metodo de pago seleccionado.
 .on("change", "[name=paymentType]", function (event) {
   
   let payRadioErrFeed = document.getElementById("payRadioErrFeed");
   let cardPaymentForm = $("#cardPaymentForm");
   let bankPaymentForm = $("#bankPaymentForm");
   
+  //Control para mostrar formulario de tarjeta al seleccionar metodo tarjeta.
   if (event.target.id == 'cardsradio') {
     cardPaymentForm.show();
     bankPaymentForm.hide();
     bankPaymentForm.removeClass("was-validated");
     payRadioErrFeed.classList.remove("is-invalid");
   }
+  //Control para mostrar formulario de banco al seleccionar metodo Z.
   if (event.target.id == 'banksradio') {
     cardPaymentForm.hide();
     bankPaymentForm.show();

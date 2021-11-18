@@ -1,3 +1,4 @@
+//Endpoints con datos en formato JSON.
 const CATEGORIES_URL = "https://japdevdep.github.io/ecommerce-api/category/all.json";
 const PUBLISH_PRODUCT_URL = "https://japdevdep.github.io/ecommerce-api/product/publish.json";
 const CATEGORY_INFO_URL = "https://japdevdep.github.io/ecommerce-api/category/1234.json";
@@ -8,14 +9,15 @@ const CART_INFO_URL = "https://japdevdep.github.io/ecommerce-api/cart/987.json";
 const CART_INFO_URL_ARRAY = "https://freddie41.github.io/e-mercado.sandbox/cars_api/cart-preset.json";
 const CART_BUY_URL = "https://japdevdep.github.io/ecommerce-api/cart/buy.json";
 
+//Funciones para mostrar y ocultar spinners de carga.
 var showSpinner = function () {
   document.getElementById("spinner-wrapper").style.display = "block";
 }
-
 var hideSpinner = function () {
   document.getElementById("spinner-wrapper").style.display = "none";
 }
 
+//Funcion para fetchear la información de los endpoints.
 var getJSONData = function (url) {
   var result = {};
   showSpinner();
@@ -41,23 +43,21 @@ var getJSONData = function (url) {
     });
 }
 
-//Funcion que activa/desactiva el offcanvas sidebar
+//Funcion que muestra y oculta el sidebar de tipo offcanvas.
 function offCanvasInit() {
-  
   $(document).ready(function() {
- 
       $('.dismiss, .overlay').on('click', function() {
           $('.sidebar').removeClass('active');
           $('.overlay').removeClass('active');
       });
-   
+      //Abre el sidebar.
       $('.open-menu').on('click', function(e) {
           e.preventDefault();
           setTimeout(function(){
             $('.sidebar').addClass('active');
           }, 100);
           $('.overlay').addClass('active');
-          // close opened sub-menus
+          //Cierra el sidebar.
           $('.collapse.show').toggleClass('show');
           $('a[aria-expanded=true]').attr('aria-expanded', 'false');
       });
@@ -69,18 +69,18 @@ function offCanvasInit() {
 //elementos HTML presentes.
 document.addEventListener("DOMContentLoaded", function (e) {
 
-  //Inicializador del componente.
+  //Inicializador del sidebar.
   offCanvasInit();
 
-  //Get User/googleUser data
+  //Obtiene los emails del tipo de usuario ingresado.
   var userLogged = localStorage.getItem("userLogged");
   var gUserProfile = localStorage.getItem("googleUserProfile");
 
-  //Get offcanvas and navbar user data fields
+  //Obtiene los campos de email de usuario en sidebar y navbar.
   var userNavbar = document.getElementById("user");
   var userOffcanvas = document.getElementById("user-sm");
 
-  //Control para mostrar user logged o google user logged.
+  //Control para mostrar info de usuario normal.
   if (userLogged) {
     
     userLogged = JSON.parse(userLogged);
@@ -88,10 +88,11 @@ document.addEventListener("DOMContentLoaded", function (e) {
     //Email mostrado en el navbar.
     userNavbar.innerText = "Hola," + " " + userLogged.user;
 
-    //Mail mostrado en el offcanvas.
+    //Email mostrado en el sidebar.
     userOffcanvas.innerText = "Hola," + " " + userLogged.user;
   }
 
+  //Control para mostrar info de usuario google.
   if (gUserProfile) {
     
     gUserProfile = JSON.parse(gUserProfile);
@@ -99,7 +100,7 @@ document.addEventListener("DOMContentLoaded", function (e) {
     //Google name mostrado en el navbar.
     userNavbar.innerText = "Hola," + " " + gUserProfile.gUserName;
 
-    //Google name mostrado en el offcanvas.
+    //Google name mostrado en el sidebar.
     userOffcanvas.innerText = "Hola," + " " + gUserProfile.gUserName;
   }
 });
