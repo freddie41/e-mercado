@@ -54,7 +54,7 @@
 
       <!-- Emercado logo -->
       <div class="logo">
-        <h2 class="text-center"><a href="home.html"></a></h2>
+        <h2 class="text-center"><a href="index.html"></a></h2>
       </div>
 
       <!-- User login info -->
@@ -67,7 +67,7 @@
       <!-- Menu elements -->
       <ul class="list-unstyled menu-elements">
         <li class="active">
-          <a href="home.html" style="text-decoration: none;"><i class="fas fa-home"></i>Inicio</a>
+          <a href="index.html" style="text-decoration: none;"><i class="fas fa-home"></i>Inicio</a>
         </li>
         <li>
           <a href="categories.html" style="text-decoration: none;"><i class="fas fa-th"></i>Categorías</a>
@@ -100,11 +100,11 @@
               if (auth2 !== null) {
                 auth2.signOut().then(function () {
                   localStorage.clear();
-                  window.location.href = "index.html";
+                  window.location.href = "login.html";
                 });
               } else {
                 localStorage.clear();
-                window.location.href = "index.html";
+                window.location.href = "login.html";
               }
             }
           </script>
@@ -128,7 +128,7 @@
   <!-- Navbar -->
   <nav class="site-header sticky-top py-1 bg-dark d-none d-md-inline-block">
     <div class="container d-flex flex-column flex-md-row justify-content-between">
-      <a class="py-2 d-none d-md-inline-block" href="home.html" style="text-decoration: none;">
+      <a class="py-2 d-none d-md-inline-block" href="index.html" style="text-decoration: none;">
         <i class="fas fa-home"></i>Inicio
       </a>
       <a class="py-2 d-none d-md-inline-block" href="categories.html" style="text-decoration: none;">
@@ -172,11 +172,11 @@
                 if (auth2 !== null) {
                   auth2.signOut().then(function () {
                     localStorage.clear();
-                    window.location.href = "index.html";
+                    window.location.href = "login.html";
                   });
                 } else {
                   localStorage.clear();
-                  window.location.href = "index.html";
+                  window.location.href = "login.html";
                 }
               }
             </script>
