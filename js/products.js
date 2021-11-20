@@ -250,6 +250,19 @@ function showGridView() {
 //elementos HTML presentes.
 document.addEventListener("DOMContentLoaded", function (e) {
 
+    //Trae el usuario logueado.
+    let userLogged = localStorage.getItem("userLogged");
+    let googleUserLogged = localStorage.getItem("googleUserProfile");
+
+    //Control para validar que el usuario haya hecho login.
+    if (!userLogged && !googleUserLogged) {
+        localStorage.setItem("login-need", JSON.stringify({
+            from: "products.html",
+            msg: "Debes iniciar sesión para acceder al listado de productos."
+        }));
+        window.location = "login.html";
+    }
+
     //Trae el listado de productos del endpoint.
     getJSONData(PRODUCTS_URL).then(function (resultObj) {
 

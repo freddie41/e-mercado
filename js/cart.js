@@ -279,6 +279,7 @@ function deleteProduct(name) {
   }).then((result) => {
 
     if (result.isConfirmed) {
+      
       //Alerta de confirmación del borrado de tipo modal.
       swalBSStandardBtn.fire(
         '¡Éxito!',
@@ -419,6 +420,19 @@ function validateForms() {
 //Función que se ejecuta una vez que el evento de carga de todos los elementos
 // html del documento ha finalizado.
 $(document).ready(function () {
+
+  //Trae el usuario logueado.
+  let userLogged = localStorage.getItem("userLogged");
+  let googleUserLogged = localStorage.getItem("googleUserProfile");
+
+  //Control para validar que el usuario haya hecho login.
+  if (!userLogged && !googleUserLogged) {
+    localStorage.setItem("login-need", JSON.stringify({
+      from: "cart.html",
+      msg: "Debes iniciar sesión para acceder al carrito."
+    }));
+    window.location = "index.html";
+  }
 
   //Funcion que trae listado de productos desde el endpoint.
   getJSONData(CART_INFO_URL_ARRAY).then(function (resultObj) {

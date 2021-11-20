@@ -29,6 +29,20 @@ function updateTotalCosts(){
 //que el documento se encuentra cargado, es decir, se encuentran todos los
 //elementos HTML presentes.
 document.addEventListener("DOMContentLoaded", function(e){
+
+    //Trae el usuario logueado.
+    let userLogged = localStorage.getItem("userLogged");
+    let googleUserLogged = localStorage.getItem("googleUserProfile");
+
+    //Control para validar que el usuario haya hecho login.
+    if (!userLogged && !googleUserLogged) {
+        localStorage.setItem("login-need", JSON.stringify({
+            from: "sell.html",
+            msg: "Debes iniciar sesión para acceder a la pagina de venta de artículos."
+        }));
+        window.location = "login.html";
+    }
+
     document.getElementById("productCountInput").addEventListener("change", function(){
         productCount = this.value;
         updateTotalCosts();

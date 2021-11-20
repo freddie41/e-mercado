@@ -231,6 +231,19 @@ function showProductInfo (productID) {
 //elementos HTML presentes.
 document.addEventListener("DOMContentLoaded", function (e) {
 
+    //Trae el usuario logueado.
+    let userLogged = localStorage.getItem("userLogged");
+    let googleUserLogged = localStorage.getItem("googleUserProfile");
+
+    //Control para validar que el usuario haya hecho login.
+    if (!userLogged && !googleUserLogged) {
+        localStorage.setItem("login-need", JSON.stringify({
+            from: "product-info.html",
+            msg: "Debes iniciar sesión para acceder a la info del producto."
+        }));
+        window.location = "login.html";
+    }
+
     //Trae el ID de producto almacenado en local. 
     var product = JSON.parse(localStorage.getItem("productID"));
 

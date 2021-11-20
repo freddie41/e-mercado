@@ -23,6 +23,20 @@ function showImagesGallery(array){
 //que el documento se encuentra cargado, es decir, se encuentran todos los
 //elementos HTML presentes.
 document.addEventListener("DOMContentLoaded", function(e){
+
+    //Trae el usuario logueado.
+    let userLogged = localStorage.getItem("userLogged");
+    let googleUserLogged = localStorage.getItem("googleUserProfile");
+
+    //Control para validar que el usuario haya hecho login.
+    if (!userLogged && !googleUserLogged) {
+        localStorage.setItem("login-need", JSON.stringify({
+            from: "category-info.html",
+            msg: "Debes iniciar sesión para acceder a la info de categoría."
+        }));
+        window.location = "login.html";
+    }
+
     getJSONData(CATEGORY_INFO_URL).then(function(resultObj){
         if (resultObj.status === "ok")
         {
