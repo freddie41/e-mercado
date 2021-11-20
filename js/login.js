@@ -1,48 +1,160 @@
+//Trae los input para los datos de ingreso.
+var password = $("#inputPassword");
+var user = $("#inputUser");
+
+//Funcion para mostrar alerta de login invalido.
+function showFailureAlert() {
+    
+    //Alerta de error al no poder validar los campos de tipo modal.
+    swalBSStandardBtn.fire({
+        title: '¡Ups!',
+        html: 'Datos de ingreso inválidos.<br>Corrija los campos señalados.',
+        icon: 'error',
+    });
+
+      //Scroll automatico al nivel superior de la pagina para visualizar alerta.
+      window.scrollTo(0, 0);
+}
+
+//Funcion para validar inputs de usuario y contraseña.
+function validateEmptyFields() {
+
+    //Bandera de validación.
+    let validFields = true;
+
+    //Control para que el campo usuario no quede vacio.
+    if (user.val() == "") {
+
+        validFields = false;
+        user.addClass("is-invalid");
+    }
+
+    //Control para que el campo contraseña no quede vacio.
+    if (password.val() == "") {
+
+        validFields = false;
+        password.addClass("is-invalid");
+
+    }
+
+    return validFields;
+}
+
+function validateLogin() {
+    
+    //Bandera de validación.
+    let validLogin = true;
+
+    //Expresion regular para validar email de usuario.
+    var validEmail = new RegExp(/^([_a-zA-Z0-9-]+)(\.[_a-zA-Z0-9-]+)*@([a-zA-Z0-9-]+\.)+([a-zA-Z]{2,3})$/);
+
+    //Expresion regular para validar contraseña.
+    var validPassword = new RegExp(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]).{6,}$/);
+
+    //Control para validar estructura de email corracta.
+    if (validEmail.test(user.val()) == false) {
+        console.log("userBAD");
+        validLogin = false;
+        user.addClass("is-invalid");
+
+    } else {
+        console.log("userGOOD");
+        user.removeClass("is-invalid");
+        user.addClass("is-valid");
+    }
+
+    //Control para validar estructura de contraseña correcta.
+    if (validPassword.test(password.val()) == false) {
+        console.log("passBAD");
+        validLogin = false;
+        password.addClass("is-invalid");
+
+    } else {
+        console.log("passGOOD");
+        password.removeClass("is-invalid");
+        password.addClass("is-valid");
+    }
+
+    //Control para validar que los campos no se ingresen vacios.
+    if (!validateEmptyFields()) {
+
+        validLogin = false;
+    }
+    
+    return validLogin;
+}
+
 //Función que se ejecuta una vez que se haya lanzado el evento de
 //que el documento se encuentra cargado, es decir, se encuentran todos los
 //elementos HTML presentes.
-document.addEventListener("DOMContentLoaded", function (e) {
+$(document).ready(function () {
 
-    document.getElementById("loginBtn")
-    .addEventListener("click", function () {
+    let loginNeed = localStorage.getItem("login-need");
 
-        //Validación para que los campos del login no queden vacios
-        let password = document.getElementById("inputPassword");
-        let user = document.getElementById("inputUser");
-        let camposCompletos = true;
+    if (loginNeed) {
+        loginNeed = JSON.parse(loginNeed);
 
-        if (user.value === "" && password.value !== "") {
-            camposCompletos = false;
-            alert("El campo de usuario no puede ir vacío");
-            document.getElementById("inputUser")
-                .setAttribute("style", "border-color: #dc3545; box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);");
+        //Alerta de confirmación del borrado de tipo modal.
+        swalBSStandardBtn.fire({
+            title: '¡Atención!',
+            text: `${loginNeed.msg}`,
+            icon: 'warning',
+        });
+    }
+
+    //Inicializador de popovers.
+    $('[data-toggle="popover"]').popover();
+})
+//Bindeo de evento al cliquear en btn ingresar y validar login.
+.on("click", "#loginBtn", function () {
+        
+        //Control para validar el login correcto.
+        if (validateLogin()) {
+
+            //Guarda el email del usuario logeado para mostrar en navbar y sidebar.
+            localStorage.setItem("userLogged", (JSON.stringify({
+                
+                user: user.val()
+            }
+            )));
+
+            //Alerta de confirmación del borrado de tipo modal.
+            swalBSStandardBtn.fire({
+                title: '¡Éxito!',
+                text: 'Datos de ingreso correctos.',
+                icon: 'success',
+                showConfirmButton: false,
+                timer: 2500
+            });
+
+            
+            let loginNeed = localStorage.getItem("login-need");
+            
+            //Control para redirigir a la pagina solicitada previo a estar logeado.
+            if (loginNeed) {
+
+                loginNeed = JSON.parse(loginNeed);
+
+                //Tiempo de espera hasta redirigir.
+                setTimeout(function () {
+                    
+                    localStorage.removeItem("login-need");
+                    window.location = loginNeed.from;
+
+                }, 2500);//Tiempo en ms.
+
+            } else {
+                
+                //Tiempo de espera hasta redirigir.
+                setTimeout(function () {
+                    
+                    //Redirige al inicio por defecto.
+                    window.location = "index.html";
+                }, 2500);
+            }
         } else {
-            document.getElementById("inputUser")
-                .removeAttribute("style");
+            console.log("passLOGIN");
+            //Muestra alerta de campos inválidos.
+            showFailureAlert();
         }
-
-        if (password.value === "" && user.value !== "") {
-            camposCompletos = false;
-            alert("El campo de contraseña no puede ir vacío");
-            document.getElementById("inputPassword")
-                .setAttribute("style", "border-color: #dc3545; box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);");
-        } else {
-            document.getElementById("inputPassword")
-                .removeAttribute("style");
-        }
-
-        if (user.value === "" && password.value === "") {
-            camposCompletos = false;
-            alert("Debe ingresar un usuario y contraseña");
-            document.getElementById("inputUser")
-                .setAttribute("style", "border-color: #dc3545; box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);");
-            document.getElementById("inputPassword")
-                .setAttribute("style", "border-color: #dc3545; box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);");
-        }
-
-        if (camposCompletos) {
-            localStorage.setItem("userLogged", (JSON.stringify({ user: user.value })));
-            window.location = "home.html";
-        }
-    });
-});
+})
