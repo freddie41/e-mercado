@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<!-- saved from url=(0049)https://getbootstrap.com/docs/4.3/examples/album/ -->
+<html lang="es">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <title>eMercado - Todo lo que busques está aquí</title>
+
+  <!-- Google source data -->
+  <meta name="google-signin-client_id"
+    content="428794117897-af3u2j4lhobceldnrq8s6cdnnuucd6l8.apps.googleusercontent.com">
+  <link href="https://fonts.googleapis.com/css?family=Raleway:300,300i,400,400i,700,700i,900,900i" rel="stylesheet">
+
+  <!-- Bootstrap CSS/JS -->
+  <link rel="canonical" href="https://getbootstrap.com/docs/4.3/examples/album/">
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/styles.css" rel="stylesheet">
+  <link href="css/dropzone.css" rel="stylesheet">
+  <link href="css/bootstrap-datepicker3.css" rel="stylesheet">
+
+  <!-- Sweet Alert CSS/JS -->
+  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+  <!-- Font awesome source -->
+  <link href="css/font-awesome.min.css" rel="stylesheet">
+
+  <style>
+    body {
+      height: 100%;
+      background-color: #f8f9fa;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .input-group>.input-group-prepend>.input-group-text {
+      border-top-right-radius: 0 !important;
+      border-bottom-right-radius: 0 !important;
+      cursor: pointer;
+    }
+
+    .login-cover {
+      align-self: center;
+    }
+
+    .img-fluid {
+      max-width: 100%;
+      width: 80vh;
+    }
+
+    #login-container {
+      flex: 1 0 auto;
+    }
+
+    .signin {
+      width: 100%;
+      max-width: 330px;
+      padding: 15px;
+      margin: auto;
+    }
+
+    .footer {
+      position: relative;
+      background-color: #fff;
+      margin-top: auto;
+
+    }
+
+    .or-break {
+      border-bottom: 1px solid #e4e4e4;
+      color: #999;
+      font-size: 13px;
+      line-height: 0;
+      margin: 20px -15px;
+      text-align: center;
+    }
+
+    .or-break>span {
+      background: #f8f9fa;
+      padding: 0 10px;
+    }
+
+    /* Control de ancho de las alertas responsive
+    para mobile y resoluciones superiores */
+    @media (max-width: 576px) {
+      .alert {
+        position: absolute;
+        display: block;
+        text-align: center;
+        font-size: 0.9rem;
+        z-index: 10;
+        top: 112px;
+        width: 92%;
+        left: 50%;
+        transform: translate(-50%, 0);
+      }
+    }
+
+    @media (min-width: 576px) {
+      .alert {
+        position: absolute;
+        display: block;
+        text-align: center;
+        font-size: 0.9rem;
+        z-index: 10;
+        top: 275px;
+        width: 50%;
+        left: 50%;
+        transform: translate(-50%, 0);
+      }
+    }
+  </style>
+</head>
+
+<body class="text-center">
+  <img class="login-cover img-fluid" src="img/login.png" alt="jap-login" id="jap-login">
+  <div class="container" id="login-container">
+    <div class="signin">
+      <h1 class="h3 mb-3 font-weight-normal">Bienvenido</h1>
+      <h1 class="h6 font-weight-normal">Inicie sesión con su cuenta</h1>
+      <!-- Alert -->
+      <div id="alertInfo"></div>
+      <!-- END Alert -->
+      <div class="input-group mt-4 mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+        </div>
+        <input type="email" id="inputUser" placeholder="Email" class="form-control rounded-right" autofocus>
+        <div class="invalid-feedback text-left">
+          Debe ingresar un email válido.
+        </div>
+      </div>
+      <div class="input-group mb-4">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="passwordPop" tabindex="0" role="button" data-toggle="popover" data-trigger="hover"
+            data-animation="true" data-placement="bottom" title="Requerimientos:"
+            data-content="Debe tener al menos 6 caracteres y contener al menos un número, una letra mayúscula y una minúscula.">
+            <i class="fas fa-lock"></i>
+          </span>
+        </div>
+        <input type="password" id="inputPassword" placeholder="Contraseña" class="form-control rounded-right">
+        <div class="invalid-feedback text-left">
+          Debe ingresar una contraseña válida.
+        </div>
+      </div>
+      <div class="m-0">
+        <button id="loginBtn" class="btn btn-lg btn-info btn-block">Ingresar</button>
+      </div>
+      <div class="or-break">
+        <span>O</span>
+      </div>
+      <!-- Sign in with Google -->
+      <div class="mb-4" id="my-signin2" style="display:none"></div>
+      <script src="https://apis.google.com/js/platform.js" async defer></script>
+      <script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
+      <script>
+
+        //Config de btns de SweetAlert2 para mostrar btns de BS4.
+        var swalBSStandardBtn = Swal.mixin({
+          customClass: {
+            confirmButton: 'btn btn-info m-3',
+          },
+          buttonsStyling: false
+        });
+
+        function onSuccess(googleUser) {
+
+         //Obtiene el objeto de google con datos de usuario.
+          var profile = googleUser.getBasicProfile();
+
+          //Guarda los datos en un objeto local.
+          localStorage.setItem("googleUserProfile", (JSON.stringify(
+            {
+              gUserFullName: profile.getName(),
+              gUserName: profile.getGivenName(),
+              gUserLastnames: profile.getFamilyName(),
+              gUserEmail: profile.getEmail(),
+              gUserImg: profile.getImageUrl()
+            }
+          )));
+
+           //Alerta de confirmación del borrado de tipo modal.
+           swalBSStandardBtn.fire({
+            title: '¡Éxito!',
+            text: 'Datos de ingreso correctos.',
+            icon: 'success',
+            showConfirmButton: false,
+            timer: 2000
+          });
+
+          let loginNeed = localStorage.getItem("login-need");
+
+          //Control para redirigir a la pagina solicitada previo a estar logeado.
+          if (loginNeed) {
+
+            loginNeed = JSON.parse(loginNeed);
+
+            //Tiempo de espera hasta redirigir.
+            setTimeout(function () {
+
+              localStorage.removeItem("login-need");
+              window.location = loginNeed.from;
+
+            }, 2500);//Tiempo en ms.
+
+          } else {
+
+            //Tiempo de espera hasta redirigir.
+            setTimeout(function () {
+
+              //Redirige al inicio por defecto.
+              window.location = "index.html";
+            }, 2500);
+          }
+        }
+
+        function onFailure(error) {
+          console.log(error);
+        }
+
+        function renderButton() {
+          gapi.signin2.render('my-signin2', {
+            'scope': 'profile email',
+            'width': 300,
+            'height': 50,
+            'longtitle': true,
+            'theme': 'white',
+            'onsuccess': onSuccess,
+            'onfailure': onFailure,
+          });
+        }
+
+        var reintentosDeCargaGoogleBtn = 0;
+        //Función para controlar que al finalizar
+        //la carga del btn se pueda cambiar el default btn txt a español.
+        function onInit() {
+          //Timer con un control de errores para el cambio de txt que reduce
+          // el tiempo en el que carga del botón y se ejecuta el cambio de text.
+          setTimeout(function () {
+            try {
+              document.getElementById("my-signin2")
+                .getElementsByClassName("abcRioButtonContents")[0]
+                .getElementsByTagName("span")[0]
+                .innerText = "Acceder con Google";
+              document.getElementById("my-signin2").style.display = "block";
+            } catch {
+              reintentosDeCargaGoogleBtn += 1;
+              if (reintentosDeCargaGoogleBtn < 5) {
+                onInit();
+              }
+            }
+          }, 100);
+        }
+        window.onload = onInit;
+      </script>
+    </div>
+  </div>
+  <footer class="text-muted">
+    <div class="container">
+      <p>Este sitio forma parte de Desarrollo Web - JAP - 2021</p>
+    </div>
+  </footer>
+  <script src="js/jquery-3.4.1.min.js"></script>
+  <script src="js/bootstrap.bundle.min.js"></script>
+  <script src="js/init.js"></script>
+  <script src="js/login.js"></script>
+</body>
+
+</html>
