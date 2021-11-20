@@ -3,15 +3,6 @@ const ORDER_ASC_BY_COST = "Menor precio";
 const ORDER_DESC_BY_COST = "Mayor precio";
 const ORDER_BY_PROD_RELEVANCE = "Relevancia";
 
-//Config de btns de SweetAlert2 para mostrar btns de BS4.
-var swalBSCancelAcceptButtons = Swal.mixin({
-    customClass: {
-        confirmButton: 'btn btn-info m-3',
-        cancelButton: 'btn btn-secondary m-3'
-    },
-    buttonsStyling: false
-});
-
 //Variables de control de ingreso para el filtro de min y max $.
 var minCost = undefined;
 var maxCost = undefined;
@@ -27,6 +18,30 @@ var currentProductsArray = [];
 
 //Lista para guardar nuevos articulos agregados al carrito.
 var newCartArtsArray = [];
+
+//Config de btns de SweetAlert2 para mostrar btns de BS4.
+var swalBSDeleteAcceptButtons = Swal.mixin({
+    customClass: {
+        confirmButton: 'btn btn-danger mx-3 my-2',
+        cancelButton: 'btn btn-secondary mx-3 my-2'
+    },
+    buttonsStyling: false
+  });
+  
+  var swalBSCancelAcceptButtons = Swal.mixin({
+    customClass: {
+        confirmButton: 'btn btn-info mx-3 my-2',
+        cancelButton: 'btn btn-secondary mx-3 my-2'
+    },
+    buttonsStyling: false
+  });
+  
+  var swalBSStandardBtn = Swal.mixin({
+    customClass: {
+        confirmButton: 'btn btn-info mx-3 my-2',
+    },
+    buttonsStyling: false
+  });
 
 //Función para ordenar los productos en base a los criterios:
 //*Ascendente y descendente en base al precio.
@@ -197,7 +212,7 @@ function addProdtoCart(id, name, cost, currency, image) {
             articles: newCartArtsArray
         }
     )));
-    //Alerta de confirmación de tipo modal SweetAlert2.
+    //Alerta de confirmación de tipo modal SweetAlert2 al agregar producto al carrito.
     swalBSCancelAcceptButtons.fire({
         title: '¡Éxito!',
         text: "Producto agregado al carrito.",

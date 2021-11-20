@@ -2,14 +2,38 @@
 var password = $("#inputPassword");
 var user = $("#inputUser");
 
+//Config de btns de SweetAlert2 para mostrar btns de BS4.
+var swalBSDeleteAcceptButtons = Swal.mixin({
+    customClass: {
+        confirmButton: 'btn btn-danger mx-3 my-2',
+        cancelButton: 'btn btn-secondary mx-3 my-2'
+    },
+    buttonsStyling: false
+  });
+  
+  var swalBSCancelAcceptButtons = Swal.mixin({
+    customClass: {
+        confirmButton: 'btn btn-info mx-3 my-2',
+        cancelButton: 'btn btn-secondary mx-3 my-2'
+    },
+    buttonsStyling: false
+  });
+  
+  var swalBSStandardBtn = Swal.mixin({
+    customClass: {
+        confirmButton: 'btn btn-info mx-3 my-2',
+    },
+    buttonsStyling: false
+  });
+
 //Funcion para mostrar alerta de login invalido.
 function showFailureAlert() {
     
-    //Alerta de error al no poder validar los campos de tipo modal.
+    //Alerta de error de tipo modal SweetAlert2 al no poder validar los campos.
     swalBSStandardBtn.fire({
         title: '¡Ups!',
         html: 'Datos de ingreso inválidos.<br>Corrija los campos señalados.',
-        icon: 'error',
+        icon: 'warning',
     });
 
       //Scroll automatico al nivel superior de la pagina para visualizar alerta.
@@ -94,7 +118,7 @@ $(document).ready(function () {
     if (loginNeed) {
         loginNeed = JSON.parse(loginNeed);
 
-        //Alerta de confirmación del borrado de tipo modal.
+        //Alerta de confirmación del borrado de tipo modal SweetAlert2.
         swalBSStandardBtn.fire({
             title: '¡Atención!',
             text: `${loginNeed.msg}`,
@@ -118,7 +142,7 @@ $(document).ready(function () {
             }
             )));
 
-            //Alerta de confirmación del borrado de tipo modal.
+            //Alerta de confirmación del borrado de tipo modal SweetAlert2.
             swalBSStandardBtn.fire({
                 title: '¡Éxito!',
                 text: 'Datos de ingreso correctos.',

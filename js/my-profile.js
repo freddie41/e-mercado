@@ -15,6 +15,29 @@ var profilePhone = document.getElementById("profilePhone");
 var profileAge = document.getElementById("profileAge");
 var profileBio = document.getElementById("profileBio");
 
+//Config de btns de SweetAlert2 para mostrar btns de BS4.
+var swalBSDeleteAcceptButtons = Swal.mixin({
+  customClass: {
+      confirmButton: 'btn btn-danger mx-3 my-2',
+      cancelButton: 'btn btn-secondary mx-3 my-2'
+  },
+  buttonsStyling: false
+});
+
+var swalBSCancelAcceptButtons = Swal.mixin({
+  customClass: {
+      confirmButton: 'btn btn-info mx-3 my-2',
+      cancelButton: 'btn btn-secondary mx-3 my-2'
+  },
+  buttonsStyling: false
+});
+
+var swalBSStandardBtn = Swal.mixin({
+  customClass: {
+      confirmButton: 'btn btn-info mx-3 my-2',
+  },
+  buttonsStyling: false
+});
 
 //Funcion para calcular la edad, dada una fecha de nacimiento como input.
 function getAge(birth) {
@@ -91,52 +114,44 @@ function changeProfilePicture() {
 
           //Control para validar que la img pudo ser cargada de forma exitosa.
           if (Math.random() < 0.9) {
-            //Alerta para de exito al cambiar la imagen del perfil.
-            $(alert).append(`
-                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    <i class="fa fa-check-circle text-success mx-2"></i><strong>Éxito.</strong> Imagen de perfil actualizada.
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                `
-            ).removeClass("hide").hide().fadeIn(300);//Tiempo de aparición en ms.
+            
+            //Alerta de exito de tipo modal SweetAlert2 al cambiar la imagen del perfil.
+            swalBSStandardBtn.fire({
+              title: '¡Éxito!',
+              text: 'La imagen de perfil ha sido actualizada.',
+              icon: 'success',
+              showConfirmButton: false,
+              timer: 2500
+          });
 
             //Se limpia el valor del input de la carga de imagen luego de subida.
             $(triggerInput).val("");
 
-            setTimeout(() => {
-              $(alert).find('[role="alert"]').animate({ opacity: 0 }, 300).remove(300);//Tiempo para remover alerta en ms.
-            }, 3000);//Tiempo de permanencia de alerta en ms.
           } else {
+            //Mantiene la img por defecto al no poder cargar la nueva img.
             $(holder).find(".pic").attr("src", currentImg);
-            //Alerta de error al intentar subir la imagen.
-            $(alert).append(`
-                <div class="alert alert-danger alert-dismissible hide" role="alert">
-                    <i class="fa fa-times-circle text-danger mx-2"></i><strong>Error.</strong> Inténtelo de nuevo más tarde.
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                `
-            ).removeClass("hide").hide().fadeIn(300);//Tiempo de aparición en ms.
+
+            //Alerta de error de tipo modal SweetAlert2 al no poder validar el carrito.
+            swalBSStandardBtn.fire({
+              title: '¡Ups!',
+              html: 'Error al cargar la imagen.<br>Intentelo de nuevo mas tarde.',
+              icon: 'error',
+              confirmButtonText: 'Aceptar',
+            });
 
             //Se limpia el valor del input de la carga de imagen luego de subida.
             $(triggerInput).val("");
-            setTimeout(() => {
-              $(alert).find('[role="alert"]').animate({ opacity: 0 }, 300).hide(300);//Tiempo para remover alerta en ms.
-            }, 3000);//Tiempo de permanencia de alerta en ms.
           }
         }, 1500);//Tiempo de carga de img.
       };
     } else {
-      //Alerta de error al intentar subir una imagen en formato no valido.
-      $(alert).append(
-        `<div class="alert alert-danger d-inline-block p-2 small" role="alert">Por favor, elija una imagen válida.</div>`
-      );
-      setTimeout(() => {
-        $(alert).find('role="alert"').remove(300);//Tiempo para remover alerta en ms.
-      }, 3000);//Tiempo de permanencia de alerta en ms.
+      //Alerta de error de tipo modal SweetAlert2 al intentar subir una imagen en formato no valido.
+      swalBSStandardBtn.fire({
+        title: '¡Ups!',
+        html: 'Formato de imagen inválido.<br>Elija otro formato de imagen y vuelva a intentarlo.',
+        icon: 'warning',
+        confirmButtonText: 'Aceptar',
+      });
     }
   });
 }
@@ -155,21 +170,13 @@ function validateAndSaveData() {
 
       if (form.checkValidity() === false) {
 
-        //Alerta de error al no poder validar todos los campos.
-        setTimeout(function () {
-          $('<div class="dangerAlert alert alert-danger">' +
-            '<i class="fa fa-times-circle text-danger mx-2"></i>' +
-            '<strong>Error.</strong> Corrija los campos señalados.' +
-            '<button type="button" class="close" data-dismiss="alert">' +
-            '&times;</button></div>').hide().appendTo('#alertInfo').fadeIn(300);//Tiempo de aparición en ms.
-
-          $(".alert").delay(3000).fadeOut(//Tiempo de permanencia de alerta en ms.
-            "normal",
-            function () {
-              $(this).remove().fadeIn(300);//Tiempo para remover alerta en ms.
-            }
-          );
-        }, 300);//Tiempo de espera hasta mostrar alerta.
+        //Alerta de error de tipo modal SweetAlert2 al no poder validar el carrito.
+        swalBSStandardBtn.fire({
+          title: '¡Ups!',
+          html: 'Datos de ingreso inválidos.<br>Corrija los campos señalados.',
+          icon: 'warning',
+          confirmButtonText: 'Aceptar',
+        });
 
         //Scroll automatico al nivel superior de la pagina para visualizar alerta.
         window.scrollTo(0, 0);
@@ -187,20 +194,15 @@ function validateAndSaveData() {
           userBio: userBio.value
         })));
 
-        //Alerta de exito al guardar nuevos datos de usuario.
+        //Alerta de exito de tipo modal SweetAlert2 al guardar nuevos datos de usuario.
         setTimeout(function () {
-          $('<div class="successAlert alert alert-success">' +
-            '<i class="fa fa-check-circle text-success mx-2"></i>' +
-            '<strong>Éxito.</strong> Info del perfil actualizada.' +
-            '<button type="button" class="close" data-dismiss="alert">' +
-            '&times;</button></div>').hide().appendTo('#alertInfo').fadeIn(300);//Tiempo de aparición en ms.
-
-          $(".alert").delay(3000).fadeOut(//Tiempo de permanencia de alerta en ms.
-            "normal",
-            function () {
-              $(this).remove().fadeIn(300);//Tiempo para remover alerta en ms.
-            }
-          );
+          swalBSStandardBtn.fire({
+            title: '¡Éxito!',
+            text: 'Los datos de usuario han sido actualizados.',
+            icon: 'success',
+            showConfirmButton: false,
+            timer: 2000
+        });
 
           //Muestra los datos guardados en los inputs.
           showSavedData();
