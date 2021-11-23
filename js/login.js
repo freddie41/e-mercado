@@ -34,6 +34,7 @@ function showFailureAlert() {
         title: '¡Ups!',
         html: 'Datos de ingreso inválidos.<br>Corrija los campos señalados.',
         icon: 'warning',
+        confirmButtonText: 'Aceptar',
     });
 
       //Scroll automatico al nivel superior de la pagina para visualizar alerta.
@@ -77,24 +78,20 @@ function validateLogin() {
 
     //Control para validar estructura de email corracta.
     if (validEmail.test(user.val()) == false) {
-        console.log("userBAD");
         validLogin = false;
         user.addClass("is-invalid");
 
     } else {
-        console.log("userGOOD");
         user.removeClass("is-invalid");
         user.addClass("is-valid");
     }
 
     //Control para validar estructura de contraseña correcta.
     if (validPassword.test(password.val()) == false) {
-        console.log("passBAD");
         validLogin = false;
         password.addClass("is-invalid");
 
     } else {
-        console.log("passGOOD");
         password.removeClass("is-invalid");
         password.addClass("is-valid");
     }
@@ -118,11 +115,12 @@ $(document).ready(function () {
     if (loginNeed) {
         loginNeed = JSON.parse(loginNeed);
 
-        //Alerta de confirmación del borrado de tipo modal SweetAlert2.
+        //Alerta de tipo modal SweetAlert2 para informar que el usuario necesita logearse.
         swalBSStandardBtn.fire({
             title: '¡Atención!',
             text: `${loginNeed.msg}`,
             icon: 'warning',
+            confirmButtonText: 'Aceptar',
         });
     }
 
@@ -177,7 +175,6 @@ $(document).ready(function () {
                 }, 2500);
             }
         } else {
-            console.log("passLOGIN");
             //Muestra alerta de campos inválidos.
             showFailureAlert();
         }
