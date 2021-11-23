@@ -289,11 +289,12 @@ function deleteProduct(name) {
     if (result.isConfirmed) {
       
       //Alerta de confirmación del borrado de tipo modal.
-      swalBSStandardBtn.fire(
-        '¡Éxito!',
-        'Artículo borrado del carrito.',
-        'success'
-      )
+      swalBSStandardBtn.fire({
+        title: '¡Éxito!',
+        text: 'Artículo borrado del carrito.',
+        icon: 'success',
+        confirmButtonText: 'Aceptar',
+      })
       //Ejecución del borrado.
       cartProducts = cartProducts.filter(function (product) {
         return product.name !== name;
@@ -420,6 +421,53 @@ function validateForms() {
   return cartValid;
 }
 
+//Funcion para agregar nuevos articulos al carrito.
+function addNewProdToCart() {
+  
+  //Control de articulos agregados al carrito.
+  if (newCartProducts) {
+
+    let newCartProductsArray = JSON.parse(newCartProducts).articles;
+
+    for (let i = 0; i < newCartProductsArray.length; i++) {
+
+      let newProduct = newCartProductsArray[i];
+
+      //Busca si el producto agregado al carrito ya existe en el carrito.
+      let foundProd = cartProducts.find(product => product.id === newProduct.id);
+
+      if (foundProd) {
+
+        for (let x = 0; x < cartProducts.length; x++) {
+          
+          let product = cartProducts[x];
+
+          //Control para sumar una unidad del mismo producto agregado al carrito.
+          if (product === foundProd) {
+
+            product = product.count++;
+          }
+        }
+
+      } else {
+
+        //Crea un nuevo objeto para agregar al array de productos.
+        newProduct =
+        {
+          id: newProduct.id,
+          name: newProduct.name,
+          count: newProduct.count,
+          unitCost: newProduct.unitCost,
+          currency: newProduct.currency,
+          src: newProduct.src
+        }
+        //Agrega el articulo al array de productos.
+        cartProducts.push(newProduct);
+      }
+    }
+  }
+}
+
 //Función que se ejecuta una vez que el evento de carga de todos los elementos
 // html del documento ha finalizado.
 $(document).ready(function () {
@@ -444,28 +492,8 @@ $(document).ready(function () {
 
       cartProducts = resultObj.data.articles;
 
-      //Control de existencia de objeto con nuevos productos guardados en local.
-      if (newCartProducts) {
-
-        let newCartProductsArray = JSON.parse(newCartProducts).articles;
-
-        for (let i = 0; i < newCartProductsArray.length; i++) {
-          
-          let newProduct = newCartProductsArray[i];
-          
-          newProduct =
-          {
-            id: newProduct.id,
-            name: newProduct.name,
-            count: newProduct.count,
-            unitCost: newProduct.unitCost,
-            currency: newProduct.currency,
-            src: newProduct.src
-          }
-          //Agrega una instancia de articulo al array de productos.
-          cartProducts.push(newProduct);
-        }
-      }
+      //Verifica si hay articulos nuevos para agregar al carrito.
+      addNewProdToCart();
 
       //Muestra productos actualizados en carrito.
       showCartProducts();
