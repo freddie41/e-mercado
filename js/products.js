@@ -1,4 +1,4 @@
-//Constantes para referenciar el criterio de ordenamiento elegido
+//Constantes para referenciar el criterio de ordenamiento elegido.
 const ORDER_ASC_BY_COST = "Menor precio";
 const ORDER_DESC_BY_COST = "Mayor precio";
 const ORDER_BY_PROD_RELEVANCE = "Relevancia";
@@ -283,7 +283,7 @@ document.addEventListener("DOMContentLoaded", function (e) {
 
         if (resultObj.status === "ok") {
             
-            //Muestra ordenados por relevancia.
+            //Muestra productos ordenados por relevancia.
             sortAndShowProducts(ORDER_BY_PROD_RELEVANCE, resultObj.data);
 
             //Inicializador de btns para seleccionar vista de lista o grilla.

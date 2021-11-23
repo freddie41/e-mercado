@@ -20,6 +20,15 @@
   <!-- Font awesome source -->
   <link href="css/font-awesome.min.css" rel="stylesheet">
   
+  <style>
+    /* Ancho del container del listado unicamente para el layout de esta página */
+    @media (min-width: 1200px) {
+  
+      .container.categories-list {
+        max-width: 1320px;
+      }
+    }
+  </style>
 </head>
   
 <body>
@@ -110,7 +119,7 @@
   <!-- Navbar -->
   <nav class="site-header sticky-top py-1 bg-dark d-none d-md-block">
     <div class="container d-flex flex-column flex-md-row justify-content-between">
-      <a class="py-2 d-none d-md-inline-block" href="home.html" style="text-decoration: none;">
+      <a class="py-2 d-none d-md-inline-block" href="index.html" style="text-decoration: none;">
         <i class="fas fa-home"></i>Inicio
       </a>
       <a class="py-2 d-none d-md-inline-block" href="categories.html" style="text-decoration: none;">
@@ -152,11 +161,11 @@
                 if (auth2 !== null) {
                   auth2.signOut().then(function () {
                     localStorage.clear();
-                    window.location.href = "index.html";
+                    window.location.href = "login.html";
                   });
                 } else {
                   localStorage.clear();
-                  window.location.href = "index.html";
+                  window.location.href = "login.html";
                 }
               }
             </script>
@@ -170,201 +179,163 @@
   <!-- End Navbar -->
     
   <main role="main" class="pb-5">
-    <div class="container my-4">
+    <div class="container categories-list my-4">
       <div class="text-center p-4 mb-4">
         <h2>Categorías</h2>
         <p class="lead">Verás aquí todas las categorías del sitio.</p>
       </div>
-      <!-- Botones de ordenamiento -->
-      <div class="row no-gutters mb-3">
-        <div class="col-md-6"></div>
-        <div class="col-md-6">
+  
+      <div class="row gutters mb-2">
+        <div class="col-3"></div>
+        <!-- Botones de ordenamiento y visualizacion -->
+        <div class="col-12 col-md-9 text-right">
           <div class="row no-gutters justify-content-end">
-            <div class="mx-2">
-              <p class="font-weight-normal text-center my-2">Orden</p>
+            <!-- Botones de visualizacion -->
+            <div class="col-4 d-none d-md-block">
+              <div class="text-muted text-left small mt-2 ml-3"><span class="mr-1">Ver:</span>
+                <div class="btn-group btn-group-sm btn-group-toggle" data-toggle="buttons">
+                  <label class="btn btn-light active" id="showGrid">
+                    <input type="radio" name="viewProducts" checked>
+                    <i class="fas fa-th text-dark mr-1"></i><span class="text-dark">Grilla</span>
+                  </label>
+                  <label class="btn btn-light" id="showList">
+                    <input type="radio" name="viewProducts">
+                    <i class="fas fa-th-list text-dark mr-1"></i><span class="text-dark">Lista</span>
+                  </label>
+                </div>
+              </div>
             </div>
-            <div class="text-right ml-2">
-              <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                <label class="btn btn-light active" id="sortAsc">
-                  <input type="radio" name="options" autocomplete="off" checked="">
-                  <i class="fas fa-long-arrow-alt-up mr-1"></i>A-Z
-                </label>
-                <label class="btn btn-light" id="sortDesc">
-                  <input type="radio" name="options" autocomplete="off">
-                  <i class="fas fa-long-arrow-alt-down mr-1"></i>Z-A
-                </label>
-                <label class="btn btn-light" id="sortByCount">
-                  <input type="radio" name="options" autocomplete="off">
-                  <i class="fas fa-sort-amount-down mr-1"></i>Cantidad
-                </label>
+            <!-- END Botones de visualizacion -->
+  
+            <div class="col-3"></div>
+            <!-- Botones de ordenamiento -->
+            <div class="col-12 col-md-5">
+              <div class="text-muted text-right mt-2 small"><span class="mr-1">Orden:</span>
+                <div class="btn-group btn-group-sm btn-group-toggle" data-toggle="buttons">
+                  <label class="btn btn-light active" id="sortByCount">
+                    <input type="radio" name="options" autocomplete="off" checked>
+                    <i class="fas fa-sort-amount-down mr-1"></i>Cantidad
+                  </label>
+                  <label class="btn btn-light" id="sortAsc">
+                    <input type="radio" name="options" autocomplete="off">
+                    <i class="fas fa-sort-alpha-down mr-1"></i>
+                    <div class="d-inline-block">
+                      A-Z
+                    </div>
+                  </label>
+                  <label class="btn btn-light text-dark" id="sortDesc">
+                    <input type="radio" name="options" autocomplete="off">
+                    <i class="fas fa-sort-alpha-down-alt mr-1"></i>
+                    <div class="d-inline-block">
+                      Z-A
+                    </div>
+                  </label>
+                </div>
+              </div>
+            </div>
+            <!-- END Botones de ordenamiento -->
+          </div>
+        </div>
+        <!-- END Botones de ordenamiento y visualizacion -->
+      </div>
+  
+      <div class="row gutters">
+        <!-- Panel de filtros -->
+        <div class="col-12 col-sm-12 col-md-5 col-lg-3 px-3">
+          <div class="card mb-4">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-4 col-md-6 col-lg-6 mb-3">
+                  <div class="text-muted">
+                    <i class="fas fa-filter text-dark mr-2"></i><span class="text-muted">Filtros</span>
+                  </div>
+                </div>
+                <div class="col-8 col-md-6 col-lg-6 text-right mb-3">
+                  <button class="btn btn-light btn-sm" id="clearFilters">Limpiar</button>
+                </div>
+              </div>
+              <div class="row">
+  
+                <!-- Acordeon de filtros -->
+                <div class="col-12 col-md-12 col-lg-12 px-1">
+                  <!-- Filtro por busqueda por titulo y/o descripción -->
+                  <div class="card mb-3">
+                    <div class="card-header" id="heading1">
+                      <div class="my-1" role="button" data-toggle="collapse" data-target="#collapseSearchFilter"
+                        aria-expanded="false" aria-controls="collapseSearchFilter">
+                        <span>Palabra clave</span>
+                        <span class="flip-chevron"><i class="fas fa-chevron-down text-muted pt-1"
+                            style="float: right;"></i></span>
+                      </div>
+                    </div>
+  
+                    <div id="collapseSearchFilter" class="collapse show" aria-labelledby="heading1">
+                      <div class="card-body px-2 py-2">
+                        <div class="row">
+                          <div class="col-12">
+                            <div class="inner-addon left-addon">
+                              <i class="fa fa-search text-muted"></i>
+                              <input class="form-control" type="search" placeholder="Buscar..." id="search">
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- END Filtro por busqueda por titulo y/o descripción -->
+  
+                  <!-- Filtro por cantidad -->
+                  <div class="card">
+                    <div class="card-header" id="heading2">
+                      <div class="my-1" role="button" data-toggle="collapse" data-target="#collapseAmountFilter"
+                        aria-expanded="false" aria-controls="collapseAmountFilter">
+                        <span>Cantidad</span>
+                        <span class="flip-chevron"><i class="fas fa-chevron-down text-muted pt-1"
+                            style="float: right;"></i></span>
+                      </div>
+                    </div>
+                    <div id="collapseAmountFilter" class="collapse show" aria-labelledby="heading2">
+                      <div class="card-body px-2 py-3">
+                        <div class="row no-gutters">
+                          <div class="col-4 col-md-4 col-lg-4 px-1">
+                            <input class="form-control form-control-sm" type="number" placeholder="Min."
+                              id="rangeFilterCountMin">
+                          </div>
+                          <div class="col-4 col-md-4 col-lg-4 px-1">
+                            <input class="form-control form-control-sm" type="number" placeholder="Máx."
+                              id="rangeFilterCountMax">
+                          </div>
+                          <div class="col-4 col-md-4 col-lg-4 px-1 text-center">
+                            <button class="btn btn-light btn-sm" id="rangeFilterCount">Aplicar</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- END Filtro por precio -->
+  
+                </div>
+                <!-- END Acordeon de filtros -->
               </div>
             </div>
           </div>
         </div>
-      </div>
-      <div class="row no-gutters justify-content-end mb-3">
-        <div class="col-md-5 col-sm-3"></div>
-        <!-- Filtro por cantidad y btn para restablecer lista -->
-        <div class="col-md-7 col-sm-6">
-          <div class="row container justify-content-end p-0 m-0">
-            <div class="mx-2">
-              <p class="font-weight-normal text-center my-2">Cantidad</p>
-            </div>
-            <div class="col-2 px-2">
-              <input class="form-control" type="number" placeholder="min." id="rangeFilterCountMin">
-            </div>
-            <div class="col-2 px-2 mr-2">
-              <input class="form-control" type="number" placeholder="máx." id="rangeFilterCountMax">
-            </div>
-            <div class="btn-group" role="group">
-              <button class="btn btn-light" id="rangeFilterCount">
-                <i class="fa fa-filter mr-1"></i>Filtrar
-              </button>
-              <button class="btn btn-light" id="clearRangeFilter">
-                <i class="fas fa-eraser mr-1"></i>Limpiar
-              </button>
+        <!-- END Panel de filtros -->
+  
+        <!-- Lista de categorias -->
+        <div id="showGridCol" class="col-12 col-sm-12 col-md-7 col-lg-9">
+          <div class="card pt-3">
+            <div class="container">
+              <div class="row" id="cat-grid-container"></div>
             </div>
           </div>
         </div>
-      </div>
-      <!-- Lista de categorías -->
-      <div class="row no-gutters">
-        <div class="list-group" id="cat-list-container">
-            <a href="category-info.html" class="list-group-item list-group-item-action">
-                <div class="row">
-                    <div class="col-3">
-                        <img src="img/cat1.jpg" alt="Los mejores precios en autos 0 kilómetro, de alta y media gama." class="img-thumbnail">
-                    </div>
-                    <div class="col">
-                        <div class="d-flex w-100 justify-content-between">
-                            <h4 class="mb-1">Autos</h4>
-                            <small class="text-muted">122 artículos</small>
-                        </div>
-                        <p class="mb-1">Los mejores precios en autos 0 kilómetro, de alta y media gama.</p>
-                    </div>
-                </div>
-            </a>
-            
-            <a href="category-info.html" class="list-group-item list-group-item-action">
-                <div class="row">
-                    <div class="col-3">
-                        <img src="img/cat9.jpg" alt="Celulares de todo tipo para cubrir todas las necesidades." class="img-thumbnail">
-                    </div>
-                    <div class="col">
-                        <div class="d-flex w-100 justify-content-between">
-                            <h4 class="mb-1">Celulares</h4>
-                            <small class="text-muted">124 artículos</small>
-                        </div>
-                        <p class="mb-1">Celulares de todo tipo para cubrir todas las necesidades.</p>
-                    </div>
-                </div>
-            </a>
-            
-            <a href="category-info.html" class="list-group-item list-group-item-action">
-                <div class="row">
-                    <div class="col-3">
-                        <img src="img/cat5.jpg" alt="Todo en cuanto a computadoras, para uso de oficina y/o juegos." class="img-thumbnail">
-                    </div>
-                    <div class="col">
-                        <div class="d-flex w-100 justify-content-between">
-                            <h4 class="mb-1">Computadoras</h4>
-                            <small class="text-muted">724 artículos</small>
-                        </div>
-                        <p class="mb-1">Todo en cuanto a computadoras, para uso de oficina y/o juegos.</p>
-                    </div>
-                </div>
-            </a>
-            
-            <a href="category-info.html" class="list-group-item list-group-item-action">
-                <div class="row">
-                    <div class="col-3">
-                        <img src="img/cat8.jpg" alt="Toda la variedad de indumentaria para todo tipo de deporte." class="img-thumbnail">
-                    </div>
-                    <div class="col">
-                        <div class="d-flex w-100 justify-content-between">
-                            <h4 class="mb-1">Deporte</h4>
-                            <small class="text-muted">574 artículos</small>
-                        </div>
-                        <p class="mb-1">Toda la variedad de indumentaria para todo tipo de deporte.</p>
-                    </div>
-                </div>
-            </a>
-            
-            <a href="category-info.html" class="list-group-item list-group-item-action">
-                <div class="row">
-                    <div class="col-3">
-                        <img src="img/cat7.jpg" alt="Todos los electrodomésticos modernos y de bajo consumo." class="img-thumbnail">
-                    </div>
-                    <div class="col">
-                        <div class="d-flex w-100 justify-content-between">
-                            <h4 class="mb-1">Electrodomésticos</h4>
-                            <small class="text-muted">84 artículos</small>
-                        </div>
-                        <p class="mb-1">Todos los electrodomésticos modernos y de bajo consumo.</p>
-                    </div>
-                </div>
-            </a>
-            
-            <a href="category-info.html" class="list-group-item list-group-item-action">
-                <div class="row">
-                    <div class="col-3">
-                        <img src="img/cat4.jpg" alt="Herramientas para cualquier tipo de trabajo." class="img-thumbnail">
-                    </div>
-                    <div class="col">
-                        <div class="d-flex w-100 justify-content-between">
-                            <h4 class="mb-1">Herramientas</h4>
-                            <small class="text-muted">452 artículos</small>
-                        </div>
-                        <p class="mb-1">Herramientas para cualquier tipo de trabajo.</p>
-                    </div>
-                </div>
-            </a>
-            
-            <a href="category-info.html" class="list-group-item list-group-item-action">
-                <div class="row">
-                    <div class="col-3">
-                        <img src="img/cat2.jpg" alt="Encuentra aquí los mejores precios para niños/as de cualquier edad." class="img-thumbnail">
-                    </div>
-                    <div class="col">
-                        <div class="d-flex w-100 justify-content-between">
-                            <h4 class="mb-1">Juguetes</h4>
-                            <small class="text-muted">354 artículos</small>
-                        </div>
-                        <p class="mb-1">Encuentra aquí los mejores precios para niños/as de cualquier edad.</p>
-                    </div>
-                </div>
-            </a>
-            
-            <a href="category-info.html" class="list-group-item list-group-item-action">
-                <div class="row">
-                    <div class="col-3">
-                        <img src="img/cat3.jpg" alt="Muebles antiguos, nuevos y para ser armados por uno mismo." class="img-thumbnail">
-                    </div>
-                    <div class="col">
-                        <div class="d-flex w-100 justify-content-between">
-                            <h4 class="mb-1">Muebles</h4>
-                            <small class="text-muted">157 artículos</small>
-                        </div>
-                        <p class="mb-1">Muebles antiguos, nuevos y para ser armados por uno mismo.</p>
-                    </div>
-                </div>
-            </a>
-            
-            <a href="category-info.html" class="list-group-item list-group-item-action">
-                <div class="row">
-                    <div class="col-3">
-                        <img src="img/cat6.jpg" alt="Gran variedad de ropa, nueva y de segunda mano." class="img-thumbnail">
-                    </div>
-                    <div class="col">
-                        <div class="d-flex w-100 justify-content-between">
-                            <h4 class="mb-1">Vestimenta</h4>
-                            <small class="text-muted">841 artículos</small>
-                        </div>
-                        <p class="mb-1">Gran variedad de ropa, nueva y de segunda mano.</p>
-                    </div>
-                </div>
-            </a>
-            </div>
+        <div id="showListCol" class="col-12 col-sm-12 col-md-7 col-lg-9 d-none">
+          <div class="container">
+            <div class="row" id="cat-list-container"></div>
+          </div>
+        </div>
+        <!-- END Lista de categorias -->
       </div>
     </div>
   </main>

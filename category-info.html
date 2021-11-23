@@ -83,11 +83,11 @@
               if (auth2 !== null) {
                 auth2.signOut().then(function () {
                   localStorage.clear();
-                  window.location.href = "index.html";
+                  window.location.href = "login.html";
                 });
               } else {
                 localStorage.clear();
-                window.location.href = "index.html";
+                window.location.href = "login.html";
               }
             }
           </script>
@@ -202,7 +202,9 @@
           </div>
         </dd>
       </dl>
-      <a type="button" class="btn btn-outline-info btn-lg btn-block" href="products.html">Ver productos</a>
+      <div class="mb-4">
+        <a type="button" class="btn btn-outline-info btn-lg btn-block" href="products.html">Ver productos</a>
+      </div>
     </div>
   </main>
   <footer class="text-muted bg-light">
