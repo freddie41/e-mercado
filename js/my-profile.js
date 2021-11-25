@@ -178,9 +178,6 @@ function validateAndSaveData() {
           confirmButtonText: 'Aceptar',
         });
 
-        //Scroll automatico al nivel superior de la pagina para visualizar alerta.
-        window.scrollTo(0, 0);
-
       } else {
         
         //Se guardan los nuevos datos de usuario.
@@ -208,9 +205,6 @@ function validateAndSaveData() {
           showSavedData();
 
         }, 300);//Tiempo de espera hasta mostrar alerta.
-
-        //Scroll automatico al page top para ver alerta.
-        window.scrollTo(0, 0);
       }
       form.classList.add('was-validated');
     });
