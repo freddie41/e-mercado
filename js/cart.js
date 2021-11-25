@@ -486,7 +486,7 @@ $(document).ready(function () {
   }
 
   //Funcion que trae listado de productos desde el endpoint.
-  getJSONData(CART_INFO_URL_ARRAY).then(function (resultObj) {
+  getJSONData(CART_INFO_URL).then(function (resultObj) {
 
     if (resultObj.status === "ok") {
 
@@ -515,18 +515,22 @@ $(document).ready(function () {
   var currentVal = parseInt(input.val());
 
   if (currentVal) {
+
     //Control al cliquear en btn sustraer.
     if (type == 'minus') {
 
       //Control para sustraccion de un valor de cantidad.
       if (currentVal > input.attr('min')) {
+
         input.val(currentVal - 1).change();
       }
+
     //Control al cliquear en btn adicionar.
-    } else if (type == 'plus') {
+  } else if (type == 'plus') {
 
       //Control para adicion de un valor de cantidad.
       if (currentVal < input.attr('max')) {
+
         input.val(currentVal + 1).change();
       }
     }
@@ -588,10 +592,20 @@ $(document).ready(function () {
 .on("click", "#submitCart", function (event) {
   
   if (!validateForms()) {
+
     event.preventDefault();
     event.stopPropagation();
+
+  } else {
+
+    //Alerta de confirmación de tipo modal al crear la orden con exito.
+    swalBSStandardBtn.fire({
+      title: '¡Éxito!',
+      html: 'Tu orden ha sido creada.<br>En breves recibirás un email con los datos de la orden.',
+      icon: 'success',
+      confirmButtonText: 'Aceptar',
+    })
   }
-  window.scrollTo(0, 0);
 })
 //Bindeo de evento que restablece metodo de pago elegido al hacer clic en btn cerrar.
 .on("click", "#paymentModal [data-dismiss=modal]", function () {
