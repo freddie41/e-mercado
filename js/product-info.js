@@ -10,7 +10,7 @@ var productsList = [];
 //Función para mostrar un carousel de imágenes.
 function showCarousel(id, array) {
 
-    var html = $("#" + id).append( `
+    var html = $("#" + id).append(`
     <ol class="carousel-indicators"></ol>
     <div class="carousel-inner" role="listbox"></div>
     <a class="carousel-control-prev" href="#${id}" role="button" data-slide="prev">
@@ -53,7 +53,7 @@ function showCommentsList(commentsList) {
     let htmlContentToAppend = document.getElementById("commentsList").innerHTML;
 
     for (let item of commentsList) {
-        
+
         let comment = item;
 
         //Control para definir el rating de cada comentario en base al valor del endpoint.
@@ -94,8 +94,8 @@ function getStarRating() {
 
     var stars = document.getElementsByName("rating");
 
-    for (item of stars){
-        if (item.checked){
+    for (item of stars) {
+        if (item.checked) {
             return item.value;
         }
     }
@@ -117,20 +117,21 @@ function showUserLogged() {
 
     //Obtienen datos de usuario google y normal guardados en local.
     var userLogged = localStorage.getItem("userLogged");
-    var googleUserLogged = localStorage.getItem("googleUserLogged");
+    var googleUserProfile = localStorage.getItem("googleUserProfile");
     var user = document.getElementById("user");
-  
+
     //Control para mostrar email de usuario normal.
     if (userLogged) {
-      userLogged = JSON.parse(userLogged);
-      user = userLogged.user;
-      return user;
+        userLogged = JSON.parse(userLogged);
+        user = userLogged.user;
+        return user;
     }
     //Control para mostrar email de usuario google.
-    if (googleUserLogged) {
-      googleUserEmail = googleUserLogged;
-      user = googleUserEmail;
-      return googleUserEmail;
+    if (googleUserProfile) {
+        googleUserProfile = JSON.parse(googleUserProfile);
+        googleUserEmail = googleUserProfile.gUserFullName;
+        user = googleUserEmail;
+        return user;
     }
 }
 
@@ -168,31 +169,31 @@ function showRelatedProducts(productsList, relatedProducts) {
                 </div>
             </div>
             `
-        } 
+        }
     }
     document.getElementById("card-deck").innerHTML = htmlContentToAppend;
 }
 
 //Funcion para ver la pagina de info de producto al cliquear en una de las opciones de productos relacionados.
-function setProductInfo (id) {
-    localStorage.setItem("productID", JSON.stringify({productID: id}));
+function setProductInfo(id) {
+    localStorage.setItem("productID", JSON.stringify({ productID: id }));
     window.location = "product-info.html";
 }
 
 //Función para mostrar info del producto segun el ID guardado en local.
-function showProductInfo (productID) {
+function showProductInfo(productID) {
 
-    getJSONData(PRODUCT_INFO + productID + ".json").then(function(resultObj) {
+    getJSONData(PRODUCT_INFO + productID + ".json").then(function (resultObj) {
 
         if (resultObj.status === "ok") {
 
             productInfo = resultObj.data;
 
-            let productNameHTML  = document.getElementById("productName");
+            let productNameHTML = document.getElementById("productName");
             let productDescriptionHTML = document.getElementById("productDescription");
             let productCategoryHTML = document.getElementById("productCategory");
             let productCostHTML = document.getElementById("productCost");
-        
+
             productNameHTML.innerHTML = productInfo.name;
             productDescriptionHTML.innerHTML = productInfo.description;
             productCategoryHTML.innerHTML = productInfo.category;
@@ -203,7 +204,7 @@ function showProductInfo (productID) {
 
             //Trae listado de comentarios desde el endpoint.
             getJSONData(PRODUCT_INFO_COMMENTS_URL).then(function (resultObj) {
-            
+
                 if (resultObj.status === "ok") {
 
                     //Muestra el listado de comentarios.
@@ -211,11 +212,11 @@ function showProductInfo (productID) {
 
                     //Trea el listado de productos desde el endpoint.
                     getJSONData(PRODUCTS_URL).then(function (resultObj) {
-        
+
                         if (resultObj.status === "ok") {
-        
+
                             productsList = resultObj.data;
-        
+
                             //Muestra los productos relacionados.
                             showRelatedProducts(productsList, productInfo.relatedProducts);
                         }
