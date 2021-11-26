@@ -1,13 +1,10 @@
 //Endpoints con datos en formato JSON.
 const CATEGORIES_URL = "https://japdevdep.github.io/ecommerce-api/category/all.json";
-const PUBLISH_PRODUCT_URL = "https://japdevdep.github.io/ecommerce-api/product/publish.json";
 const CATEGORY_INFO_URL = "https://japdevdep.github.io/ecommerce-api/category/1234.json";
 const PRODUCTS_URL = "https://freddie41.github.io/e-mercado.sandbox/cars_api/cars.json";
-const PRODUCT_INFO_URL = "https://japdevdep.github.io/ecommerce-api/product/5678.json";
+const PRODUCT_INFO_URL = "https://freddie41.github.io/e-mercado.sandbox/cars_api/";
 const PRODUCT_INFO_COMMENTS_URL = "https://japdevdep.github.io/ecommerce-api/product/5678-comments.json";
-const CART_INFO_URL = "https://japdevdep.github.io/ecommerce-api/cart/987.json";
-const CART_INFO_URL_ARRAY = "https://freddie41.github.io/e-mercado.sandbox/cars_api/cart-preset.json";
-const CART_BUY_URL = "https://japdevdep.github.io/ecommerce-api/cart/buy.json";
+const CART_INFO_URL = "https://freddie41.github.io/e-mercado.sandbox/cars_api/cart-preset.json";
 
 //Funciones para mostrar y ocultar spinners de carga.
 var showSpinner = function () {
@@ -20,6 +17,7 @@ var hideSpinner = function () {
 //Funcion para fetchear la información de los endpoints.
 var getJSONData = function (url) {
   var result = {};
+  //Muestra el spinner mientras se carga la data.
   showSpinner();
   return fetch(url)
     .then(response => {
@@ -32,12 +30,14 @@ var getJSONData = function (url) {
     .then(function (response) {
       result.status = 'ok';
       result.data = response;
+      //Oculta el spinner cuando la data ha sido cargada por completo.
       hideSpinner();
       return result;
     })
     .catch(function (error) {
       result.status = 'error';
       result.data = error;
+      //Oculta el spinner mientras se intenta cargar la data.
       hideSpinner();
       return result;
     });
