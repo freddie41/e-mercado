@@ -329,14 +329,14 @@
                       <div class="row">
                         <div class="col-md-6 mb-3">
                           <label for="firstName">Nombre</label>
-                          <input type="text" class="form-control" id="firstName" placeholder="" value="" required>
+                          <input type="text" class="form-control" id="firstName" value="" required>
                           <div class="invalid-feedback">
                             Debe ingresar un nombre.
                           </div>
                         </div>
                         <div class="col-md-6 mb-3">
                           <label for="lastName">Apellido</label>
-                          <input type="text" class="form-control" id="lastName" placeholder="" value="" required>
+                          <input type="text" class="form-control" id="lastName" value="" required>
                           <div class="invalid-feedback">
                             Debe ingresar un apellido.
                           </div>
@@ -361,7 +361,7 @@
           
                       <div class="mb-3">
                         <label for="address2">Dirección 2 <span class="text-muted">(Opcional)</span></label>
-                        <input type="text" class="form-control" id="direccion" placeholder="Piso o apartamento">
+                        <input type="text" class="form-control" id="address2" placeholder="Piso o apartamento">
                       </div>
           
                       <div class="row">
@@ -374,14 +374,14 @@
                         </div>
                         <div class="col-md-4 mb-3">
                           <label for="state">Departamento</label>
-                          <input type="text" class="form-control" id="departamento" placeholder="Departamento/Estado" required>
+                          <input type="text" class="form-control" id="state" placeholder="Departamento/Estado" required>
                           <div class="invalid-feedback">
                             Debe ingresar un departamento.
                           </div>
                         </div>
                         <div class="col-md-4 mb-3">
                           <label for="zip">Código postal</label>
-                          <input type="text" class="form-control" id="codigoPostal" placeholder="" required>
+                          <input type="tel" class="form-control" id="zip" minlength="5" maxlength="5" required>
                           <div class="invalid-feedback">
                             Debe ingresar un código postal.
                           </div>
@@ -499,14 +499,14 @@
                                       <div class="row">
                                         <div class="col-md-6 mb-3">
                                           <label for="cc-name">Nombre en la tarjeta</label>
-                                          <input type="text" class="form-control" name="name" id="cc-name" placeholder="" required>
+                                          <input type="text" class="form-control" name="name" id="cc-name" required>
                                           <div class="invalid-feedback">
                                             Debe ingresar el nombre en la tarjeta.
                                           </div>
                                         </div>
                                         <div class="col-md-6 mb-3">
                                           <label for="cc-number">Número de tarjeta</label>
-                                          <input type="text" class="form-control" name="number" id="cc-number" placeholder="" required>
+                                          <input type="tel" class="form-control" name="number" id="cc-number" minlength="16" maxlength="16" required>
                                           <div class="invalid-feedback">
                                             Debe ingresar el número de tarjeta.
                                           </div>
@@ -522,7 +522,7 @@
                                         </div>
                                         <div class="col-md-6 mb-3">
                                           <label for="cc-cvv">Código de seguridad</label>
-                                          <input type="text" class="form-control" name="cvv" id="cc-cvv" placeholder="CVV" required>
+                                          <input type="tel" class="form-control" name="cvv" id="cc-cvv" placeholder="CVV" minlength="3" maxlength="3" required>
                                           <div class="invalid-feedback">
                                             Debe ingresar el código de seguridad.
                                           </div>
