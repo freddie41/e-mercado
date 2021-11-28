@@ -7,8 +7,30 @@ let PESO_CURRENCY = "Pesos Uruguayos (UYU)";
 let DOLLAR_SYMBOL = "USD ";
 let PESO_SYMBOL = "UYU ";
 let PERCENTAGE_SYMBOL = '%';
-let SUCCESS_MSG = "¡Se ha realizado la publicación con éxito! :)";
-let ERROR_MSG = "Ha habido un error :(, verifica qué pasó.";
+
+//Config de btns de SweetAlert2 para mostrar btns de BS4.
+var swalBSDeleteAcceptButtons = Swal.mixin({
+    customClass: {
+        confirmButton: 'btn btn-danger mx-3 my-2',
+        cancelButton: 'btn btn-secondary mx-3 my-2'
+    },
+    buttonsStyling: false
+  });
+  
+  var swalBSCancelAcceptButtons = Swal.mixin({
+    customClass: {
+        confirmButton: 'btn btn-info mx-3 my-2',
+        cancelButton: 'btn btn-secondary mx-3 my-2'
+    },
+    buttonsStyling: false
+  });
+  
+  var swalBSStandardBtn = Swal.mixin({
+    customClass: {
+        confirmButton: 'btn btn-info mx-3 my-2',
+    },
+    buttonsStyling: false
+  });
 
 //Función que se utiliza para actualizar los costos de publicación
 function updateTotalCosts(){
@@ -129,30 +151,26 @@ document.addEventListener("DOMContentLoaded", function(e){
             infoMissing = true;
         }
         
-        if(!infoMissing)
-        {
-            //Aquí ingresa si pasó los controles, irá a enviar
-            //la solicitud para crear la publicación.
+        //Aquí ingresa si pasó los controles, irá a enviar
+        //la solicitud para crear la publicación.
+        if (!infoMissing) {
 
-            getJSONData(PUBLISH_PRODUCT_URL).then(function(resultObj){
-                let msgToShowHTML = document.getElementById("resultSpan");
-                let msgToShow = "";
-    
-                //Si la publicación fue exitosa, devolverá mensaje de éxito,
-                //de lo contrario, devolverá mensaje de error.
-                if (resultObj.status === 'ok')
-                {
-                    msgToShow = resultObj.data.msg;
-                    document.getElementById("alertResult").classList.add('alert-success');
-                }
-                else if (resultObj.status === 'error')
-                {
-                    msgToShow = ERROR_MSG;
-                    document.getElementById("alertResult").classList.add('alert-danger');
-                }
-    
-                msgToShowHTML.innerHTML = msgToShow;
-                document.getElementById("alertResult").classList.add("show");
+            //Alerta de confirmación de tipo modal al crear publicacion con exito.
+            swalBSStandardBtn.fire({
+                title: '¡Éxito!',
+                html: 'El artículo fue publicado.',
+                icon: 'success',
+                confirmButtonText: 'Aceptar',
+            });
+
+        } else {
+
+            //Alerta de error de tipo modal SweetAlert2 al no poder validar la publicacion.
+            swalBSStandardBtn.fire({
+                title: '¡Ups!',
+                html: 'Datos de ingreso inválidos.<br>Corrija los campos señalados.',
+                icon: 'warning',
+                confirmButtonText: 'Aceptar',
             });
         }
 
