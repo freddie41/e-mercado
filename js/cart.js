@@ -482,7 +482,7 @@ $(document).ready(function () {
       from: "cart.html",
       msg: "Debes iniciar sesión para acceder al carrito."
     }));
-    window.location = "index.html";
+    window.location = "login.html";
   }
 
   //Funcion que trae listado de productos desde el endpoint.
