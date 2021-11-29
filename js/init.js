@@ -1,10 +1,10 @@
 //Endpoints con datos en formato JSON.
-const CATEGORIES_URL = "https://japdevdep.github.io/ecommerce-api/category/all.json";
-const CATEGORY_INFO_URL = "https://japdevdep.github.io/ecommerce-api/category/1234.json";
-const PRODUCTS_URL = "https://freddie41.github.io/e-mercado.sandbox/cars_api/cars.json";
-const PRODUCT_INFO_URL = "https://freddie41.github.io/e-mercado.sandbox/cars_api/";
-const PRODUCT_INFO_COMMENTS_URL = "https://japdevdep.github.io/ecommerce-api/product/5678-comments.json";
-const CART_INFO_URL = "https://freddie41.github.io/e-mercado.sandbox/cars_api/cart-preset.json";
+const CATEGORIES_URL = "https://freddie41.github.io/e-mercado/json_data/categories.json";
+const CATEGORY_INFO_URL = "https://freddie41.github.io/e-mercado/json_data/category-info.json";
+const PRODUCTS_URL = "https://freddie41.github.io/e-mercado/json_data/products.json";
+const PRODUCT_INFO_URL = "https://freddie41.github.io/e-mercado/json_data/product-info/";
+const PRODUCT_INFO_COMMENTS_URL = "https://freddie41.github.io/e-mercado/json_data/product-info-comments.json";
+const CART_INFO_URL = "https://freddie41.github.io/e-mercado/json_data/cart-info.json";
 
 //Funciones para mostrar y ocultar spinners de carga.
 var showSpinner = function () {
