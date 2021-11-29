@@ -1,0 +1,15 @@
+{
+  "name": "Volkswagen Gol",
+  "description": "Una mirada única. El Gol presenta en su exterior un frente más robusto y firme. Sus líneas definidas y su nuevo diseño de parrilla y faros le dan una impronta inconfundible.",
+  "cost": 18000,
+  "currency": "USD",
+  "soldCount": 41,
+  "category": "Autos",
+  "images": [
+    "img/cars/volkswagen/volkswagen1_1.jpg",
+    "img/cars/volkswagen/volkswagen1_2.jpg",
+    "img/cars/volkswagen/volkswagen1_3.jpg",
+    "img/cars/volkswagen/volkswagen1_4.jpg"
+  ],
+  "relatedProducts": [7, 6, 5]
+}

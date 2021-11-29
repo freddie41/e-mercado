@@ -1,0 +1,15 @@
+{
+  "name": "Fiat Way",
+  "description": "FIAT UNO WAY llama la atención. Imposible entrar en el FIAT UNO WAY y no dejarse impresionar por cada detalle. \u003cbr\u003eCon un acabado superior y más moderno, sin olvidar el volante multifuncional que llama la atención de todos, UNO WAY es sinónimo de diseño.",
+  "cost": 14500,
+  "currency": "USD",
+  "soldCount": 52,
+  "category": "Autos",
+  "images": [
+    "img/cars/fiat/fiat1_1.jpg",
+    "img/cars/fiat/fiat1_2.jpg",
+    "img/cars/fiat/fiat1_3.jpg",
+    "img/cars/fiat/fiat1_4.jpg"
+  ],
+  "relatedProducts": [3, 4, 1]
+}

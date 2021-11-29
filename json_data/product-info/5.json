@@ -1,0 +1,15 @@
+{
+  "name": "Toyota Yaris",
+  "description": "El Toyota Yaris Hybrid se renueva por completo y las mejoras lo convierten en uno de los mejores candidatos si buscas un coche versátil para un usar principalmente en ciudad, pero con el que también podrás viajar. Más coche que antes, el nuevo Yaris es mucho mejor que su predecesor.",
+  "cost": 21990,
+  "currency": "USD",
+  "soldCount": 45,
+  "category": "Autos",
+  "images": [
+    "img/cars/toyota/toyota1_1.jpg",
+    "img/cars/toyota/toyota1_2.jpg",
+    "img/cars/toyota/toyota1_3.jpg",
+    "img/cars/toyota/toyota1_4.jpg"
+  ],
+  "relatedProducts": [2, 3, 4]
+}

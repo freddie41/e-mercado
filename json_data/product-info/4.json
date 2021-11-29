@@ -1,0 +1,15 @@
+{
+  "name": "Peugeot 208",
+  "description": "Con su nuevo estilo tecnológico, look deportivo y un adelanto al futuro, el Nuevo Peugeot 208 es irresistible. \u003cbr\u003eSu diseño de proporciones exactas, genera un vehículo dinámico y bien equilibrado, inspirado en el concept Fractal.",
+  "cost": 15200,
+  "currency": "USD",
+  "soldCount": 17,
+  "category": "Autos",
+  "images": [
+    "img/cars/peugeot/peugeot1_1.jpg",
+    "img/cars/peugeot/peugeot1_2.jpg",
+    "img/cars/peugeot/peugeot1_3.jpg",
+    "img/cars/peugeot/peugeot1_4.jpg"
+  ],
+  "relatedProducts": [1, 2, 3]
+}

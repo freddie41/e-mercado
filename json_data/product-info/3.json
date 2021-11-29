@@ -1,0 +1,15 @@
+{
+  "name": "Suzuki Celerio",
+  "description": "Vive nuevas experiencias arriba de un auto que lo tiene todo: eficiencia de combustible, diseño y comodidad \u003cbr\u003eSi buscas entretenimiento sin sacrificar rendimiento, Celerio es para vos.",
+  "cost": 12500,
+  "currency": "USD",
+  "soldCount": 25,
+  "category": "Autos",
+  "images": [
+    "img/cars/suzuki/suzuki1_1.jpg",
+    "img/cars/suzuki/suzuki1_2.jpg",
+    "img/cars/suzuki/suzuki1_3.jpg",
+    "img/cars/suzuki/suzuki1_4.jpg"
+  ],
+  "relatedProducts": [4, 1, 2]
+}

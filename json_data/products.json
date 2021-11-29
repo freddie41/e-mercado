@@ -1,0 +1,83 @@
+[
+    {
+        "id": 1,
+        "name": "Chevrolet Onix",
+        "description": "Generación 2019, variedad de colores. Motor 1.0, ideal para ciudad.",
+        "cost": 13500,
+        "currency": "USD",
+        "imgSrc": "img/cars/chevrolet/chevrolet1.jpg",
+        "soldCount": 14
+    },
+    {
+        "id": 2,
+        "name": "Fiat Way",
+        "description": "La versión de Fiat que brinda confort y seguridad a un precio accesible.",
+        "cost": 14500,
+        "currency": "USD",
+        "imgSrc": "img/cars/fiat/fiat1.jpg",
+        "soldCount": 82
+    },
+    {
+        "id": 3,
+        "name": "Suzuki Celerio",
+        "description": "Un auto que se ha ganado la buena fama por su economía con el combustible.",
+        "cost": 12500,
+        "currency": "USD",
+        "imgSrc": "img/cars/suzuki/suzuki1.jpg",
+        "soldCount": 66
+    },
+    {
+        "id": 4,
+        "name": "Peugeot 208",
+        "description": "El modelo de auto que se sigue renovando y manteniendo su prestigio en comodidad.",
+        "cost": 25200,
+        "currency": "USD",
+        "imgSrc": "img/cars/peugeot/peugeot1.jpg",
+        "soldCount": 17
+    },
+    {
+        "id": 5,
+        "name": "Toyota Yaris",
+        "description": "El Nuevo Toyota Yaris ha sido galardonado con el premio Coche del año 2021.",
+        "cost": 21990,
+        "currency": "USD",
+        "imgSrc": "img/cars/toyota/toyota1.jpg",
+        "soldCount": 45
+    },
+    {
+        "id": 6,
+        "name": "Citroën C3",
+        "description": "Berlina de diseño, el Nuevo Citroën C3 se distingue por su diseño único.",
+        "cost": 19800,
+        "currency": "USD",
+        "imgSrc": "img/cars/citroen/citroen1.jpg",
+        "soldCount": 33
+    },
+    {
+        "id": 7,
+        "name": "Renault Kwid",
+        "description": "El Renault KWID esta diseñado para llamar la atención de todos en las calles.",
+        "cost": 12990,
+        "currency": "USD",
+        "imgSrc": "img/cars/renault/renault1.jpg",
+        "soldCount": 69
+    },
+    {
+        "id": 8,
+        "name": "Volkswagen Gol",
+        "description": "El Volkswagen Gol. Un clásico que se mantiene siempre moderno.",
+        "cost": 18000,
+        "currency": "USD",
+        "imgSrc": "img/cars/volkswagen/volkswagen1.jpg",
+        "soldCount": 41
+    },
+    {
+        "id": 9,
+        "name": "Nissan Kicks",
+        "description": "Con nuevo diseño, equipamiento y tecnología; convierte el viaje en algo increíble.",
+        "cost": 24500,
+        "currency": "USD",
+        "imgSrc": "img/cars/nissan/nissan1.jpg",
+        "soldCount": 55
+    }
+]

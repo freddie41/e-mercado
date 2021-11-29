@@ -1,0 +1,15 @@
+{
+  "name": "Citroën C3",
+  "description": "Con sus 97 combinaciones de personalización exterior, no hay otro coche igual. En confort, el Nuevo Citroën C3 incorpora los nuevos asientos Advanced Comfort y suspensiones que le sitúan como líder en su categoría. Moderno y conectado, dispone de 12 ayudas a la conducción para facilitar el día a día.",
+  "cost": 19800,
+  "currency": "USD",
+  "soldCount": 33,
+  "category": "Autos",
+  "images": [
+    "img/cars/citroen/citroen1_1.jpg",
+    "img/cars/citroen/citroen1_2.jpg",
+    "img/cars/citroen/citroen1_3.jpg",
+    "img/cars/citroen/citroen1_4.jpg"
+  ],
+  "relatedProducts": [5, 1, 2]
+}

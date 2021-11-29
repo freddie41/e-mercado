@@ -1,0 +1,15 @@
+{
+  "name": "Nissan Kicks",
+  "description": "Atrae todas las miradas y deja que el desafiante diseño del Totalmente Nuevo Nissan Kicks domine el camino. Cuenta con líneas aerodinámicas que resaltan su carácter ágil y ligero, además de un techo flotante que lo hace más atrevido..",
+  "cost": 24500,
+  "currency": "USD",
+  "soldCount": 55,
+  "category": "Autos",
+  "images": [
+    "img/cars/nissan/nissan1_1.jpg",
+    "img/cars/nissan/nissan1_2.jpg",
+    "img/cars/nissan/nissan1_3.jpg",
+    "img/cars/nissan/nissan1_4.jpg"
+  ],
+  "relatedProducts": [8, 1, 2]
+}

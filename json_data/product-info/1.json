@@ -1,0 +1,15 @@
+{
+  "name": "Chevrolet Onix",
+  "description": "Potenciá tu actitud con Onix Joy que, además de destacarse por su diseño juvenil y moderno, te ofrecé una óptima autonomía, un desempeño equilibrado y el máximo confort interior. \u003cbr\u003eYa sea un viaje largo o un simple paseo por la ciudad, el confort es uno de los puntos fuertes del Onix. Esta versión incluye aire acondicionado, asientos tapizados en tela y gran espacio interior que te garantiza el máximo confort.",
+  "cost": 13500,
+  "currency": "USD",
+  "soldCount": 14,
+  "category": "Autos",
+  "images": [
+    "img/cars/chevrolet/chevrolet1_1.jpg",
+    "img/cars/chevrolet/chevrolet1_2.jpg",
+    "img/cars/chevrolet/chevrolet1_3.jpg",
+    "img/cars/chevrolet/chevrolet1_4.jpg"
+  ],
+  "relatedProducts": [2, 3, 4]
+}

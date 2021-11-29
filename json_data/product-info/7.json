@@ -1,0 +1,15 @@
+{
+  "name": "Renault Kwid",
+  "description": "Su diseño inspirado en las SUV, con salientes delanteros y traseros y una gran distancia al suelo, transmite fuerza y robustez. Los elegantes faros antiniebla mejoran aún más la sorprendente presencia del Renault KWID.",
+  "cost": 12990,
+  "currency": "USD",
+  "soldCount": 69,
+  "category": "Autos",
+  "images": [
+    "img/cars/citroen/citroen1_1.jpg",
+    "img/cars/citroen/citroen1_2.jpg",
+    "img/cars/citroen/citroen1_3.jpg",
+    "img/cars/citroen/citroen1_4.jpg"
+  ],
+  "relatedProducts": [6, 5, 4]
+}
