@@ -183,7 +183,7 @@ function setProductInfo(id) {
 //Función para mostrar info del producto segun el ID guardado en local.
 function showProductInfo(productID) {
 
-    getJSONData(PRODUCT_INFO + productID + ".json").then(function (resultObj) {
+    getJSONData(PRODUCT_INFO_URL + productID + ".json").then(function (resultObj) {
 
         if (resultObj.status === "ok") {
 
