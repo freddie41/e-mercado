@@ -80,6 +80,8 @@ function calcSubTotal() {
   }
 
   $("#subtotalCarrito").html(totalCarrito);
+  
+  //Actualizan los costos y cantidades en tiempo real.
   showProductsSummary();
   calcTotal();
 }
