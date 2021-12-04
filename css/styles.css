@@ -352,24 +352,26 @@ el site header y dropdown */
 /* Spinners de carga del sitio */
 .lds-ring {
   color: #17a2b8;
-  display: inline-block;
-  position: relative;
-  width: 64px;
-  height: 64px;
-  top:50%;
-  left: 50%;
+  display: block;
+  position: fixed;
+  width: 100px;
+  height: 100px;
+  position: fixed;
+  z-index: 1031; /* High z-index so it is on top of the page */
+  top: calc( 50% - ( 100px / 2) ); /* where ... is the element's height */
+  right: calc( 50% - ( 100px / 2) ); /* where ... is the element's width */
 }
 .lds-ring div {
   box-sizing: border-box;
   display: block;
   position: absolute;
-  width: 51px;
-  height: 51px;
-  margin: 6px;
-  border: 6px solid #fff;
-  border-radius: 50%;
+  width: 100px;
+  height: 100px;
+  margin: 12px;
+  border: 12px solid #fff;
+  border-radius: 75%;
   animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
-  border-color: #fff transparent transparent transparent;
+  border-color: #17a2b8 transparent transparent transparent;
 }
 .lds-ring div:nth-child(1) {
   animation-delay: -0.45s;
